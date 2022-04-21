@@ -6,11 +6,11 @@ class Product {
   final int id, courses;
   final Color color;
   Product({
-    required this.image,
-    required this.title,
-    required this.courses,
-    required this.color,
-    required this.id,
+    this.image,
+    this.title,
+    this.courses,
+    this.color,
+    this.id,
   });
 }
 

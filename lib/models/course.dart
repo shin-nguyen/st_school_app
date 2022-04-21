@@ -10,15 +10,15 @@ class Course {
   final int videoTotal;
 
   const Course({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.lecturer,
-    required this.language,
-    required this.price,
-    required this.image,
-    required this.subTotal,
-    required this.videoTotal,
+    this.id,
+    this.name,
+    this.description,
+    this.lecturer,
+    this.language,
+    this.price,
+    this.image,
+    this.subTotal,
+    this.videoTotal,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {

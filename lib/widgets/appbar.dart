@@ -4,7 +4,7 @@ import '../constants/system_constants.dart';
 
 class CustomeAppBar extends StatelessWidget {
   const CustomeAppBar({
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override

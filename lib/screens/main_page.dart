@@ -7,7 +7,8 @@ import 'package:st_school_app/screens/profile_page.dart';
 import 'package:st_school_app/screens/setting_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({Key key}) : super(key: key);
+  static const routeName = '/home';
 
   @override
   State<MainPage> createState() => _MainPageState();

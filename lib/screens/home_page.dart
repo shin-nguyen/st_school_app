@@ -6,7 +6,7 @@ import 'package:st_school_app/widgets/category_list.dart';
 import 'package:st_school_app/widgets/sorting.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
