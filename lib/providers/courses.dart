@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:st_school_app/models/course.dart';
 import 'package:http/http.dart' as http;
-import '../models/http_exception.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../constants/base_constants.dart' as Constants;
@@ -43,8 +42,8 @@ class Courses with ChangeNotifier {
     //       videoTotal: 1)
     //
   ];
-  final String authToken;
-  final String userId;
+  String authToken;
+  String userId;
   Courses(this.authToken, this.userId, this._items);
 
   List<Course> get getCourses {

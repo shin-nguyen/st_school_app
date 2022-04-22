@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 import '../constants/base_constants.dart' as Constants;
 import 'package:jwt_decode/jwt_decode.dart';
 
 class Auth with ChangeNotifier {
-  String? _token = null;
-  DateTime? _expiryDate = null;
-  String? _userId = null;
-  Timer? _authTimer = null;
+  String? _token;
+  DateTime? _expiryDate;
+  String? _userId;
+  Timer? _authTimer;
 
   bool get isAuth {
     return token != null;
@@ -65,7 +65,9 @@ class Auth with ChangeNotifier {
           'expiryDate': _expiryDate!.toIso8601String(),
         },
       );
-      prefs.setString('userData', userData);
+      if (userData != null) {
+        prefs.setString('userData', userData);
+      }
     } catch (error) {
       rethrow;
     }
@@ -108,7 +110,7 @@ class Auth with ChangeNotifier {
   Future<void> logout() async {
     _token = null;
     _userId = null;
-    _expiryDate = new DateTime.now();
+    _expiryDate = null;
     if (_authTimer != null) {
       _authTimer!.cancel();
       _authTimer = null;
