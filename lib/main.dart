@@ -5,6 +5,7 @@ import 'package:st_school_app/screens/detail_page.dart';
 import 'package:st_school_app/screens/shop_page.dart';
 import 'package:st_school_app/screens/login.dart';
 import 'package:st_school_app/screens/main_page.dart';
+import 'package:st_school_app/screens/sign_in/sign_in_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,10 +24,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const LoginPage(),
+        home: LoginPage(),
         routes: {
           '/home': (context) => const MainPage(),
-          '/login': (context) => const LoginPage(),
+          '/login': (context) => LoginPage(),
           '/shop': (context) => const ShopPage(),
           '/detail/1': (context) => const DetailPage()
         },
