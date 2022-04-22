@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 class Product {
   final String image, title;
   final int id, courses;
   final Color color;
   Product({
-    this.image,
-    this.title,
-    this.courses,
-    this.color,
-    this.id,
+    required this.image,
+    required this.title,
+    required this.courses,
+    required this.color,
+    required this.id,
   });
 }
 

@@ -21,12 +21,12 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Auth(),
           ),
-          ChangeNotifierProxyProvider<Auth, Courses>(
-            update: (_, auth, previousProducts) => Courses(
-                auth.token,
-                auth.userId,
-                previousProducts == null ? [] : previousProducts.getCourses),
-          ),
+          // ChangeNotifierProxyProvider<Auth, Courses>(
+          //   update: (_, auth, previousProducts) => Courses(
+          //       auth.token,
+          //       auth.userId,
+          //       previousProducts == null ? [] : previousProducts.getCourses),
+          // ),
 
           // ChangeNotifierProvider(create: (context) => Courses(_, _, _)),
         ],

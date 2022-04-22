@@ -7,7 +7,7 @@ import 'package:st_school_app/screens/learning_page.dart';
 import 'package:st_school_app/screens/setting/setting_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key key}) : super(key: key);
+  // const MainPage({Key? key}) : super(key: key);
   static const routeName = '/home';
 
   @override
@@ -16,8 +16,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   List pages = [
-    const HomePage(),
-    const LearningPage(),
+    HomePage(),
+    LearningPage(),
     CompleteProfileScreen(),
     SettingPage(),
   ];

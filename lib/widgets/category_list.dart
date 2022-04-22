@@ -3,7 +3,7 @@ import 'package:st_school_app/models/product_model.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -22,8 +22,8 @@ class CategoryList extends StatelessWidget {
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
-    Key key,
-    this.product,
+    Key? key,
+    required this.product,
   }) : super(key: key);
   final Product product;
   @override

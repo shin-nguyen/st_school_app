@@ -4,7 +4,7 @@ import 'package:st_school_app/widgets/course_list.dart';
 import 'package:st_school_app/widgets/sorting.dart';
 
 class ShopPage extends StatefulWidget {
-  const ShopPage({Key key}) : super(key: key);
+  // const ShopPage({Key? key}) : super(key: key);
 
   @override
   State<ShopPage> createState() => _ShopPageState();
@@ -16,12 +16,12 @@ class _ShopPageState extends State<ShopPage> {
     return Scaffold(
         body: SafeArea(
             child: Column(children: [
-      const CustomeAppBar(),
-      const SizedBox(
+      CustomeAppBar(),
+      SizedBox(
         height: 20,
       ),
-      const Sorting(),
-      const CourseList()
+      Sorting(),
+      CourseList()
     ])));
   }
 }

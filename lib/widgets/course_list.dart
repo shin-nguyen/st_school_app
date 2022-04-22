@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:st_school_app/models/product_model.dart';
 
 class CourseList extends StatelessWidget {
-  const CourseList({
-    Key key,
-  }) : super(key: key);
+  // const CourseList({
+  //   Key? key,
+  // }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,9 @@ class CourseList extends StatelessWidget {
 
 class CourseCard extends StatelessWidget {
   const CourseCard({
-    Key key,
-    this.product,
-  }) : super(key: key);
+    // Key? key,
+    required this.product,
+  });
   final Product product;
   @override
   Widget build(BuildContext context) {

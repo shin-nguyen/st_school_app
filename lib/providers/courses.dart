@@ -77,6 +77,9 @@ class Courses with ChangeNotifier {
           price: course['price'],
           language: course['language'],
           image: course['image'],
+          lecturer: "1",
+          subTotal: 1,
+          videoTotal: 1,
         ));
       });
       _items = courses;
