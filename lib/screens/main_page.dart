@@ -1,9 +1,9 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
-import 'package:st_school_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:st_school_app/screens/home_page.dart';
 import 'package:st_school_app/screens/learning_page.dart';
+import 'package:st_school_app/screens/profile/profile_page.dart';
 import 'package:st_school_app/screens/setting/setting_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,8 +17,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List pages = [
     HomePage(),
-    LearningPage(),
-    CompleteProfileScreen(),
+    const LearningPage(),
+    ProfilePage(),
     SettingPage(),
   ];
   int _selectedIndex = 0;
