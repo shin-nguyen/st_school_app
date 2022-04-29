@@ -1,1 +1,0 @@
-enum PopupMenuAction { TEST, LOGOUT }

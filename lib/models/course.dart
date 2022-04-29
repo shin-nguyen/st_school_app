@@ -35,3 +35,72 @@ class Course {
     );
   }
 }
+
+List<Course> courses = [
+  Course(
+      id: 1,
+      name: 'name',
+      description: 'description',
+      lecturer: 'lecturer',
+      language: 'language',
+      price: 122,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1638543961/st-school/images/js.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'name',
+      description: 'description',
+      lecturer: 'lecturer',
+      language: 'language',
+      price: 122,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1638543915/st-school/images/py.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'name',
+      description: 'description',
+      lecturer: 'lecturer',
+      language: 'language',
+      price: 122,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'name',
+      description: 'description',
+      lecturer: 'lecturer',
+      language: 'language',
+      price: 122,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'name',
+      description: 'description',
+      lecturer: 'lecturer',
+      language: 'language',
+      price: 122,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'name',
+      description: 'description',
+      lecturer: 'lecturer',
+      language: 'language',
+      price: 122,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png",
+      subTotal: 1,
+      videoTotal: 1)
+];

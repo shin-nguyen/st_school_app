@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class LearningPage extends StatefulWidget {
   const LearningPage({Key? key}) : super(key: key);
 
+  static const routeName = '/learning';
+
   @override
   State<LearningPage> createState() => _LearningPageState();
 }
@@ -10,6 +12,6 @@ class LearningPage extends StatefulWidget {
 class _LearningPageState extends State<LearningPage> {
   @override
   Widget build(BuildContext context) {
-    return Text("Hi");
+    return Text("Hiiiiiiiiiiiiiiii");
   }
 }

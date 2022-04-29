@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/providers/courses.dart';
-import 'main_page.dart';
+import 'package:st_school_app/screens/home/main_page.dart';
+import 'home/main_page.dart';
 
 // import '../widgets/app_drawer.dart';
 // import '../widgets/products_grid.dart';

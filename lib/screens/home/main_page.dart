@@ -1,13 +1,13 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
-import 'package:st_school_app/screens/home_page.dart';
-import 'package:st_school_app/screens/learning_page.dart';
-import 'package:st_school_app/screens/profile/profile_page.dart';
-import 'package:st_school_app/screens/setting/setting_page.dart';
+import 'package:st_school_app/screens/home/home_page.dart';
+import 'package:st_school_app/screens/home/my-courses/my-courses-page.dart';
+import 'package:st_school_app/screens/home/profile/profile_page.dart';
+import 'package:st_school_app/screens/home/setting/setting_page.dart';
 
 class MainPage extends StatefulWidget {
-  // const MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
   static const routeName = '/home';
 
   @override
@@ -16,8 +16,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   List pages = [
-    HomePage(),
-    const LearningPage(),
+    const HomePage(),
+    const MyCoursesPage(),
     ProfilePage(),
     SettingPage(),
   ];
@@ -35,25 +35,25 @@ class _MainPageState extends State<MainPage> {
         }),
         items: [
           BottomNavyBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
+              icon: const Icon(Icons.home),
+              title: const Text('Home'),
               activeColor: kpink,
               inactiveColor: Colors.grey[300]),
           BottomNavyBarItem(
-            icon: Icon(Icons.auto_stories),
-            title: Text('Learning'),
+            icon: const Icon(Icons.auto_stories),
+            title: const Text('Learning'),
             inactiveColor: Colors.grey[300],
             activeColor: kpink,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
+            icon: const Icon(Icons.person),
+            title: const Text('Profile'),
             inactiveColor: Colors.grey[300],
             activeColor: kpink,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
+            icon: const Icon(Icons.settings),
+            title: const Text('Settings'),
             inactiveColor: Colors.grey[300],
             activeColor: kpink,
           ),

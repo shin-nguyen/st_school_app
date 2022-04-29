@@ -42,8 +42,8 @@ class Sorting extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10),
-          child:
-              Container(height: 20, child: Image.asset("assets/icon/sort.png")),
+          child: Container(
+              height: 20, child: Image.asset("assets/icons/sort.png")),
         ),
       ],
     );

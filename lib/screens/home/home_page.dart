@@ -1,4 +1,3 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/widgets/appbar.dart';
@@ -6,14 +5,13 @@ import 'package:st_school_app/widgets/category_list.dart';
 import 'package:st_school_app/widgets/sorting.dart';
 
 class HomePage extends StatefulWidget {
-  // const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +19,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             CustomeAppBar(),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
@@ -79,7 +77,6 @@ class _HomePageState extends State<HomePage> {
                     height: 20,
                   ),
                   //category list
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -106,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   ),
 //we can not use gridview inside column
 //use shrinkwrap and physical scroll
-                  CategoryList(),
+                  const CategoryList(),
                   const SizedBox(
                     height: 20,
                   ),
