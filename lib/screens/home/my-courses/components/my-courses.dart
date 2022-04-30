@@ -36,6 +36,7 @@ class CourseCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
+                height: 320,
                 decoration: new BoxDecoration(
                     color: Color.fromARGB(255, 248, 247, 247)),
                 child: Column(
@@ -80,6 +81,7 @@ class CourseCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // SizedBox(height: 10),
                     Padding(
                         padding:
                             EdgeInsets.only(left: 10.0, top: 10.0, right: 10),

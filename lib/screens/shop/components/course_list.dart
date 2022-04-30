@@ -35,6 +35,7 @@ class CourseCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
+                height: 350,
                 decoration: new BoxDecoration(
                     color: Color.fromARGB(255, 255, 255, 255)),
                 child: Column(
@@ -47,7 +48,7 @@ class CourseCard extends StatelessWidget {
                         child: Positioned(
                             child: Container(
                           width: double.maxFinite,
-                          height: 130,
+                          height: 120,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage(course.image),
@@ -56,7 +57,7 @@ class CourseCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 10),
+                      padding: const EdgeInsets.only(left: 20.0, top: 5),
                       child: SizedBox(
                         width: 200.0,
                         child: Text(
@@ -151,7 +152,7 @@ class CourseCard extends StatelessWidget {
                           style: TextStyle(
                               color: Color.fromARGB(255, 8, 8, 8),
                               fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                              fontSize: 18),
                         ),
                       ),
                     ),
