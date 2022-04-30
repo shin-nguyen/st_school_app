@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 import '../constants/base_constants.dart' as Constants;
 import 'package:jwt_decode/jwt_decode.dart';
@@ -57,7 +57,7 @@ class Auth with ChangeNotifier {
 
       _autoLogout();
       notifyListeners();
-      final prefs = await SharedPreferences.getInstance();
+      // final prefs = await SharedPreferences.getInstance();
       final userData = json.encode(
         {
           'token': _token,
@@ -66,7 +66,7 @@ class Auth with ChangeNotifier {
         },
       );
       if (userData != null) {
-        prefs.setString('userData', userData);
+        // prefs.setString('userData', userData);
       }
     } catch (error) {
       rethrow;
@@ -83,27 +83,27 @@ class Auth with ChangeNotifier {
   }
 
   Future<bool> tryAutoLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userData')) {
-      return false;
-    }
+    // final prefs = await SharedPreferences.getInstance();
+    // if (!prefs.containsKey('userData')) {
+    //   return false;
+    // }
 
-    final extractedUserData =
-        jsonDecode(prefs.getString('userData')) as Map<String, Object>;
+    // final extractedUserData =
+    //     jsonDecode(prefs.getString('userData')) as Map<String, Object>;
 
-    final expiryDate =
-        DateTime.parse(extractedUserData['expiryDate'].toString());
+    // final expiryDate =
+    //     DateTime.parse(extractedUserData['expiryDate'].toString());
 
-    if (expiryDate.isBefore(DateTime.now())) {
-      return false;
-    }
+    // if (expiryDate.isBefore(DateTime.now())) {
+    //   return false;
+    // }
 
-    _token = extractedUserData['token'].toString();
-    _userId = extractedUserData['userId'].toString();
-    _expiryDate = expiryDate;
+    // _token = extractedUserData['token'].toString();
+    // _userId = extractedUserData['userId'].toString();
+    // _expiryDate = expiryDate;
 
-    notifyListeners();
-    _autoLogout();
+    // notifyListeners();
+    // _autoLogout();
     return true;
   }
 
@@ -116,9 +116,9 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
+    // final prefs = await SharedPreferences.getInstance();
     // prefs.remove('userData');
-    prefs.clear();
+    // prefs.clear();
   }
 
   void _autoLogout() {

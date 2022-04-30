@@ -49,10 +49,9 @@ class CourseCard extends StatelessWidget {
                             child: Container(
                           width: double.maxFinite,
                           height: 130,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png"),
+                                  image: NetworkImage(course.image),
                                   fit: BoxFit.cover)),
                         )),
                       ),

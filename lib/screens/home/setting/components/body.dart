@@ -43,8 +43,8 @@ class Body extends StatelessWidget {
             text: "Log out",
             icon: "assets/icons/Log out.svg",
             press: () {
-              final auth = Provider.of<Auth>(context, listen: false);
-              auth.logout();
+              // final auth = Provider.of<Auth>(context, listen: false);
+              // auth.logout();
 
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/');
