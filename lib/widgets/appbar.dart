@@ -19,9 +19,10 @@ class CustomeAppBar extends StatelessWidget {
               color: kblue,
             )),
         IconButton(
-            onPressed: () {},
+            onPressed: () =>
+                {Navigator.pushReplacementNamed(context, "/checkout")},
             icon: const Icon(
-              Icons.search_rounded,
+              Icons.shopping_cart_outlined,
             ))
       ],
     );
