@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/providers/courses.dart';
 import 'package:st_school_app/providers/user.dart';
-import 'package:st_school_app/screens/course_overview_screen.dart';
-import 'package:st_school_app/screens/detail_page.dart';
-import 'package:st_school_app/screens/shop_page.dart';
-import 'package:st_school_app/screens/login.dart';
-import 'package:st_school_app/screens/main_page.dart';
-import 'package:st_school_app/screens/sign_in/sign_in_screen.dart';
-import 'package:st_school_app/screens/splash_screen.dart';
+import 'package:st_school_app/routes.dart';
+import 'package:st_school_app/screens/login/login.dart';
 import './providers/auth.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -45,24 +42,19 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
             ),
             initialRoute: '/',
-            home: auth.isAuth
-                ? CoursesOverviewScreen()
-                : FutureBuilder(
-                    future: auth.tryAutoLogin(),
-                    builder: (ctx, authResultSnapshot) =>
-                        // authResultSnapshot.connectionState ==
-                        //         ConnectionState.waiting
-                        //     ? SplashScreen()
-                        // :
-                        AuthScreen(),
-                  ),
-            routes: {
-              MainPage.routeName: (ctx) => MainPage(),
-              // '/home': (context) => const MainPage(),
-              // '/login': (context) => const LoginPage(),
-              '/shop': (context) => ShopPage(),
-              '/detail/1': (context) => DetailPage()
-            },
+            // home: auth.isAuth
+            //     ? CoursesOverviewScreen()
+            //     : FutureBuilder(
+            //         future: auth.tryAutoLogin(),
+            //         builder: (ctx, authResultSnapshot) =>
+            //             // authResultSnapshot.connectionState ==
+            //             //         ConnectionState.waiting
+            //             //     ? SplashScreen()
+            //             // :
+            //             AuthScreen(),
+            //       ),
+            home: const LoginPage(),
+            routes: routes,
           ),
         ));
   }

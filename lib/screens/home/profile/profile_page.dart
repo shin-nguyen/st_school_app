@@ -18,18 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          Positioned(
-              left: 15,
-              top: 15,
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () => {Navigator.pop(context)},
-                      icon: Icon(Icons.arrow_back),
-                      color: Color.fromARGB(255, 10, 10, 10))
-                ],
-              )),
-          const SizedBox(height: 10),
+          const SizedBox(height: 30),
           ProfileImage(
             imagePath:
                 "https://scontent.fpnh22-4.fna.fbcdn.net/v/t1.18169-9/14993308_1930517297175926_3226462828616400930_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=NA-ztCO7hSIAX9khhQy&_nc_ht=scontent.fpnh22-4.fna&oh=00_AT9MO0aRRvA5UzbUAIThwBC3YKG0iHgX-FpGY05Z3EXv8w&oe=6288AAE3",

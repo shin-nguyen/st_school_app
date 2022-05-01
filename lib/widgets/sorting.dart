@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../constants/system_constants.dart';
 
 class Sorting extends StatelessWidget {
-  // const Sorting({
-  //   Key? key,
-  // }) : super(key: key);
+  const Sorting({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class Sorting extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10),
-          child:
-              Container(height: 20, child: Image.asset("assets/icon/sort.png")),
+          child: Container(
+              height: 20, child: Image.asset("assets/icons/sort.png")),
         ),
       ],
     );

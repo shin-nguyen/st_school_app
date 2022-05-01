@@ -35,3 +35,66 @@ class Course {
     );
   }
 }
+
+List<Course> courses = [
+  Course(
+      id: 1,
+      name: 'HTML Course',
+      description:
+          'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
+      lecturer: 'Kari Noman',
+      language: 'English',
+      price: 122,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'Learn CSS | Self-paced',
+      description:
+          'CSS is the language we use to style an HTML document. CSS describes how HTML elements should be displayed.',
+      lecturer: 'Human Lily',
+      language: 'English',
+      price: 90,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1635049169/st-school/images/css.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'Learn SQL',
+      description:
+          'SQL is a standard language for storing, manipulating and retrieving data in databases.',
+      lecturer: 'Kai Akatsuki',
+      language: 'Japan',
+      price: 200,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1632236549/st-school/images/sql.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'Learn Java',
+      description:
+          'Java is used to develop mobile apps, web apps, desktop apps, games and much more.',
+      lecturer: 'Hoang Minh Long',
+      language: 'Vietnamese',
+      price: 99,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+  Course(
+      id: 1,
+      name: 'Learn Bootstrap 3',
+      description:
+          'Bootstrap is the most popular HTML, CSS, and JavaScript framework for developing responsive, mobile-first websites.',
+      lecturer: 'ST Team',
+      language: 'English',
+      price: 50,
+      image:
+          "https://res.cloudinary.com/qscloud/image/upload/v1638544101/st-school/images/bootrap3.png.png",
+      subTotal: 1,
+      videoTotal: 1),
+];
