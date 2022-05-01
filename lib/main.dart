@@ -22,13 +22,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Auth(),
           ),
-          ChangeNotifierProxyProvider<Auth, Courses>(
-            create: (context) => Courses("", "", []),
-            update: (_, auth, previousProducts) => Courses(
-                auth.token!,
-                auth.userId!,
-                previousProducts == null ? [] : previousProducts.getCourses),
-          ),
+          // ChangeNotifierProxyProvider<Auth, Courses>(
+          //   create: (context) => Courses("", "", []),
+          //   update: (_, auth, previousProducts) => Courses(
+          //       auth.token!),
+          // ),
           ChangeNotifierProxyProvider<Auth, User>(
             create: (context) => User(
                 id: 0, address: "", firstName: "", lastName: "", phone: ""),
@@ -62,8 +60,8 @@ class MyApp extends StatelessWidget {
               MainPage.routeName: (ctx) => MainPage(),
               // '/home': (context) => const MainPage(),
               // '/login': (context) => const LoginPage(),
-              // '/shop': (context) => const ShopPage(),
-              // '/detail/1': (context) => const DetailPage()
+              '/shop': (context) => ShopPage(),
+              '/detail/1': (context) => DetailPage()
             },
           ),
         ));

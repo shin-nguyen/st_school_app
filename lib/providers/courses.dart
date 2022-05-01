@@ -42,12 +42,17 @@ class Courses with ChangeNotifier {
     //       videoTotal: 1)
     //
   ];
+  List<Course> _orders = [];
+
   String authToken;
-  String userId;
-  Courses(this.authToken, this.userId, this._items);
+  Courses(this.authToken, this._items);
 
   List<Course> get getCourses {
     return [..._items];
+  }
+
+  List<Course> get getOrder {
+    return [..._orders];
   }
 
   Course findById(String id) {
@@ -55,7 +60,8 @@ class Courses with ChangeNotifier {
   }
 
   Future<void> fetchAndSetCourses([bool filterByUser = false]) async {
-    final filterString = filterByUser ? '_' : '/api/v1/course/list';
+    final filterString =
+        filterByUser ? '/api/v1/course/purchased' : '/api/v1/course/list';
 
     var url = Uri.parse(Constants.BASE_URL + filterString);
     try {
@@ -81,7 +87,12 @@ class Courses with ChangeNotifier {
           videoTotal: 1,
         ));
       });
-      _items = courses;
+
+      if (filterByUser) {
+        _items = courses;
+      } else {
+        _orders = courses;
+      }
 
       notifyListeners();
     } catch (error) {
@@ -89,8 +100,8 @@ class Courses with ChangeNotifier {
     }
   }
 
-  // void addCourse() {
-  //   // _items.add(value);
-  //   notifyListeners();
-  // }
+  void clear() {
+    _items = [];
+    notifyListeners();
+  }
 }
