@@ -18,10 +18,10 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List pages = [
     const HomePage(),
-    SearchsPage(),
+    const SearchsPage(),
     const MyCoursesPage(),
-    ProfilePage(),
-    SettingPage(),
+    const ProfilePage(),
+    const SettingPage(),
   ];
   int _selectedIndex = 0;
 

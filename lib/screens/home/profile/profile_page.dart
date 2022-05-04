@@ -5,6 +5,8 @@ import 'package:st_school_app/widgets/button.dart';
 import 'package:st_school_app/widgets/profile_number.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
