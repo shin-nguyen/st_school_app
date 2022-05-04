@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:st_school_app/models/course.dart';
+import 'package:st_school_app/screens/home/home_page.dart';
+import 'package:st_school_app/screens/home/profile/profile_page.dart';
+import 'package:st_school_app/screens/payment/payment_page.dart';
 import 'package:st_school_app/utils/app_color.dart';
 import 'package:st_school_app/widgets/text_size.dart';
 import 'package:pay/pay.dart';
@@ -121,18 +125,36 @@ class OrderCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        GooglePayButton(
-                          width: 300,
-                          paymentConfigurationAsset: 'assets/data/gpay.json',
-                          paymentItems: _paymentItems,
-                          style: GooglePayButtonStyle.black,
-                          type: GooglePayButtonType.pay,
-                          margin: const EdgeInsets.only(top: 15.0),
-                          onPaymentResult: onGooglePayResult,
-                          loadingIndicator: const Center(
-                            child: CircularProgressIndicator(),
+                        Container(
+                          width: 80,
+                          height: 35,
+                          padding: EdgeInsets.only(bottom: 10, top: 0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: AppColor.selectBackground),
+                          child: Center(
+                            child: IconButton(
+                                onPressed: () => {
+                                      Navigator.pushNamed(
+                                          context, PaymentPage.routeName)
+                                    },
+                                icon: const Icon(Icons.check_outlined),
+                                color: AppColor.selectColor),
                           ),
                         ),
+                        // GooglePayButton(
+                        //   width: 300,
+                        //   paymentConfigurationAsset: 'assets/data/gpay.json',
+                        //   paymentItems: _paymentItems,
+                        //   style: GooglePayButtonStyle.black,
+                        //   type: GooglePayButtonType.pay,
+                        //   margin: const EdgeInsets.only(top: 15.0),
+                        //   onPaymentResult: onGooglePayResult,
+                        //   loadingIndicator: const Center(
+                        //     child: CircularProgressIndicator(),
+                        //   ),
+                        // ),
+
                         Expanded(child: Container()),
                         Text(
                           "\$1248.00",
