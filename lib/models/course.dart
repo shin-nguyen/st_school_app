@@ -48,7 +48,7 @@ List<Course> courses = [
       image:
           "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
       subTotal: 1,
-      videoTotal: 1),
+      videoTotal: 20),
   Course(
       id: 1,
       name: 'Learn CSS | Self-paced',
@@ -60,7 +60,7 @@ List<Course> courses = [
       image:
           "https://res.cloudinary.com/qscloud/image/upload/v1635049169/st-school/images/css.png.png",
       subTotal: 1,
-      videoTotal: 1),
+      videoTotal: 12),
   Course(
       id: 1,
       name: 'Learn SQL',
@@ -72,7 +72,7 @@ List<Course> courses = [
       image:
           "https://res.cloudinary.com/qscloud/image/upload/v1632236549/st-school/images/sql.png.png",
       subTotal: 1,
-      videoTotal: 1),
+      videoTotal: 12),
   Course(
       id: 1,
       name: 'Learn Java',
@@ -84,7 +84,7 @@ List<Course> courses = [
       image:
           "https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png",
       subTotal: 1,
-      videoTotal: 1),
+      videoTotal: 53),
   Course(
       id: 1,
       name: 'Learn Bootstrap 3',
@@ -96,5 +96,5 @@ List<Course> courses = [
       image:
           "https://res.cloudinary.com/qscloud/image/upload/v1638544101/st-school/images/bootrap3.png.png",
       subTotal: 1,
-      videoTotal: 1),
+      videoTotal: 4),
 ];

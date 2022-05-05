@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/course.dart';
 import 'package:st_school_app/screens/learning/learning_page.dart';
+import 'package:st_school_app/widgets/custom_heading.dart';
+import 'package:st_school_app/widgets/custom_my_courses_card.dart';
 
 class MyCourseList extends StatelessWidget {
   const MyCourseList({
@@ -9,98 +12,46 @@ class MyCourseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        shrinkWrap: true,
-        physics: const ScrollPhysics(),
-        itemCount: courses.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 0.85),
-        itemBuilder: (context, index) => CourseCard(
-              course: courses[index],
-            ));
-  }
-}
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(appPadding),
+      child: Column(children: [
+        const SizedBox(height: spacer - 1.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            const CustomHeading(
+                title: 'My Courses',
+                subTitle: 'Let\'s continue, shall we?',
+                color: secondary),
+            Text(
+              5.toString() + ' Courses',
+              style: const TextStyle(color: secondary, fontSize: 15.0),
+            ),
+          ],
+        ),
+        const SizedBox(height: spacer),
+        Column(
+          children: List.generate(courses.length, (index) {
+            var course = courses[index];
 
-class CourseCard extends StatelessWidget {
-  const CourseCard({
-    Key? key,
-    required this.course,
-  }) : super(key: key);
-  final Course course;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-            onTap: () => Navigator.pushNamed(context, LearningPage.routeName),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Container(
-                height: 320,
-                decoration: new BoxDecoration(
-                    color: Color.fromARGB(255, 248, 247, 247)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: ClipRRect(
-                        // borderRadius: BorderRadius.circular(10.0),
-                        child: Positioned(
-                            child: Container(
-                          width: double.maxFinite,
-                          height: 130,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(course.image),
-                                  fit: BoxFit.cover)),
-                        )),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 10),
-                      child: SizedBox(
-                        width: 200.0,
-                        child: Text(
-                          course.name,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 31, 1, 1),
-                            fontSize: 18.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 5.0),
-                      child: Text(
-                        course.lecturer,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 102, 102, 102),
-                          fontSize: 11.0,
-                        ),
-                      ),
-                    ),
-                    // SizedBox(height: 10),
-                    Padding(
-                        padding:
-                            EdgeInsets.only(left: 10.0, top: 10.0, right: 10),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const LinearProgressIndicator(
-                                minHeight: 8,
-                                backgroundColor:
-                                    Color.fromARGB(255, 224, 225, 225),
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.red),
-                                value: 0.10,
-                              ),
-                              Text('${(0.10 * 100).round()}%')
-                            ])),
-                  ],
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: GestureDetector(
+                onTap: () =>
+                    Navigator.pushNamed(context, LearningPage.routeName),
+                child: CustomMyCoursesCard(
+                  image: course.image,
+                  title: course.description,
+                  instructor: course.lecturer,
+                  videoAmount: "12",
+                  percentage: 30.0,
                 ),
               ),
-            )));
+            );
+          }),
+        ),
+      ]),
+    );
   }
 }

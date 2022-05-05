@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/screens/home/my-courses/components/my-courses.dart';
-import 'package:st_school_app/widgets/appbar.dart';
 
 class MyCoursesPage extends StatefulWidget {
   const MyCoursesPage({Key? key}) : super(key: key);
@@ -12,17 +12,10 @@ class MyCoursesPage extends StatefulWidget {
 class _MyCoursesPageState extends State<MyCoursesPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            decoration:
-                const BoxDecoration(color: Color.fromARGB(255, 230, 230, 230)),
-            child: ListView(children: [
-              CustomeAppBar(),
-              const SizedBox(
-                height: 20,
-              ),
-              // Sorting(),
-              MyCourseList()
-            ])));
+    return const Scaffold(
+      backgroundColor: background,
+      extendBodyBehindAppBar: true,
+      body: MyCourseList(),
+    );
   }
 }
