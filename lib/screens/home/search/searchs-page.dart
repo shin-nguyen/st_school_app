@@ -20,11 +20,10 @@ class _SearchsPageState extends State<SearchsPage> {
       // backgroundColor: AppColor.idColor,
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.0),
+        preferredSize: const Size.fromHeight(0.0),
         child: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.transparent,
-          brightness: Brightness.light,
         ),
       ),
       body: getBody(),
@@ -56,7 +55,7 @@ class _SearchsPageState extends State<SearchsPage> {
           ),
           const SizedBox(height: spacer),
 
-          //title
+          //Top Searches
           const CustomTitle(title: 'Top Searches', extend: false),
           const SizedBox(height: smallSpacer),
 
@@ -94,8 +93,8 @@ class _SearchsPageState extends State<SearchsPage> {
               );
             }),
           ),
-
-          //title
+          const SizedBox(height: smallSpacer),
+          //Categories
           const CustomTitle(title: 'Categories', extend: false),
           const SizedBox(height: smallSpacer),
 
