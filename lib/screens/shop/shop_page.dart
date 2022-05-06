@@ -17,9 +17,9 @@ class _ShopPageState extends State<ShopPage> {
         body: Container(
             decoration:
                 const BoxDecoration(color: Color.fromARGB(255, 230, 230, 230)),
-            child: ListView(children: [
+            child: ListView(children: const [
               CustomeAppBar(),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               // Sorting(),

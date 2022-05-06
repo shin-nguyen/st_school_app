@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:st_school_app/screens/learning/components/video.dart';
 import 'package:st_school_app/widgets/app_text.dart';
-
 import 'package:st_school_app/widgets/appbar.dart';
-import 'package:st_school_app/widgets/no_account_text.dart';
 import 'package:video_player/video_player.dart';
 
 class LearningPage extends StatefulWidget {
@@ -27,7 +25,7 @@ class _LearningPageState extends State<LearningPage> with RestorationMixin {
             height: double.maxFinite,
             child: Stack(children: [
               const CustomeAppBar(),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Positioned(
                   left: 15,
                   right: 15,

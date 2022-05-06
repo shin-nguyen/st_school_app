@@ -36,7 +36,7 @@ class Course {
   }
 }
 
-List<Course> courses = [
+const List<Course> courses = [
   Course(
       id: 1,
       name: 'HTML Course',

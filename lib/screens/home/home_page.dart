@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/models/course.dart';
 import 'package:st_school_app/widgets/appbar.dart';
 import 'package:st_school_app/widgets/category_list.dart';
-import 'package:st_school_app/widgets/sorting.dart';
+import 'package:st_school_app/widgets/custom_category_card.dart';
+import 'package:st_school_app/widgets/custom_course_card.dart';
+import 'package:st_school_app/widgets/custom_promotion_card.dart';
+import 'package:st_school_app/widgets/custom_title.dart';
+import 'package:st_school_app/widgets/custome_search_field.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: ListView(
           children: [
-            CustomeAppBar(),
+            const CustomeAppBar(),
             const SizedBox(
               height: 20,
             ),
@@ -69,13 +74,18 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
+                  //search
+                  const SizedBox(height: spacer),
+                  const CustomSearchField(
+                    hintField: 'Try "Web Design"',
+                    backgroundColor: background,
                   ),
-                  //sorting
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: spacer - 30.0),
+                  //categoy card
+                  // const CustomCategoryCard(),
+                  //promotion card
+                  const CustomPromotionCard(),
+                  const SizedBox(height: spacer),
                   //category list
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,14 +93,14 @@ class _HomePageState extends State<HomePage> {
                       const Text(
                         "Categories",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       InkWell(
                         onTap: () => {Navigator.pushNamed(context, '/shop')},
                         child: const Text(
-                          "See All",
+                          "See More",
                           style: TextStyle(fontSize: 16, color: kblue),
                         ),
                       ),
@@ -101,12 +111,42 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 20,
                   ),
-//we can not use gridview inside column
-//use shrinkwrap and physical scroll
+                  //we can not use gridview inside column
+                  //use shrinkwrap and physical scroll
                   const CategoryList(),
                   const SizedBox(
                     height: 20,
                   ),
+                  const CustomTitle(title: 'Design Courses'),
+                  const SizedBox(height: smallSpacer),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.only(
+                      left: appPadding,
+                      right: appPadding - 10.0,
+                    ),
+                    child: Wrap(
+                      children: List.generate(courses.length, (index) {
+                        var data = courses[index];
+
+                        return Padding(
+                          padding:
+                              const EdgeInsets.only(right: 15.0, bottom: 20.0),
+                          child: GestureDetector(
+                            child: CustomCourseCardExpand(
+                              thumbNail: data.image,
+                              videoAmount: data.videoTotal.toString(),
+                              title: data.description,
+                              userProfile:
+                                  'https://images.unsplash.com/photo-1601582589907-f92af5ed9db8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80',
+                              userName: data.lecturer,
+                              price: data.price.toString(),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  )
                 ],
               ),
             )
