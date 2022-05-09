@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/account_menu_json.dart';
+import 'package:st_school_app/providers/auth_notifier.dart';
 import 'package:st_school_app/widgets/custom_button_box.dart';
 import 'package:st_school_app/widgets/custom_place_holder.dart';
 import 'package:st_school_app/widgets/custom_title.dart';
@@ -52,7 +54,12 @@ class Body extends StatelessWidget {
 
           const SizedBox(height: spacer),
           GestureDetector(
-            onTap: () async {},
+            onTap: () {
+              final auth = Provider.of<AuthNotifier>(context, listen: false);
+              auth.logout();
+
+              Navigator.of(context).pushReplacementNamed('/');
+            },
             child: const CustomButtonBox(title: 'Log out'),
           ),
           // SettingMenu(

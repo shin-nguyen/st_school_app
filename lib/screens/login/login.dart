@@ -1,8 +1,8 @@
-// ignore_for_file: unnecessary_new, unnecessary_const
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:st_school_app/providers/auth_notifier.dart';
 import 'package:st_school_app/screens/forgot_password/forgot_password_screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -181,6 +181,9 @@ class _LoginPageState extends State<LoginPage>
   }
 
   Widget _buildSignIn(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey();
+    final _passwordController = TextEditingController();
+
     return Container(
       padding: const EdgeInsets.only(top: 23.0),
       child: Column(
@@ -195,7 +198,7 @@ class _LoginPageState extends State<LoginPage>
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: Container(
+                child: SizedBox(
                   width: 300.0,
                   height: 190.0,
                   child: Column(
@@ -303,7 +306,7 @@ class _LoginPageState extends State<LoginPage>
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () => {Navigator.pushNamed(context, '/home')},
+                    onPressed: _submit,
                   )),
             ],
           ),
@@ -413,6 +416,28 @@ class _LoginPageState extends State<LoginPage>
         ],
       ),
     );
+  }
+
+  Future<void> _submit() async {
+    try {
+      // Log user in
+      await Provider.of<AuthNotifier>(context, listen: false)
+          .login(LoginRequestModel("thongchuthanh2000@gmail.com", "123456"));
+    } catch (error) {
+      var errorMessage = 'Authentication failed';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password.';
+      }
+      // _showErrorDialog(errorMessage);
+    }
   }
 
   Widget _buildSignUp(BuildContext context) {

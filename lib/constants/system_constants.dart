@@ -65,3 +65,5 @@ const Color textBlack = Color(0xFF000000);
 const Color grey = Color(0xFF707070);
 
 const String assetImg = 'assets/images/';
+
+const String baseUrl = "http://192.168.1.26:8080";

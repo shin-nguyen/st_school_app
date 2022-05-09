@@ -18,6 +18,15 @@ final List<Category> categoryJson = [
   Category('IT & Software', 'assets/images/bag_icon.svg'),
 ];
 
+final List<Category> categoryJsonTwo = [
+  Category('Photography & Video', 'assets/images/bag_icon.svg'),
+  Category('Marketing', 'assets/images/bag_icon.svg'),
+  Category('Lifestyle', 'assets/images/brush_icon.svg'),
+  Category('Office Productivity', 'assets/images/bag_icon.svg'),
+  Category('Music', 'assets/images/bag_icon.svg'),
+  Category('Personal Development', 'assets/images/bag_icon.svg'),
+];
+
 final List<Category> homePageCategoryJson = [
   Category('Code', 'assets/images/code_icon.svg'),
   Category('Design', 'assets/images/brush_icon.svg'),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:st_school_app/providers/courses.dart';
-import 'package:st_school_app/providers/user.dart';
+import 'package:st_school_app/models/user.dart';
+import 'package:st_school_app/providers/auth_notifier.dart';
+import 'package:st_school_app/providers/cart_notifier.dart';
+import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/routes.dart';
+import 'package:st_school_app/screens/home/main_page.dart';
 import 'package:st_school_app/screens/login/login.dart';
-import './providers/auth.dart';
 
 void main() => runApp(const MyApp());
 
@@ -17,43 +20,30 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
-            value: Auth(),
+            value: AuthNotifier(),
           ),
-          // ChangeNotifierProxyProvider<Auth, Courses>(
-          //   create: (context) => Courses("", "", []),
-          //   update: (_, auth, previousProducts) => Courses(
-          //       auth.token!),
-          // ),
-          ChangeNotifierProxyProvider<Auth, User>(
-            create: (context) => User(
-                id: 0, address: "", firstName: "", lastName: "", phone: ""),
-            update: (_, auth, previousUser) => User(
-                id: previousUser!.id,
-                firstName: previousUser.firstName,
-                lastName: previousUser.lastName,
-                phone: previousUser.phone,
-                address: previousUser.address),
+          ChangeNotifierProvider.value(
+            value: CartNotifier(),
+          ),
+          ChangeNotifierProxyProvider<AuthNotifier, CoursesNotifier>(
+            create: (context) => CoursesNotifier([]),
+            update: (_, auth, previousCourses) => CoursesNotifier(
+                previousCourses == null ? [] : previousCourses.getCourses),
+          ),
+          ChangeNotifierProxyProvider<AuthNotifier, UserNotifier>(
+            create: (context) => UserNotifier(User.empty()),
+            update: (_, auth, previousUser) =>
+                UserNotifier(previousUser!.getUser),
           ),
         ],
-        child: Consumer<Auth>(
+        child: Consumer<AuthNotifier>(
           builder: (ctx, auth, _) => MaterialApp(
             title: 'ST School',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
             initialRoute: '/',
-            // home: auth.isAuth
-            //     ? CoursesOverviewScreen()
-            //     : FutureBuilder(
-            //         future: auth.tryAutoLogin(),
-            //         builder: (ctx, authResultSnapshot) =>
-            //             // authResultSnapshot.connectionState ==
-            //             //         ConnectionState.waiting
-            //             //     ? SplashScreen()
-            //             // :
-            //             AuthScreen(),
-            //       ),
-            home: const LoginPage(),
+            home: auth.isAuth ? const MainPage() : const LoginPage(),
             routes: routes,
           ),
         ));

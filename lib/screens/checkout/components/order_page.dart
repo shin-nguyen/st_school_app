@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:st_school_app/models/course.dart';
-import 'package:st_school_app/screens/home/home_page.dart';
+import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/screens/home/home-page/home_page.dart';
 import 'package:st_school_app/screens/home/profile/profile_page.dart';
 import 'package:st_school_app/screens/payment/payment_page.dart';
 import 'package:st_school_app/utils/app_color.dart';
@@ -20,13 +22,14 @@ class OrderList extends StatelessWidget {
         left: 0,
         right: 0,
         bottom: 0,
-        child: ListView.builder(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            itemCount: courses.length,
-            itemBuilder: (context, index) => OrderCard(
-                  course: courses[index],
-                )));
+        child: Consumer<CoursesNotifier>(
+            builder: (ctx, data, child) => ListView.builder(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemCount: data.getCourses.length,
+                itemBuilder: (context, index) => OrderCard(
+                      course: data.getCourses[index],
+                    ))));
   }
 }
 

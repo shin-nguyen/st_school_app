@@ -1,7 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
-import 'package:st_school_app/screens/home/home_page.dart';
+import 'package:st_school_app/screens/home/home-page/home_page.dart';
 import 'package:st_school_app/screens/home/my-courses/my-courses-page.dart';
 import 'package:st_school_app/screens/home/profile/profile_page.dart';
 import 'package:st_school_app/screens/home/setting/setting_page.dart';

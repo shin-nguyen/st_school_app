@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/course.dart';
+import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/screens/learning/learning_page.dart';
 import 'package:st_school_app/widgets/custom_heading.dart';
 import 'package:st_school_app/widgets/custom_my_courses_card.dart';
@@ -32,24 +34,27 @@ class MyCourseList extends StatelessWidget {
         ),
         const SizedBox(height: spacer),
         Column(
-          children: List.generate(courses.length, (index) {
-            var course = courses[index];
-
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, LearningPage.routeName),
-                child: CustomMyCoursesCard(
-                  image: course.image,
-                  title: course.description,
-                  instructor: course.lecturer,
-                  videoAmount: "12",
-                  percentage: 30.0,
-                ),
-              ),
-            );
-          }),
+          children: [
+            Consumer<CoursesNotifier>(
+                builder: (ctx, data, child) => ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemCount: data.getCourses.length,
+                    itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                                context, LearningPage.routeName),
+                            child: CustomMyCoursesCard(
+                              image: data.getCourses[index].image,
+                              title: data.getCourses[index].description,
+                              instructor: data.getCourses[index].lecturer,
+                              videoAmount: "12",
+                              percentage: 30.0,
+                            ),
+                          ),
+                        )))
+          ],
         ),
       ]),
     );

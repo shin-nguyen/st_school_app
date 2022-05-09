@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:st_school_app/models/course.dart';
+import 'package:st_school_app/providers/courses_notifier.dart';
 
 class CourseList extends StatelessWidget {
   const CourseList({
@@ -8,15 +10,16 @@ class CourseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        shrinkWrap: true,
-        physics: const ScrollPhysics(),
-        itemCount: courses.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 0.85),
-        itemBuilder: (context, index) => CourseCard(
-              course: courses[index],
-            ));
+    return Consumer<CoursesNotifier>(
+        builder: (ctx, courses, child) => GridView.builder(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
+            itemCount: courses.getCourses.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 0.85),
+            itemBuilder: (context, index) => CourseCard(
+                  course: courses.getCourses[index],
+                )));
   }
 }
 

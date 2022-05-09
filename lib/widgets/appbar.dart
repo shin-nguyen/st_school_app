@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/system_constants.dart';
-
 class CustomeAppBar extends StatelessWidget {
   const CustomeAppBar({
     Key? key,
@@ -10,14 +8,8 @@ class CustomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        IconButton(
-            onPressed: () => {Navigator.pop(context)},
-            icon: const Icon(
-              Icons.dashboard_rounded,
-              color: kblue,
-            )),
         IconButton(
             onPressed: () =>
                 {Navigator.pushReplacementNamed(context, "/checkout")},

@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:st_school_app/providers/courses.dart';
+import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/screens/home/main_page.dart';
 import 'home/main_page.dart';
-
-// import '../widgets/app_drawer.dart';
-// import '../widgets/products_grid.dart';
-// import '../widgets/badge.dart';
-// import '../providers/cart.dart';
-// import './cart_screen.dart';
-// import '../providers/products.dart';
 
 enum FilterOptions {
   Favorites,
@@ -31,21 +24,21 @@ class _CoursesOverviewScreenState extends State<CoursesOverviewScreen> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<Courses>(context).fetchAndSetCourses().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     Provider.of<Courses>(context).fetchAndSetCourses().then((_) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     });
+  //   }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
