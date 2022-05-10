@@ -4,8 +4,10 @@ import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/category.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/screens/checkout/checkout_page.dart';
 import 'package:st_school_app/screens/home/home-page/components/home.dart';
+import 'package:st_school_app/screens/home/home-page/components/user_info.dart';
 import 'package:st_school_app/widgets/appbar.dart';
 import 'package:st_school_app/widgets/badge.dart';
 import 'package:st_school_app/widgets/category_list.dart';
@@ -42,6 +44,8 @@ class _HomePageState extends State<HomePage> {
           _isLoading = false;
         });
       });
+
+      Provider.of<UserNotifier>(context).getInfoByToken();
     }
 
     _isInit = false;
@@ -51,31 +55,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          Consumer<CartNotifier>(
-            builder: (_, cart, ch) => Badge(
-              child: ch,
-              value: cart.itemCount.toString(),
-              color: Colors.tealAccent,
-            ),
-            child: IconButton(
-              icon: const Icon(
-                Icons.shopping_cart,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CheckoutPage.routeName);
-              },
-            ),
-          ),
-        ],
-        backgroundColor: Colors.grey,
-      ),
       body: SafeArea(
         child: ListView(
           children: [
-            // const CustomeAppBar(),
-
+            // Create Cart
+            Consumer<CartNotifier>(
+              builder: (_, cart, ch) => Badge(
+                child: ch,
+                value: cart.itemCount.toString(),
+                color: primary,
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.shopping_cart,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CheckoutPage.routeName);
+                },
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -83,62 +81,18 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Hi Sinh Nguyen",
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            "Today is a good day\nto learn something new!",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              wordSpacing: 2.5,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                                color: kpurple,
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: Image.asset(
-                              "./assets/images/profile.png",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  const UserInfo(),
                   //search
-                  const SizedBox(height: spacer),
-                  const CustomSearchField(
-                    hintField: 'Try "Web Design"',
-                    backgroundColor: background,
-                  ),
                   const SizedBox(height: spacer - 30.0),
                   //categoy card
-                  // const CustomCategoryCard(),
-                  //promotion card
                   const CustomPromotionCard(),
+                  //promotion card
+                  // _isLoading
+                  //     ? const Center(
+                  //         child: CircularProgressIndicator(),
+                  //       )
+                  //     : const CustomPromotionCard(),
                   const SizedBox(height: spacer),
-                  //category list
 
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

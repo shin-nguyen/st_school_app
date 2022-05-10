@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/providers/auth_notifier.dart';
+import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/screens/forgot_password/forgot_password_screen.dart';
 
 class LoginPage extends StatefulWidget {

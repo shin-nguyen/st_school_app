@@ -26,9 +26,12 @@ class MyApp extends StatelessWidget {
             value: CartNotifier(),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, CoursesNotifier>(
-            create: (context) => CoursesNotifier([]),
+            create: (context) => CoursesNotifier([], [], []),
             update: (_, auth, previousCourses) => CoursesNotifier(
-                previousCourses == null ? [] : previousCourses.getCourses),
+              previousCourses == null ? [] : previousCourses.getCourses,
+              previousCourses == null ? [] : previousCourses.getPromotions,
+              previousCourses == null ? [] : previousCourses.getMyLearning,
+            ),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, UserNotifier>(
             create: (context) => UserNotifier(User.empty()),

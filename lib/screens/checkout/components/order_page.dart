@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/models/course.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
-import 'package:st_school_app/screens/home/home-page/home_page.dart';
-import 'package:st_school_app/screens/home/profile/profile_page.dart';
 import 'package:st_school_app/screens/payment/payment_page.dart';
 import 'package:st_school_app/utils/app_color.dart';
 import 'package:st_school_app/widgets/text_size.dart';

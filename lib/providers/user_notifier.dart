@@ -34,7 +34,5 @@ class UserNotifier with ChangeNotifier {
     } else {
       throw Exception('Failed to load data!');
     }
-
-    notifyListeners();
   }
 }
