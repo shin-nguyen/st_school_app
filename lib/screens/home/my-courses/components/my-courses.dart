@@ -32,7 +32,7 @@ class MyCourseList extends StatelessWidget {
               ),
             ],
           ),
-          // const SizedBox(height: spacer),
+          const SizedBox(height: spacer - 15.0),
           Column(
             children: List.generate(courses.length, (index) {
               var course = courses[index];
@@ -45,8 +45,9 @@ class MyCourseList extends StatelessWidget {
                     image: course.image,
                     title: course.description,
                     instructor: course.lecturer,
-                    videoAmount: "12",
-                    percentage: 30.0,
+                    videoAmount: course.videoTotal.toString(),
+                    percentage: course.progress.toDouble(),
+                    video: course.video,
                   ),
                 ),
               );

@@ -19,36 +19,38 @@ class CustomTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: secondary,
-            fontSize: fontSize,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        (extend)
-            ? GestureDetector(
-                onTap: () {
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   route,
-                  //   arguments: arg,
-                  // );
-                },
-                child: const Text(
-                  'See More',
-                  style: TextStyle(
-                      color: primary,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400),
-                ),
-              )
-            : Container(),
-      ],
-    );
+    return Padding(
+        padding: const EdgeInsets.only(right: 10, left: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: secondary,
+                fontSize: fontSize,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            (extend)
+                ? GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        route,
+                        arguments: arg,
+                      );
+                    },
+                    child: const Text(
+                      'See More',
+                      style: TextStyle(
+                          color: primary,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )
+                : Container(),
+          ],
+        ));
   }
 }

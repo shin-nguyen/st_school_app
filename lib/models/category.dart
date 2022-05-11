@@ -10,16 +10,16 @@ class Category {
 }
 
 final List<Category> categoryJson = [
-  Category('Code', 'assets/images/code_icon.svg'),
+  Category('Software', 'assets/images/code_icon.svg'),
+  Category('Business', 'assets/images/bag_icon.svg'),
   Category('Finance & Accounting', 'assets/images/bag_icon.svg'),
   Category('Design', 'assets/images/brush_icon.svg'),
   Category('Development', 'assets/images/bag_icon.svg'),
-  Category('Business', 'assets/images/bag_icon.svg'),
   Category('IT & Software', 'assets/images/bag_icon.svg'),
 ];
 
 final List<Category> categoryJsonTwo = [
-  Category('Photography & Video', 'assets/images/bag_icon.svg'),
+  Category('Development', 'assets/images/bag_icon.svg'),
   Category('Marketing', 'assets/images/bag_icon.svg'),
   Category('Lifestyle', 'assets/images/brush_icon.svg'),
   Category('Office Productivity', 'assets/images/bag_icon.svg'),

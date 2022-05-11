@@ -27,7 +27,7 @@ class _MyCoursesPageState extends State<MyCoursesPage> {
         _isLoading = true;
       });
 
-      Provider.of<CoursesNotifier>(context).fetchAndSetCourses().then((_) {
+      Provider.of<CoursesNotifier>(context).fetchAndSetCourses(true).then((_) {
         setState(() {
           _isLoading = false;
         });

@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 
 class CustomMyCoursesCard extends StatefulWidget {
-  const CustomMyCoursesCard({
-    Key? key,
-    required this.image,
-    required this.title,
-    required this.instructor,
-    required this.videoAmount,
-    this.percentage = 0,
-  }) : super(key: key);
+  const CustomMyCoursesCard(
+      {Key? key,
+      required this.image,
+      required this.title,
+      required this.instructor,
+      required this.videoAmount,
+      this.percentage = 0,
+      this.video = 0})
+      : super(key: key);
 
   final String image;
   final String title;
   final String instructor;
   final String videoAmount;
   final double percentage;
+  final int video;
 
   @override
   _CustomMyCoursesCardState createState() => _CustomMyCoursesCardState();
@@ -80,7 +82,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                             ),
                           ),
                           Text(
-                            '6/' + widget.videoAmount,
+                            widget.video.toString() + '/' + widget.videoAmount,
                             style: const TextStyle(
                               fontSize: 11.0,
                               color: grey,

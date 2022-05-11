@@ -33,6 +33,12 @@ class CoursesNotifier with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
+  List<Course>? findByCatogory(String type) {
+    return type == ''
+        ? _items
+        : _items.where((prod) => prod.category == type).toList();
+  }
+
   Promotion findOne() {
     if (_promotions.isEmpty) {
       return Promotion.empty();
@@ -42,9 +48,9 @@ class CoursesNotifier with ChangeNotifier {
     return _promotions[_random.nextInt(_promotions.length)];
   }
 
-  Future<void> fetchAndSetCourses([bool myLearning = true]) async {
+  Future<void> fetchAndSetCourses([bool myLearning = false]) async {
     final filterString =
-        !myLearning ? '/api/v1/course/list' : '/api/v1/course/list/purchased';
+        !myLearning ? '/api/v1/course/list' : '/api/v1/order/by-user';
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.get("token").toString();
     try {
@@ -55,14 +61,14 @@ class CoursesNotifier with ChangeNotifier {
         "Accept": "application/json",
       });
 
-      final coursesJson = json.decode(response.body);
-      final List<Course> courses = [];
-
-      coursesJson.forEach((course) {
-        courses.add(Course.fromJson(course));
-      });
+      final dataJson = json.decode(response.body);
 
       if (!myLearning) {
+        final List<Course> courses = [];
+
+        dataJson.forEach((course) {
+          courses.add(Course.fromJson(course));
+        });
         final List<Promotion> promotions = [];
 
         //Get promotion from courses
@@ -77,10 +83,13 @@ class CoursesNotifier with ChangeNotifier {
         }
         _items = courses;
         _promotions = promotions;
-        _myLearning = _myLearning;
       } else {
-        _items = _items;
-        _promotions = _promotions;
+        final List<Course> courses = [];
+
+        for (var order in dataJson) {
+          courses.add(Course.fromOrder(order['course'], order['progress'],
+              (order['videos'] as List).length));
+        }
         _myLearning = courses;
       }
 
