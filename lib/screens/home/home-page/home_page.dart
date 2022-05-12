@@ -5,18 +5,14 @@ import 'package:st_school_app/models/category.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/providers/user_notifier.dart';
+import 'package:st_school_app/screens/categories/categories_page.dart';
 import 'package:st_school_app/screens/checkout/checkout_page.dart';
 import 'package:st_school_app/screens/home/home-page/components/home.dart';
 import 'package:st_school_app/screens/home/home-page/components/user_info.dart';
-import 'package:st_school_app/screens/shop/shop_page.dart';
-import 'package:st_school_app/widgets/appbar.dart';
 import 'package:st_school_app/widgets/badge.dart';
-import 'package:st_school_app/widgets/category_list.dart';
 import 'package:st_school_app/widgets/custom_categories.dart';
-import 'package:st_school_app/widgets/custom_categories_button.dart';
 import 'package:st_school_app/widgets/custom_promotion_card.dart';
 import 'package:st_school_app/widgets/custom_title.dart';
-import 'package:st_school_app/widgets/custome_search_field.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -95,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: spacer),
                   const CustomTitle(
                     title: 'Categories',
-                    route: ShopPage.routeName,
+                    route: CategoriesPage.routeName,
                     arg: "",
                   ),
                   const SizedBox(height: smallSpacer),
@@ -124,7 +120,11 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const CustomTitle(title: 'Design Courses'),
+                  const CustomTitle(
+                    title: 'Software',
+                    route: CategoriesPage.routeName,
+                    arg: "Software",
+                  ),
                   const SizedBox(height: smallSpacer),
                   _isLoading
                       ? const Center(

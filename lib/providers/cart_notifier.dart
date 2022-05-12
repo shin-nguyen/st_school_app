@@ -21,11 +21,11 @@ class CartNotifier with ChangeNotifier {
   }
 
   void addItem(
-    String productId,
+    int courseId,
     double price,
     String title,
   ) {
-    if (_items.containsKey(productId)) {
+    if (_items.containsKey(courseId)) {
       // change quantity...
       // _items.update(
       //   productId,
@@ -38,9 +38,9 @@ class CartNotifier with ChangeNotifier {
       // );
     } else {
       _items.putIfAbsent(
-        productId,
+        courseId.toString(),
         () => CartItem(
-          id: DateTime.now().toString(),
+          id: courseId,
           title: title,
           price: price,
         ),

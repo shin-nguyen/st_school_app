@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/screens/detail/detail_page.dart';
 
 class CustomPromotionCard extends StatelessWidget {
   const CustomPromotionCard({Key? key}) : super(key: key);
@@ -55,30 +56,38 @@ class CustomPromotionCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       Container(
-                        height: 35.0,
-                        width: 100.0,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: primary.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(100.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: primary.withOpacity(0.5),
-                              spreadRadius: 0.0,
-                              blurRadius: 6.0,
-                              offset: const Offset(0, 2),
-                            )
-                          ],
-                        ),
-                        child: const Text(
-                          'Enroll Now',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: textWhite,
-                            fontWeight: FontWeight.w700,
+                          height: 35.0,
+                          width: 100.0,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: primary.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(100.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: primary.withOpacity(0.5),
+                                spreadRadius: 0.0,
+                                blurRadius: 6.0,
+                                offset: const Offset(0, 2),
+                              )
+                            ],
                           ),
-                        ),
-                      ),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                DetailPage.routeName,
+                                arguments: promotion.id,
+                              );
+                            },
+                            child: const Text(
+                              'Enroll Now',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: textWhite,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          )),
                     ],
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/screens/detail/detail_page.dart';
 import 'package:st_school_app/widgets/custom_course_card.dart';
 
 class HomeGrid extends StatelessWidget {
@@ -25,7 +26,11 @@ class HomeGrid extends StatelessWidget {
             padding: const EdgeInsets.only(right: 15.0, bottom: 20.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/shop');
+                Navigator.pushNamed(
+                  context,
+                  DetailPage.routeName,
+                  arguments: data.id,
+                );
               },
               child: CustomCourseCardExpand(
                 thumbNail: data.image,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:st_school_app/models/category.dart';
-import 'package:st_school_app/screens/shop/shop_page.dart';
+import 'package:st_school_app/screens/categories/categories_page.dart';
 import 'package:st_school_app/widgets/custom_categories_button.dart';
 
 class CustomCategories extends StatelessWidget {
@@ -18,7 +18,7 @@ class CustomCategories extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
             child: CustomCategoriesButton(
               title: list[index].title,
-              route: ShopPage.routeName,
+              route: CategoriesPage.routeName,
               arg: list[index].title,
             ));
       }),

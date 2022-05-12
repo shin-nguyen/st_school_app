@@ -28,8 +28,7 @@ class CoursesNotifier with ChangeNotifier {
     return [..._promotions];
   }
 
-  Course findById(String id) {
-    // ignore: unrelated_type_equality_checks
+  Course findById(int id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
@@ -75,6 +74,7 @@ class CoursesNotifier with ChangeNotifier {
         for (var course in courses) {
           if (course.price > course.subPrice && course.subPrice != 0) {
             promotions.add(Promotion(
+              course.id,
               'assets/images/dog_reading_vector.svg',
               'Get ${((course.price - course.subPrice) / course.price * 100).round()}% Off',
               course.description,

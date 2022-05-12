@@ -1,11 +1,12 @@
 class Promotion {
+  final int id;
   final String image;
   final String title;
   final String subTitle;
 
-  Promotion(this.image, this.title, this.subTitle);
+  Promotion(this.id, this.image, this.title, this.subTitle);
   factory Promotion.empty() {
-    return Promotion('', '', '');
+    return Promotion(0, '', '', '');
   }
 }
  
