@@ -29,7 +29,13 @@ class CoursesNotifier with ChangeNotifier {
   }
 
   Course findById(int id) {
-    return _items.firstWhere((prod) => prod.id == id);
+    return _items.firstWhere((course) => course.id == id,
+        orElse: () => Course.empty());
+  }
+
+  Course findByMeLearning(int id) {
+    return _myLearning.firstWhere((course) => course.id == id,
+        orElse: () => Course.empty());
   }
 
   List<Course>? findByCatogory(String type) {

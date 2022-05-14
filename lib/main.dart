@@ -5,6 +5,7 @@ import 'package:st_school_app/providers/auth_notifier.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/providers/user_notifier.dart';
+import 'package:st_school_app/providers/video_notifier.dart';
 import 'package:st_school_app/routes.dart';
 import 'package:st_school_app/screens/home/main_page.dart';
 import 'package:st_school_app/screens/login/login.dart';
@@ -37,6 +38,12 @@ class MyApp extends StatelessWidget {
             create: (context) => UserNotifier(User.empty()),
             update: (_, auth, previousUser) =>
                 UserNotifier(previousUser!.getUser),
+          ),
+          ChangeNotifierProxyProvider<AuthNotifier, VideosNotifier>(
+            create: (context) => VideosNotifier([]),
+            update: (_, auth, previousVideos) => VideosNotifier(
+              previousVideos == null ? [] : previousVideos.getVideos,
+            ),
           ),
         ],
         child: Consumer<AuthNotifier>(

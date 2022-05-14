@@ -39,15 +39,21 @@ class MyCourseList extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: GestureDetector(
-                  onTap: () =>
-                      Navigator.pushNamed(context, LearningPage.routeName),
+                  onTap: () => {
+                    Navigator.pushNamed(
+                      context,
+                      LearningPage.routeName,
+                      arguments: course.id,
+                    )
+                  },
                   child: CustomMyCoursesCard(
                     image: course.image,
                     title: course.description,
                     instructor: course.lecturer,
-                    videoAmount: (course.progress.toDouble() * course.video)
-                        .round()
-                        .toString(),
+                    videoAmount:
+                        (course.video / (course.progress.toDouble() / 100))
+                            .round()
+                            .toString(),
                     percentage: course.progress.toDouble(),
                     video: course.video,
                   ),

@@ -63,4 +63,21 @@ class Course {
         progress: progress,
         video: video);
   }
+
+  factory Course.empty() {
+    return const Course(
+        id: -1,
+        name: '',
+        description: '',
+        lecturer: '',
+        language: '',
+        price: 0,
+        image: "",
+        subTotal: 0,
+        videoTotal: 0,
+        category: "",
+        progress: 0,
+        subPrice: 0,
+        video: 0);
+  }
 }
