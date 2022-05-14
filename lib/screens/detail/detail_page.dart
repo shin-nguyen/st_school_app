@@ -299,10 +299,7 @@ class DetailPage extends StatelessWidget {
                                     textStyle: const TextStyle(fontSize: 16),
                                   ),
                                   onPressed: () {
-                                    cart.addItem(
-                                        course.id,
-                                        course.price.toDouble(),
-                                        course.description);
+                                    cart.addItem(course);
                                   },
                                   child: const Text('Add to cart'),
                                 )

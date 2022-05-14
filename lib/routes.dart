@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:st_school_app/screens/categories/categories_page.dart';
-import 'package:st_school_app/screens/checkout/checkout_page.dart';
+import 'package:st_school_app/screens/checkout/cart_page.dart';
 import 'package:st_school_app/screens/detail/detail_page.dart';
 import 'package:st_school_app/screens/edit_profile/edit_profile_page.dart';
 import 'package:st_school_app/screens/forgot_password/forgot_password_screen.dart';
@@ -17,6 +17,6 @@ final Map<String, WidgetBuilder> routes = {
   CategoriesPage.routeName: (context) => const CategoriesPage(),
   LearningPage.routeName: (context) => const LearningPage(),
   ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
-  CheckoutPage.routeName: (context) => const CheckoutPage(),
+  CartPage.routeName: (context) => const CartPage(),
   PaymentPage.routeName: (context) => const PaymentPage()
 };

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:st_school_app/screens/learning/components/video.dart';
 import 'package:st_school_app/widgets/app_text.dart';
-import 'package:st_school_app/widgets/appbar.dart';
 import 'package:video_player/video_player.dart';
 
 class LearningPage extends StatefulWidget {
@@ -13,135 +12,318 @@ class LearningPage extends StatefulWidget {
   State<LearningPage> createState() => _LearningPageState();
 }
 
-class _LearningPageState extends State<LearningPage> with RestorationMixin {
-  final RestorableIntN _indexSelected = RestorableIntN(null);
-  bool isChecked = true;
+class _LearningPageState extends State<LearningPage> {
+  // final RestorableIntN _indexSelected = RestorableIntN(null);
+  // bool isChecked = true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            width: double.maxFinite,
-            height: double.maxFinite,
-            child: Stack(children: [
-              const CustomeAppBar(),
-              const SizedBox(height: 10),
-              Positioned(
-                  left: 15,
-                  right: 15,
-                  top: 15,
-                  child: Container(
-                      height: 300,
-                      child: ChewieListItem(
-                        videoPlayerController: VideoPlayerController.network(
-                          'https://res.cloudinary.com/qscloud/video/upload/v1641180341/st-school/videos/C%C3%A0i%20%C4%91%E1%BA%B7t%20m%C3%B4i%20tr%C6%B0%E1%BB%9Dng.mp4.mp4',
-                        ),
-                      ))),
-              const Divider(
-                color: Colors.grey,
-                height: 20,
-                thickness: 1,
-                indent: 20,
-                endIndent: 0,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // construct the profile details widget here
+              Container(
+                  height: 220,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/course_clone.jpg'),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              Colors.black26, BlendMode.darken)))),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 16.0, top: 16.0, bottom: 2.0),
+                child: Text('Introduction to Coding with Rubyyy',
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
               ),
-              Positioned(
-                top: 300,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                  width: MediaQuery.of(context).size.width,
-                  height: 500,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30))),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          AppText(
-                              text: "Learning HTML",
-                              size: 25,
-                              color: Color.fromARGB(255, 5, 5, 5)),
-                        ],
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, bottom: 16),
+                child: Text('Dan Draper',
+                    style: TextStyle(color: Colors.grey, fontSize: 16)),
+              ),
+
+              // the tab bar with two items
+              SizedBox(
+                height: 50,
+                child: AppBar(
+                  backgroundColor: Colors.transparent,
+                  bottom: TabBar(
+                    tabs: [
+                      Tab(
+                        text: 'Lectures',
                       ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          AppText(
-                              text: "Kai Akatsuki",
-                              size: 13,
-                              color: Color.fromARGB(255, 94, 85, 85)),
-                        ],
+                      Tab(
+                        text: 'More',
                       ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          AppText(
-                              text: "Lectures",
-                              size: 18,
-                              color: Color.fromARGB(255, 44, 44, 44)),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Expanded(
-                        child: ListView(
-                          restorationId: 'list_view',
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          children: [
-                            for (int index = 1; index < 21; index++)
-                              ListTile(
-                                // leading: ExcludeSemantics(
-                                //   child: Text('$index'),
-                                // ),
-                                trailing: Checkbox(
-                                  checkColor: Colors.white,
-                                  value: isChecked,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isChecked = value!;
-                                    });
-                                  },
-                                ),
-                                title: AppText(
-                                  text: index.toString() +
-                                      ".This is a video " +
-                                      index.toString() +
-                                      " of course",
-                                  size: 14,
-                                  color: Color.fromARGB(255, 44, 43, 43),
-                                ),
-                                subtitle: AppText(
-                                  text: "Video | 5:22 mins",
-                                  size: 10,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10),
                     ],
                   ),
                 ),
               ),
-            ])));
+
+              // create widgets for each tab bar here
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    // first tab bar view widget
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 6,
+                            itemBuilder: (ctx, i) {
+                              return IgnorePointer(
+                                ignoring: true,
+                                child: ExpansionTile(
+                                  initiallyExpanded: true,
+                                  expandedAlignment: Alignment.topLeft,
+                                  childrenPadding: EdgeInsets.only(left: 16.0),
+                                  title: Text(
+                                      'Section 1 - Day 1 - Beginner - Working with Variables in Python to Manage Data',
+                                      style: TextStyle(
+                                          color: Colors.grey.shade500,
+                                          fontSize: 15.0)),
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: 10,
+                                        itemBuilder: (ctx, i) {
+                                          return Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: ListTile(
+                                              leading: Text((i + 1).toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18.0)),
+                                              title: Text(
+                                                  'What you\'re going to get from this course',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16.0)),
+                                              subtitle: Row(
+                                                children: [
+                                                  Text('Video - 03:27 mins',
+                                                      style: TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 14.0)),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 4.0),
+                                                    child: Icon(
+                                                        Icons.closed_caption,
+                                                        color: Colors.grey),
+                                                  )
+                                                ],
+                                              ),
+                                              trailing: Icon(
+                                                  Icons
+                                                      .play_circle_fill_outlined,
+                                                  color: Colors.blue),
+                                            ),
+                                          );
+                                        })
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+                    ),
+
+                    // second tab bar viiew widget
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.more_horiz,
+                                  size: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              title: Text('About this Course',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0))),
+                          ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.file_upload_outlined,
+                                    size: 18, color: Colors.white),
+                              ),
+                              title: Text('Share this Course',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0))),
+                          ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.notes,
+                                    size: 18, color: Colors.white),
+                              ),
+                              title: Text('Notes',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0))),
+                          ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.format_list_bulleted,
+                                    size: 18, color: Colors.white),
+                              ),
+                              title: Text('Resources',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0))),
+                          ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.doorbell_outlined,
+                                    size: 18, color: Colors.white),
+                              ),
+                              title: Text('Announcements',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0))),
+                          ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.star_border,
+                                    size: 18, color: Colors.white),
+                              ),
+                              title: Text('Add course to favorites',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0))),
+                          ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.file_download_outlined,
+                                    size: 18, color: Colors.white),
+                              ),
+                              title: Text('Archive this course',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0))),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    /*
+    
+    Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  height: 220,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('images/course_1_cover.png'),
+                          fit: BoxFit.fill,
+                          colorFilter: ColorFilter.mode(
+                              Colors.black26, BlendMode.darken)))),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 8.0, top: 16.0, bottom: 8.0),
+                child: Text('Introduction to Coding with Ruby',
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text('Dan Draper',
+                    style: TextStyle(color: Colors.grey, fontSize: 16)),
+              ),
+              ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 6,
+                  itemBuilder: (ctx, i) {
+                    return IgnorePointer(
+                      ignoring: true,
+                      child: ExpansionTile(
+                        initiallyExpanded: true,
+                        expandedAlignment: Alignment.topLeft,
+                        childrenPadding: EdgeInsets.only(left: 16.0),
+                        trailing: Icon(Icons.add, color: Colors.blue),
+                        title: Text(
+                            'Section 1 - Day 1 - Beginner - Working with Variables in Python to Manage Data',
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 16.0)),
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 10,
+                              itemBuilder: (ctx, i) {
+                                return ListTile(
+                                  leading: Text('1',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18.0)),
+                                  title: Text(
+                                      'What you\'re going to get from this course',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16.0)),
+                                  subtitle: Row(
+                                    children: [
+                                      Text('Video - 03:27 mins',
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14.0)),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                        child: Icon(Icons.closed_caption,
+                                            color: Colors.grey),
+                                      )
+                                    ],
+                                  ),
+                                  trailing: Icon(
+                                      Icons.play_circle_fill_outlined,
+                                      color: Colors.blue),
+                                );
+                              })
+                        ],
+                      ),
+                    );
+                  }),
+            ],
+          ),
+        ),
+      ),
+    );
+    
+    */
   }
 
-  @override
-  String get restorationId => 'choice_chip_demo';
+  // @override
+  // String get restorationId => 'choice_chip_demo';
 
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(_indexSelected, 'choice_chip');
-  }
+  // @override
+  // void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+  //   registerForRestoration(_indexSelected, 'choice_chip');
+  // }
 
-  @override
-  void dispose() {
-    _indexSelected.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _indexSelected.dispose();
+  //   super.dispose();
+  // }
 }

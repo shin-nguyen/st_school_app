@@ -45,7 +45,9 @@ class MyCourseList extends StatelessWidget {
                     image: course.image,
                     title: course.description,
                     instructor: course.lecturer,
-                    videoAmount: course.videoTotal.toString(),
+                    videoAmount: (course.progress.toDouble() * course.video)
+                        .round()
+                        .toString(),
                     percentage: course.progress.toDouble(),
                     video: course.video,
                   ),

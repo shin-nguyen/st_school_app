@@ -6,7 +6,7 @@ import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/screens/categories/categories_page.dart';
-import 'package:st_school_app/screens/checkout/checkout_page.dart';
+import 'package:st_school_app/screens/checkout/cart_page.dart';
 import 'package:st_school_app/screens/home/home-page/components/home.dart';
 import 'package:st_school_app/screens/home/home-page/components/user_info.dart';
 import 'package:st_school_app/widgets/badge.dart';
@@ -68,7 +68,10 @@ class _HomePageState extends State<HomePage> {
                   Icons.shopping_cart,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(CheckoutPage.routeName);
+                  Navigator.pushNamed(
+                    context,
+                    CartPage.routeName,
+                  );
                 },
               ),
             ),
@@ -123,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                   const CustomTitle(
                     title: 'Software',
                     route: CategoriesPage.routeName,
-                    arg: "Software",
+                    arg: "",
                   ),
                   const SizedBox(height: smallSpacer),
                   _isLoading

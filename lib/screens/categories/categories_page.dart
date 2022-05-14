@@ -9,7 +9,7 @@ import 'package:st_school_app/widgets/custom_title.dart';
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({Key? key}) : super(key: key);
 
-  static const routeName = '/category_page';
+  static const routeName = '/category-page';
   @override
   State<CategoriesPage> createState() => _CategoriesPageState();
 }
@@ -28,6 +28,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
         backgroundColor: background,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Colors.black, //change your color here
+          ),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
         ),
