@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/models/user.dart';
 import 'package:st_school_app/providers/auth_notifier.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: Consumer<AuthNotifier>(
-          builder: (ctx, auth, _) => MaterialApp(
+          builder: (ctx, auth, _) => GetMaterialApp(
             title: 'ST School',
             theme: ThemeData(
               primarySwatch: Colors.blue,
