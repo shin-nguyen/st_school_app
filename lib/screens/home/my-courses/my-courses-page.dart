@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/providers/video_notifier.dart';
 import 'package:st_school_app/screens/home/my-courses/components/my-courses.dart';
 
 class MyCoursesPage extends StatefulWidget {
@@ -27,6 +28,7 @@ class _MyCoursesPageState extends State<MyCoursesPage> {
         _isLoading = true;
       });
 
+      Provider.of<VideosNotifier>(context, listen: false).fetchAndSetVideos();
       Provider.of<CoursesNotifier>(context).fetchAndSetCourses(true).then((_) {
         setState(() {
           _isLoading = false;

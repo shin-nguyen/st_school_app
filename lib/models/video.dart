@@ -3,13 +3,14 @@ class Video {
   final String name;
   final String source;
   final String time;
+  final int course;
 
-  const Video({
-    required this.id,
-    required this.name,
-    required this.source,
-    required this.time,
-  });
+  const Video(
+      {required this.id,
+      required this.name,
+      required this.source,
+      required this.time,
+      required this.course});
 
   factory Video.fromJson(Map<String, dynamic> json) {
     return Video(
@@ -17,6 +18,7 @@ class Video {
       name: json['name'] ?? '',
       source: json['source'] ?? '',
       time: json['time'] ?? '',
+      course: json['course']['id'] ?? '',
     );
   }
 
@@ -26,6 +28,7 @@ class Video {
       name: '',
       source: '',
       time: '',
+      course: -1,
     );
   }
 }

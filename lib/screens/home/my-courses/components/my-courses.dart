@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
-import 'package:st_school_app/screens/learning/learning_page.dart';
+import 'package:st_school_app/screens/learning/my-learnings-page.dart';
 import 'package:st_school_app/widgets/custom_heading.dart';
 import 'package:st_school_app/widgets/custom_my_courses_card.dart';
 

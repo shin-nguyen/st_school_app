@@ -5,8 +5,9 @@ import 'package:st_school_app/screens/detail/detail_page.dart';
 import 'package:st_school_app/screens/edit_profile/edit_profile_page.dart';
 import 'package:st_school_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:st_school_app/screens/home/main_page.dart';
-import 'package:st_school_app/screens/learning/learning_page.dart';
 import 'package:st_school_app/screens/payment/payment_page.dart';
+
+import 'screens/learning/my-learnings-page.dart';
 
 // We use name route
 // All our routes will be available here

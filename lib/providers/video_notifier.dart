@@ -15,14 +15,18 @@ class VideosNotifier with ChangeNotifier {
     return [..._items];
   }
 
+  List<Video> getByCourse(int id) {
+    return _items.where((video) => video.course == id).toList();
+  }
+
   Video findById(int id) {
     return _items.firstWhere((course) => course.id == id,
         orElse: () => Video.empty());
   }
 
-  Future<void> fetchAndSetVideos(int courseId) async {
-    final filterString =
-        '/api/v1/order/by-course-and-user/' + courseId.toString();
+  Future<void> fetchAndSetVideos() async {
+    const filterString = '/api/v1/video/list';
+
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.get("token").toString();
     try {
@@ -34,11 +38,9 @@ class VideosNotifier with ChangeNotifier {
       });
 
       final dataJson = (json.decode(response.body));
-      final videosJson = dataJson['videos'];
-
       final List<Video> videos = [];
 
-      videosJson.forEach((video) {
+      dataJson.forEach((video) {
         videos.add(Video.fromJson(video));
       });
 
