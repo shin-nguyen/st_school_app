@@ -2,27 +2,27 @@ import 'package:flutter/foundation.dart';
 import 'package:st_school_app/models/course.dart';
 
 class CartNotifier with ChangeNotifier {
-  // CartNotifier() {
-  //   _items.putIfAbsent(
-  //     '1231',
-  //     () => Course(
-  //         id: 1,
-  //         name: 'HTML Course',
-  //         description:
-  //             'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
-  //         lecturer: 'Kari Noman',
-  //         language: 'English',
-  //         price: 122,
-  //         image:
-  //             "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
-  //         subTotal: 1,
-  //         videoTotal: 20,
-  //         category: "ADs",
-  //         progress: 12,
-  //         subPrice: 123,
-  //         video: 123),
-  //   );
-  // }
+  CartNotifier() {
+    _items.putIfAbsent(
+      '1231',
+      () => Course(
+          id: 1,
+          name: 'HTML Course',
+          description:
+              'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
+          lecturer: 'Kari Noman',
+          language: 'English',
+          price: 122,
+          image:
+              "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
+          subTotal: 1,
+          videoTotal: 20,
+          category: "ADs",
+          progress: 12,
+          subPrice: 123,
+          video: 123),
+    );
+  }
   Map<String, Course> _items = {};
 
   Map<String, Course> get items {
