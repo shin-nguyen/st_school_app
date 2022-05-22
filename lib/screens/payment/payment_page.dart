@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/providers/orders_notifier.dart';
+import 'package:st_school_app/screens/checkout/cart_page.dart';
+import 'package:st_school_app/screens/home/home-page/home_page.dart';
 import 'package:st_school_app/utils/app_color.dart';
 import 'package:st_school_app/widgets/buttons.dart';
 import 'package:st_school_app/widgets/large_buttons.dart';
@@ -14,6 +19,7 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
+    final order = Provider.of<OrdersNotifier>(context);
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -42,7 +48,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 color: AppColor.mainColor),
           ),
           Text(
-            "Payment is completed",
+            "Payment is completed for ${order.orders.courses.length} bills",
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -52,106 +58,135 @@ class _PaymentPageState extends State<PaymentPage> {
             height: h * 0.045,
           ),
           Container(
-            height: 95,
+            height: w * 0.5,
             width: 350,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border:
                     Border.all(width: 2, color: Colors.grey.withOpacity(0.5))),
-            child: Container(
-              child: Column(children: [
-                Row(
-                  children: [
-                    Container(
-                      margin:
-                          const EdgeInsets.only(top: 15, left: 20, bottom: 10),
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.green),
-                      child: Icon(
-                        Icons.done,
-                        size: 30,
-                        color: Colors.white,
+            child: MediaQuery.removePadding(
+              removeTop: true,
+              context: context,
+              child: ListView.builder(
+                  itemCount: order.orders.courses.length,
+                  itemBuilder: (_, index) {
+                    return Container(
+                      height: w * 0.25,
+                      width: w - 10,
+                      padding: const EdgeInsets.only(top: 12, left: 12),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0x0000ffd8),
+                                offset: Offset(1, 1),
+                                blurRadius: 20.0,
+                                spreadRadius: 10)
+                          ]),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: w * .14,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height: w * .18,
+                                  width: w * .13,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.network(
+                                      order.orders.courses[index].image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: miniSpacer),
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        order.orders.courses[index].name,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: secondary,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      const SizedBox(height: miniSpacer),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Intructor: ${order.orders.courses[index].lecturer}',
+                                            style: const TextStyle(
+                                              fontSize: 11.0,
+                                              color: grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: w * .16,
+                              ),
+                              Text(
+                                '\$ ${order.orders.courses[index].price}',
+                                style: const TextStyle(
+                                  color: textBlack,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              // SizedBox(
+                              //   width: w * .1,
+                              // )
+                            ],
+                          )
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "KenGen Power",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.mainColor),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text("KenGen Power",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.idColor))
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: AppColor.mainColor),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "\$100",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: AppColor.mainColor),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                // Divider(
-                //   thickness: 2,
-                //   color: Colors.grey.withOpacity(0.5),
-                // )
-              ]),
+                    );
+                  }),
             ),
           ),
           SizedBox(
-            height: h * 0.1,
+            height: h * 0.05,
           ),
           Column(
             children: [
-              Text(
+              const Text(
                 "Total Amount",
-                style: TextStyle(fontSize: 20, color: AppColor.idColor),
+                style: TextStyle(fontSize: 20, color: idColor),
               ),
               const SizedBox(
                 height: 10,
               ),
               Text(
-                "\$2840.00",
-                style: TextStyle(fontSize: 20, color: AppColor.idColor),
+                "\$ ${order.totalOrder}",
+                style: const TextStyle(fontSize: 20, color: idColor),
               )
             ],
           ),
           SizedBox(
-            height: h * 0.14,
+            height: h * 0.12,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -167,10 +202,16 @@ class _PaymentPageState extends State<PaymentPage> {
           SizedBox(
             height: h * 0.02,
           ),
-          const AppLargeButton(
+          AppLargeButton(
             text: "Done",
             backgroundColor: Colors.white,
             textColor: AppColor.mainColor,
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                CartPage.routeName,
+              );
+            },
           )
         ]),
       ),

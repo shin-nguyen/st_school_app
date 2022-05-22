@@ -12,6 +12,7 @@ class CartItemPage extends StatelessWidget {
     required this.description,
     required this.image,
     required this.lecturer,
+    required this.choosePay,
   }) : super(key: key);
 
   final String id;
@@ -19,11 +20,12 @@ class CartItemPage extends StatelessWidget {
   final String description;
   final String image;
   final String lecturer;
+  final String choosePay;
 
   final _paymentItems = [
-    PaymentItem(
-      label: 'Totalllll',
-      amount: '99.99',
+    const PaymentItem(
+      label: 'Total',
+      amount: '0.99',
       status: PaymentItemStatus.final_price,
     )
   ];
@@ -60,7 +62,7 @@ class CartItemPage extends StatelessWidget {
               content: const Text(
                 'Do you want to remove the item from the cart?',
               ),
-              actions: <Widget>[
+              actions: [
                 FlatButton(
                   child: const Text('No'),
                   onPressed: () {
@@ -169,21 +171,23 @@ class CartItemPage extends StatelessWidget {
                   )
                 ],
               ),
-              // GooglePayButton(
-              //   paymentConfigurationAsset: 'assets/data/gpay.json',
-              //   paymentItems: _paymentItems,
-              //   width: 200,
-              //   height: 50,
-              //   style: GooglePayButtonStyle.black,
-              //   type: GooglePayButtonType.pay,
-              //   margin: const EdgeInsets.only(top: 15.0),
-              //   onPaymentResult: (data) {
-              //     print(data);
-              //   },
-              //   loadingIndicator: const Center(
-              //     child: CircularProgressIndicator(),
-              //   ),
-              // ),
+              (choosePay == 'gpay')
+                  ? GooglePayButton(
+                      paymentConfigurationAsset: 'gpay.json',
+                      paymentItems: _paymentItems,
+                      width: w * 0.9,
+                      height: 40,
+                      style: GooglePayButtonStyle.black,
+                      type: GooglePayButtonType.pay,
+                      margin: const EdgeInsets.only(top: 15.0),
+                      onPaymentResult: (data) {
+                        debugPrint(data.toString());
+                      },
+                      loadingIndicator: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ));

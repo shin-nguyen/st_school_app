@@ -1,77 +1,63 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:st_school_app/models/order_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/models/course.dart';
+import 'package:st_school_app/models/order.dart';
 
-class Orders with ChangeNotifier {
-  List<OrderItem> _orders = [];
+class OrdersNotifier with ChangeNotifier {
+  OrderItem _orders;
 
-  Orders(this._orders);
+  OrdersNotifier(this._orders);
 
-  List<OrderItem> get orders {
-    return [..._orders];
+  OrderItem get orders {
+    return _orders;
   }
 
-  // Future<void> fetchAndSetOrders() async {
-  //   final url =
-  //       'https://flutter-update.firebaseio.com/orders/$userId.json?auth=$authToken';
-  //   final response = await http.get(url);
-  //   final List<OrderItem> loadedOrders = [];
-  //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
-  //   if (extractedData == null) {
-  //     return;
-  //   }
-  //   extractedData.forEach((orderId, orderData) {
-  // loadedOrders.add(
-  //   OrderItem(
-  //     id: orderId,
-  //     amount: orderData['amount'],
-  //     dateTime: DateTime.parse(orderData['dateTime']),
-  //     products: (orderData['products'] as List<dynamic>)
-  //         .map(
-  //           (item) => CartItem(
-  //                 id: item['id'],
-  //                 price: item['price'],
-  //                 quantity: item['quantity'],
-  //                 title: item['title'],
-  //               ),
-  //         )
-  //         .toList(),
-  //   ),
-  // );
-  //   });
-  //   _orders = loadedOrders.reversed.toList();
-  //   notifyListeners();
-  // }
+  double get totalOrder {
+    double total = 0;
+    for (var course in _orders.courses) {
+      if (course.subPrice != 0) {
+        total += course.subPrice;
+      } else {
+        total += course.price;
+      }
+    }
+    return total;
+  }
 
-  // Future<void> addOrder(List<CartItem> cartProducts, double total) async {
-  //   final url =
-  //       'https://flutter-update.firebaseio.com/orders/$userId.json?auth=$authToken';
-  //   final timestamp = DateTime.now();
-  //   final response = await http.post(
-  //     url,
-  //     body: json.encode({
-  //       'amount': total,
-  //       'dateTime': timestamp.toIso8601String(),
-  //       'products': cartProducts
-  //           .map((cp) => {
-  //                 'id': cp.id,
-  //                 'title': cp.title,
-  //                 'quantity': cp.quantity,
-  //                 'price': cp.price,
-  //               })
-  //           .toList(),
-  //     }),
-  //   );
-  //   _orders.insert(
-  //     0,
-  //     OrderItem(
-  //       id: json.decode(response.body)['name'],
-  //       dateTime: timestamp,
-  //       products: cartProducts,
-  //     ),
-  //   );
-  //   notifyListeners();
-  // }
+  Future<void> addOrder(List<Course> courses) async {
+    const filterString = '/api/v1/order/adds';
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.get("token").toString();
+
+    try {
+      final response = await http.post(
+        Uri.parse(baseUrl + filterString),
+        headers: {
+          "Authorization": token,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: json.encode({
+          'courses': courses
+              .map((course) => {
+                    'id': course.id,
+                  })
+              .toList(),
+        }),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 400) {
+        _orders = OrderItem(courses: courses);
+        notifyListeners();
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    } catch (error) {
+      rethrow;
+    }
+    notifyListeners();
+  }
 }

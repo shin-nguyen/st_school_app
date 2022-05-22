@@ -13,8 +13,13 @@ class CoursesNotifier with ChangeNotifier {
   List<Course> _items = [];
   List<Course> _myLearning = [];
   List<Promotion> _promotions = [];
+  List<Course> _itemSearch = [];
 
-  CoursesNotifier(this._items, this._promotions, this._myLearning);
+  CoursesNotifier(
+    this._items,
+    this._promotions,
+    this._myLearning,
+  );
 
   List<Course> get getCourses {
     return [..._items];
@@ -22,6 +27,10 @@ class CoursesNotifier with ChangeNotifier {
 
   List<Course> get getMyLearning {
     return [..._myLearning];
+  }
+
+  List<Course> get getSearch {
+    return [..._itemSearch];
   }
 
   List<Promotion> get getPromotions {
@@ -41,7 +50,22 @@ class CoursesNotifier with ChangeNotifier {
   List<Course>? findByCatogory(String type) {
     return type == ''
         ? _items
-        : _items.where((prod) => prod.category == type).toList();
+        : _items.where((prod) => prod.topic == type).toList();
+  }
+
+  Future<void> findByQuery(String query) async {
+    try {
+      _itemSearch = query == ''
+          ? _items
+          : _items.where((course) {
+              final name = course.name.toLowerCase();
+              return name.contains(query);
+            }).toList();
+
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 
   Promotion findOne() {
@@ -88,6 +112,7 @@ class CoursesNotifier with ChangeNotifier {
           }
         }
         _items = courses;
+        _itemSearch = courses;
         _promotions = promotions;
       } else {
         final List<Course> courses = [];
@@ -107,6 +132,7 @@ class CoursesNotifier with ChangeNotifier {
 
   void clear() {
     _items = [];
+    _itemSearch = [];
     notifyListeners();
   }
 }

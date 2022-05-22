@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:st_school_app/models/order.dart';
 import 'package:st_school_app/models/user.dart';
 import 'package:st_school_app/providers/auth_notifier.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/providers/orders_notifier.dart';
 import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/providers/video_notifier.dart';
 import 'package:st_school_app/routes.dart';
@@ -43,6 +45,14 @@ class MyApp extends StatelessWidget {
             create: (context) => VideosNotifier([]),
             update: (_, auth, previousVideos) => VideosNotifier(
               previousVideos == null ? [] : previousVideos.getVideos,
+            ),
+          ),
+          ChangeNotifierProxyProvider<AuthNotifier, OrdersNotifier>(
+            create: (context) => OrdersNotifier(OrderItem.empty()),
+            update: (_, auth, previousVideos) => OrdersNotifier(
+              previousVideos == null
+                  ? OrderItem.empty()
+                  : previousVideos.orders,
             ),
           ),
         ],

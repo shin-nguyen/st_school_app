@@ -142,7 +142,7 @@ class _LearningPageState extends State<LearningPage> {
                                         subtitle: Row(
                                           children: [
                                             Text(
-                                                'Video - ${videos[index].time} mins',
+                                                'Video - ${videos[index].duration} mins',
                                                 style: const TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 14.0)),

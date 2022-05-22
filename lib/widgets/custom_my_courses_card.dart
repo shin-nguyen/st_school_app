@@ -8,7 +8,7 @@ class CustomMyCoursesCard extends StatefulWidget {
       required this.title,
       required this.instructor,
       required this.videoAmount,
-      this.percentage = 0,
+      this.progress = 0,
       this.video = 0})
       : super(key: key);
 
@@ -16,7 +16,7 @@ class CustomMyCoursesCard extends StatefulWidget {
   final String title;
   final String instructor;
   final String videoAmount;
-  final double percentage;
+  final double progress;
   final int video;
 
   @override
@@ -113,7 +113,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                       ),
                     ),
                     Container(
-                      width: widget.percentage * 2.8,
+                      width: widget.progress * 2.8,
                       height: 7.0,
                       decoration: BoxDecoration(
                         color: primary,
@@ -135,7 +135,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                 width: 50,
                 alignment: Alignment.centerRight,
                 child: Text(
-                  widget.percentage.toString() + '%',
+                  widget.progress.toString() + '%',
                   style: const TextStyle(
                       fontSize: 13.0,
                       color: primary,

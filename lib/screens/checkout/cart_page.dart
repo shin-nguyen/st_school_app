@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
+import 'package:st_school_app/providers/orders_notifier.dart';
 import 'package:st_school_app/screens/checkout/components/cart_item_page.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:st_school_app/widgets/toast.dart';
+import 'package:awesome_select/awesome_select.dart';
+import 'package:st_school_app/screens/payment/payment_page.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -16,56 +18,63 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  Razorpay razorpay = Razorpay();
+  // Razorpay razorpay = Razorpay();
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
-  }
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
+  //   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
+  // }
 
-  void handlerPaymentSuccess() {
-    print("Pament success");
-    Toast.show("Pament success", context, border: Border.all(width: 1));
-  }
+  // void handlerPaymentSuccess() {
+  //   print("Pament success");
+  //   Toast.show("Pament success", context, border: Border.all(width: 1));
+  // }
 
-  void handlerErrorFailure() {
-    print("Pament error");
-    Toast.show("Pament error", context, border: Border.all(width: 1));
-  }
+  // void handlerErrorFailure() {
+  //   print("Pament error");
+  //   Toast.show("Pament error", context, border: Border.all(width: 1));
+  // }
 
-  void handlerExternalWallet() {
-    print("External Wallet");
-    Toast.show("External Wallet", context, border: Border.all(width: 1));
-  }
+  // void handlerExternalWallet() {
+  //   print("External Wallet");
+  //   Toast.show("External Wallet", context, border: Border.all(width: 1));
+  // }
 
-  void openCheckout() {
-    var options = {
-      "key": "rzp_test_lZ2Lyxj8jBeTWY",
-      "amount": 1,
-      "name": "Sample App",
-      "description": "Payment for the some random product",
-      "prefill": {
-        "contact": "84918948074",
-        "email": "thongchuthanh2000@gmail.com"
-      },
-      "external": {
-        "wallets": ["paytm"]
-      }
-    };
+  // void openCheckout() {
+  //   var options = {
+  //     "key": "rzp_test_lZ2Lyxj8jBeTWY",
+  //     "amount": 1,
+  //     "name": "Sample App",
+  //     "description": "Payment for the some random product",
+  //     "prefill": {
+  //       "contact": "84918948074",
+  //       "email": "thongchuthanh2000@gmail.com"
+  //     },
+  //     "external": {
+  //       "wallets": ["paytm"]
+  //     }
+  //   };
 
-    try {
-      razorpay.open(options);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
+  //   try {
+  //     razorpay.open(options);
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
+  String choosePay = 'gpay';
+  List<S2Choice<String>> options = [
+    S2Choice<String>(value: 'gpay', title: 'Gooogle Pay'),
+    S2Choice<String>(value: 'paypal', title: 'Pay Pal'),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    var w = MediaQuery.of(context).size.width;
     final cart = Provider.of<CartNotifier>(context);
     return Scaffold(
       backgroundColor: background,
@@ -140,16 +149,39 @@ class _CartPageState extends State<CartPage> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 20),
                       itemCount: cart.items.length,
                       itemBuilder: (ctx, i) => CartItemPage(
-                        id: cart.items.values.toList()[i].id.toString(),
-                        price: cart.items.values.toList()[i].price.toDouble(),
-                        description: cart.items.values.toList()[i].description,
-                        image: cart.items.values.toList()[i].image,
-                        lecturer: cart.items.values.toList()[i].lecturer,
+                          id: cart.items.values.toList()[i].id.toString(),
+                          price: cart.items.values.toList()[i].price.toDouble(),
+                          description:
+                              cart.items.values.toList()[i].description,
+                          image: cart.items.values.toList()[i].image,
+                          lecturer: cart.items.values.toList()[i].lecturer,
+                          choosePay: choosePay),
+                    ),
+                  ),
+                  SmartSelect<String>.single(
+                    title: "CHOOSE PAYMENT",
+                    selectedValue: choosePay,
+                    modalStyle: const S2ModalStyle(
+                        backgroundColor: Colors.white,
+                        clipBehavior: Clip.none,
+                        elevation: 0.0),
+                    modalHeaderStyle: const S2ModalHeaderStyle(
+                      backgroundColor: background,
+                      textStyle: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w700,
+                        color: textBlack,
+                      ),
+                      iconTheme: IconThemeData(
+                        color: Colors.black, //change your color here
                       ),
                     ),
+                    choiceItems: options,
+                    onChange: (state) =>
+                        setState(() => choosePay = state.value!),
                   ),
                   Card(
                     margin: const EdgeInsets.all(15),
@@ -159,10 +191,9 @@ class _CartPageState extends State<CartPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           const Text(
-                            'Total',
+                            'Total  ',
                             style: TextStyle(fontSize: 20),
                           ),
-                          const Spacer(),
                           Chip(
                             label: Text(
                               '\$${cart.totalAmount.toStringAsFixed(2)}',
@@ -170,28 +201,62 @@ class _CartPageState extends State<CartPage> {
                                 color: textBlack,
                               ),
                             ),
-                            backgroundColor: Theme.of(context).primaryColor,
+                            backgroundColor: primary,
                           ),
-                          FlatButton(
-                            child: const Text('ORDER NOW'),
-                            onPressed: (cart.totalAmount <= 0)
-                                ? null
-                                : () {
-                                    openCheckout();
-                                    // setState(() {
-                                    //   _isLoading = true;
-                                    // });
-                                    // await Provider.of<Orders>(context, listen: false).addOrder(
-                                    //   widget.cart.items.values.toList(),
-                                    //   widget.cart.totalAmount,
-                                    // );
-                                    // setState(() {
-                                    //   _isLoading = false;
-                                    // });
-                                    // widget.cart.clear();
+                          (choosePay == 'gpay')
+                              ? GooglePayButton(
+                                  paymentConfigurationAsset: 'gpay.json',
+                                  paymentItems: [
+                                    PaymentItem(
+                                      label: 'Total',
+                                      amount: cart.totalAmount
+                                          .toStringAsFixed(2)
+                                          .toString(),
+                                      status: PaymentItemStatus.final_price,
+                                    )
+                                  ],
+                                  width: w * 0.4,
+                                  height: 40,
+                                  style: GooglePayButtonStyle.black,
+                                  type: GooglePayButtonType.pay,
+                                  onPaymentResult: (data) async {
+                                    debugPrint(data.toString());
+                                    await Provider.of<OrdersNotifier>(context,
+                                            listen: false)
+                                        .addOrder(
+                                      cart.items.values.toList(),
+                                    );
+                                    Navigator.pushNamed(
+                                      context,
+                                      PaymentPage.routeName,
+                                      // arguments: courses[index].id,
+                                    );
+                                    cart.clear();
                                   },
-                            textColor: Theme.of(context).primaryColor,
-                          )
+                                  loadingIndicator: const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                )
+                              : Container()
+                          // FlatButton(
+                          //   child: const Text('ORDER NOW'),
+                          //   onPressed: (cart.totalAmount <= 0)
+                          //       ? null
+                          //       : () {
+                          //           // setState(() {
+                          //           //   _isLoading = true;
+                          //           // });
+                          //           // await Provider.of<Orders>(context, listen: false).addOrder(
+                          //           //   widget.cart.items.values.toList(),
+                          //           //   widget.cart.totalAmount,
+                          //           // );
+                          //           // setState(() {
+                          //           //   _isLoading = false;
+                          //           // });
+                          //           // widget.cart.clear();
+                          //         },
+                          //   textColor: Theme.of(context).primaryColor,
+                          // )
                         ],
                       ),
                     ),

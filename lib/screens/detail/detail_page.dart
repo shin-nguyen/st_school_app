@@ -68,12 +68,22 @@ class DetailPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Row(
+                      //       child: Text(course.description,
+                      // overflow: TextOverflow.ellipsis,
+                      // maxLines: 2,
+                      // style: const TextStyle(
+                      //   color: textBlack,
+                      //   fontSize: 20.0,
+                      //   fontWeight: FontWeight.bold,
+                      // )),
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(course.name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 248, 175, 71),
-                                fontSize: 24.0,
+                                fontSize: 20.0,
                                 fontWeight: FontWeight.bold))
                       ],
                     ),
@@ -119,10 +129,10 @@ class DetailPage extends StatelessWidget {
                           direction: Axis.horizontal,
                         ),
                         const SizedBox(width: miniSpacer),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 4.0),
-                          child: Text('1234,421 Student',
-                              style: TextStyle(
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text('${course.subTotal} Student',
+                              style: const TextStyle(
                                 color: textBlack,
                                 fontSize: 14.0,
                               )),

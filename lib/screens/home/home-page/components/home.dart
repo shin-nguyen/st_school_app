@@ -35,7 +35,7 @@ class HomeGrid extends StatelessWidget {
               child: CustomCourseCardExpand(
                 thumbNail: data.image,
                 videoAmount: data.videoTotal.toString(),
-                title: data.description,
+                title: data.name,
                 userProfile:
                     'https://images.unsplash.com/photo-1601582589907-f92af5ed9db8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80',
                 userName: data.lecturer,

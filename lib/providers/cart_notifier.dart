@@ -5,19 +5,39 @@ class CartNotifier with ChangeNotifier {
   CartNotifier() {
     _items.putIfAbsent(
       '1231',
-      () => Course(
+      () => const Course(
           id: 1,
-          name: 'HTML Course',
+          name: 'The Complete 2020 Fullstack Web Developer Course',
           description:
               'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
           lecturer: 'Kari Noman',
           language: 'English',
-          price: 122,
+          price: 1,
           image:
               "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
           subTotal: 1,
           videoTotal: 20,
-          category: "ADs",
+          topic: "ADs",
+          progress: 12,
+          subPrice: 123,
+          video: 123),
+    );
+    _items.putIfAbsent(
+      '312312',
+      () => const Course(
+          id: 1,
+          name:
+              'Python Django - The Practical GuideLearn how to build web applications and websites with Python and the Django framework',
+          description:
+              'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
+          lecturer: 'Kari Noman',
+          language: 'English',
+          price: 1,
+          image:
+              "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
+          subTotal: 1,
+          videoTotal: 20,
+          topic: "ADs",
           progress: 12,
           subPrice: 123,
           video: 123),

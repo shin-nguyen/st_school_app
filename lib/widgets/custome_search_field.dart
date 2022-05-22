@@ -5,22 +5,29 @@ import 'package:st_school_app/constants/system_constants.dart';
 class CustomSearchField extends StatefulWidget {
   const CustomSearchField({
     Key? key,
-    required this.hintField,
-    this.backgroundColor,
+    required this.text,
+    required this.onChanged,
+    required this.hintText,
   }) : super(key: key);
 
-  final String hintField;
-  final Color? backgroundColor;
+  final String hintText;
+  final String text;
+  final ValueChanged<String> onChanged;
 
   @override
   _CustomSearchFieldState createState() => _CustomSearchFieldState();
 }
 
 class _CustomSearchFieldState extends State<CustomSearchField> {
+  final controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+
+    final styleActive = TextStyle(color: Colors.black);
+    final styleHint = TextStyle(color: Colors.black54);
+    final style = widget.text.isEmpty ? styleHint : styleActive;
 
     return Container(
       width: w,
@@ -28,38 +35,38 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
       alignment: Alignment.center,
       padding: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: widget.backgroundColor,
+        color: textWhite,
         borderRadius: BorderRadius.circular(7.0),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            height: 40,
-            width: 40.0,
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              assetImg + 'search_icon.svg',
-              color: secondary.withOpacity(0.5),
-              height: 15.0,
-            ),
-          ),
           Flexible(
               child: Container(
             width: w,
             height: 38,
             alignment: Alignment.topCenter,
             child: TextField(
-              style: const TextStyle(fontSize: 15),
-              cursorColor: textBlack,
+              controller: controller,
               decoration: InputDecoration(
-                  hintText: widget.hintField,
-                  hintStyle: TextStyle(
-                    fontSize: 15,
-                    color: secondary.withOpacity(0.5),
-                  ),
-                  border: InputBorder.none),
+                icon: Icon(Icons.search, color: style.color),
+                suffixIcon: widget.text.isNotEmpty
+                    ? GestureDetector(
+                        child: Icon(Icons.close, color: style.color),
+                        onTap: () {
+                          controller.clear();
+                          widget.onChanged('');
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                      )
+                    : null,
+                hintText: widget.hintText,
+                hintStyle: style,
+                border: InputBorder.none,
+              ),
+              style: style,
+              onChanged: widget.onChanged,
             ),
           )),
           const SizedBox(

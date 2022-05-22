@@ -95,10 +95,10 @@ class CourseStarCard extends StatelessWidget {
               itemSize: 18.0,
               direction: Axis.horizontal,
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 4.0),
-              child: Text('(1234)',
-                  style: TextStyle(
+              child: Text('(${course.subTotal})',
+                  style: const TextStyle(
                     color: textBlack,
                     fontSize: 14.0,
                   )),

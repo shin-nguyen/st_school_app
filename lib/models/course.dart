@@ -9,9 +9,9 @@ class Course {
   final String image;
   final int subTotal;
   final int videoTotal;
-  final int progress;
+  final double progress;
   final int video;
-  final String category;
+  final String topic;
 
   const Course({
     required this.id,
@@ -26,7 +26,7 @@ class Course {
     required this.subPrice,
     required this.progress,
     required this.video,
-    required this.category,
+    required this.topic,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -38,16 +38,17 @@ class Course {
       language: json['language'] ?? '',
       price: json['price'] ?? '',
       image: json['image'] ?? '',
-      subTotal: json['videoTotal'] ?? 0,
+      subTotal: json['subTotal'] ?? 0,
       videoTotal: json['videoTotal'] ?? 0,
       subPrice: json['subPrice'] ?? 0,
-      category: json['category'] ?? '',
+      topic: json['topic'] ?? '',
       progress: 0,
       video: 0,
     );
   }
 
-  factory Course.fromOrder(Map<String, dynamic> json, int progress, int video) {
+  factory Course.fromOrder(
+      Map<String, dynamic> json, double progress, int video) {
     return Course(
         id: json['id'] ?? '',
         name: json['name'] ?? '',
@@ -56,10 +57,10 @@ class Course {
         language: json['language'] ?? '',
         price: json['price'] ?? '',
         image: json['image'] ?? '',
-        subTotal: json['videoTotal'] ?? 0,
+        subTotal: json['subTotal'] ?? 0,
         videoTotal: json['videoTotal'] ?? 0,
         subPrice: json['subPrice'] ?? 0,
-        category: json['category'] ?? '',
+        topic: json['topic'] ?? '',
         progress: progress,
         video: video);
   }
@@ -75,7 +76,7 @@ class Course {
         image: "",
         subTotal: 0,
         videoTotal: 0,
-        category: "",
+        topic: "",
         progress: 0,
         subPrice: 0,
         video: 0);
