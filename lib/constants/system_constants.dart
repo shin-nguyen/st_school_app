@@ -66,4 +66,11 @@ const Color grey = Color(0xFF707070);
 const Color idColor = Color(0xFF9ca2ac);
 const String assetImg = 'assets/images/';
 
+const Color thirdColor = Color(0xFFC58BF2);
+const Color fourthColor = Color(0xFFEEA4CE);
+const Color bgTextField = Color(0xFFF7F8F8);
+
+const Color facebookColor = Color(0xFF3b5998);
+const Color googleColor = Color(0xFFDB4437);
+
 const String baseUrl = "http://192.168.1.26:8080";

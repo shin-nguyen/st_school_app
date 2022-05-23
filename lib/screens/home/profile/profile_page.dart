@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/models/latest_workout.dart';
+import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/screens/edit_profile/edit_profile_page.dart';
 import 'package:st_school_app/widgets/profile_image.dart';
-import 'package:st_school_app/widgets/button.dart';
 import 'package:st_school_app/widgets/profile_number.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,7 +17,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    // final user = UserPreferences.myUser;
+    // final user = Provider.of<UserNotifier>(context);
+
+    final w = MediaQuery.of(context).size.width;
+    final h = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: ListView(
@@ -23,30 +29,160 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 30),
           ProfileImage(
             imagePath:
-                "https://scontent.fpnh22-4.fna.fbcdn.net/v/t1.18169-9/14993308_1930517297175926_3226462828616400930_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=NA-ztCO7hSIAX9khhQy&_nc_ht=scontent.fpnh22-4.fna&oh=00_AT9MO0aRRvA5UzbUAIThwBC3YKG0iHgX-FpGY05Z3EXv8w&oe=6288AAE3",
+                "https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg",
             onClicked: () async {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const EditProfilePage()),
+                EditProfilePage.routeName,
               );
             },
           ),
           const SizedBox(height: 24),
           buildName(),
           const SizedBox(height: 24),
-          Center(child: buildUpgradeButton()),
-          const SizedBox(height: 24),
-          NumbersWidget(),
-          const SizedBox(height: 48),
+          Padding(
+            padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
+            child: Card(
+              elevation: 3.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                      topLeft: Radius.circular(30),
+                      bottomLeft: Radius.circular(30),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0x0000ffd8),
+                          offset: Offset(1, 1),
+                          blurRadius: 20.0,
+                          spreadRadius: 10)
+                    ]),
+                height: h * 0.15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    NumbersWidget(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: spacer),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Activity Progress",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textBlack),
+                ),
+                Container(
+                  width: 95,
+                  height: 35,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [secondary, primary]),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Weekly",
+                        style: TextStyle(fontSize: 13, color: textWhite),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        color: textWhite,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: w - 30,
+            height: 200,
+            decoration: BoxDecoration(
+                color: textWhite,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 20,
+                    blurRadius: 10,
+                    color: textBlack.withOpacity(0.01),
+                    offset: const Offset(0, 1),
+                  )
+                ]),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(weekly.length, (index) {
+                  return Column(
+                    children: [
+                      Flexible(
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 20,
+                              height: h,
+                              decoration: BoxDecoration(
+                                  color: bgTextField,
+                                  borderRadius: BorderRadius.circular(30)),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              child: Container(
+                                width: 20,
+                                height: h * (weekly[index]['count']),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: weekly[index]['color']),
+                                    borderRadius: BorderRadius.circular(30)),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        weekly[index]['day'],
+                        style: TextStyle(fontSize: 13),
+                      )
+                    ],
+                  );
+                }),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           buildAbout(),
+          SizedBox(
+            height: h * 0.02,
+          ),
         ],
       ),
     );
   }
 
   Widget buildName() => Column(
-        children: [
+        children: const [
           Text(
             "Kai Akatsuki",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
@@ -56,17 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
             "sinhnguyen2702@gmail.com",
             style: TextStyle(color: Colors.grey),
           ),
-          const SizedBox(height: 4),
-          Text(
-            "0365050432",
-            style: TextStyle(color: Colors.grey),
-          )
         ],
-      );
-
-  Widget buildUpgradeButton() => ButtonWidget(
-        text: 'Upgrade to PRO',
-        onClicked: () {},
       );
 
   Widget buildAbout() => Container(

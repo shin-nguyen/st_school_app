@@ -52,7 +52,7 @@ dependencies:
   http_auth: ^1.0.1
   sticky_headers: ^0.2.0
   awesome_select: ^5.0.0-nullsafety
-  # smart_select: ^4.0.0
+  fl_chart: ^0.50.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
