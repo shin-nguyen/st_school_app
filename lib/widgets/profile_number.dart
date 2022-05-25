@@ -1,22 +1,44 @@
 import 'package:flutter/material.dart';
 
 class NumbersWidget extends StatelessWidget {
+  final int all;
+  final int inProress;
+  final int done;
+
+  const NumbersWidget({
+    Key? key,
+    required this.all,
+    required this.inProress,
+    required this.done,
+  }) : super(key: key);
+
   @override
-  Widget build(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          buildButton(
-            context,
-            '48',
-            'All',
-          ),
-          buildDivider(),
-          buildButton(context, '18', 'In Progress'),
-          buildDivider(),
-          buildButton(context, '30', 'Done'),
-        ],
-      );
-  Widget buildDivider() => Container(
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        buildButton(
+          context,
+          all.toString(),
+          'All',
+        ),
+        buildDivider(),
+        buildButton(
+          context,
+          inProress.toString(),
+          'In Progress',
+        ),
+        buildDivider(),
+        buildButton(
+          context,
+          done.toString(),
+          'Done',
+        ),
+      ],
+    );
+  }
+
+  Widget buildDivider() => const SizedBox(
         height: 24,
         child: VerticalDivider(
           thickness: 2,
@@ -25,7 +47,7 @@ class NumbersWidget extends StatelessWidget {
 
   Widget buildButton(BuildContext context, String value, String text) =>
       MaterialButton(
-        padding: EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         onPressed: () {},
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         child: Column(
@@ -34,12 +56,12 @@ class NumbersWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               value,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),

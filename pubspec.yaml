@@ -53,6 +53,7 @@ dependencies:
   sticky_headers: ^0.2.0
   awesome_select: ^5.0.0-nullsafety
   fl_chart: ^0.50.6
+  image_picker: ^0.8.5+3
 dev_dependencies:
   flutter_test:
     sdk: flutter

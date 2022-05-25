@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/latest_workout.dart';
+import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/screens/edit_profile/edit_profile_page.dart';
 import 'package:st_school_app/widgets/profile_image.dart';
@@ -17,7 +18,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    // final user = Provider.of<UserNotifier>(context);
+    final user = Provider.of<UserNotifier>(context);
+    final courses = Provider.of<CoursesNotifier>(context);
 
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
@@ -28,9 +30,8 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           const SizedBox(height: 30),
           ProfileImage(
-            imagePath:
-                "https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg",
-            onClicked: () async {
+            imagePath: user.getUser.avatar,
+            onClicked: () {
               Navigator.pushNamed(
                 context,
                 EditProfilePage.routeName,
@@ -38,7 +39,8 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           const SizedBox(height: 24),
-          buildName(),
+          buildName(user.getUser.firstName + user.getUser.lastName,
+              user.getUser.email),
           const SizedBox(height: 24),
           Padding(
             padding: EdgeInsets.only(left: w * 0.05, right: w * 0.05),
@@ -65,8 +67,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    NumbersWidget(),
+                  children: [
+                    NumbersWidget(
+                      all: courses.getCourses.length,
+                      inProress: courses.findByInProgress(),
+                      done: courses.findByDone(),
+                    ),
                   ],
                 ),
               ),
@@ -78,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Activity Progress",
                   style: TextStyle(
                       fontSize: 18,
@@ -139,8 +145,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: 20,
                               height: h,
                               decoration: BoxDecoration(
-                                  color: bgTextField,
-                                  borderRadius: BorderRadius.circular(30)),
+                                color: bgTextField,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                             ),
                             Positioned(
                               bottom: 0,
@@ -156,12 +163,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Text(
                         weekly[index]['day'],
-                        style: TextStyle(fontSize: 13),
+                        style: const TextStyle(fontSize: 13),
                       )
                     ],
                   );
@@ -169,45 +174,41 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          buildAbout(),
-          SizedBox(
-            height: h * 0.02,
-          ),
+          const SizedBox(height: 20),
+          buildAbout(user.getUser.about),
+          SizedBox(height: h * 0.02),
         ],
       ),
     );
   }
 
-  Widget buildName() => Column(
-        children: const [
+  Widget buildName(name, email) => Column(
+        children: [
           Text(
-            "Kai Akatsuki",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            name,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 4),
           Text(
-            "sinhnguyen2702@gmail.com",
-            style: TextStyle(color: Colors.grey),
+            email,
+            style: const TextStyle(color: Colors.grey),
           ),
         ],
       );
 
-  Widget buildAbout() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 48),
+  Widget buildAbout(about) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'About',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Text(
-              "Some thing about me",
-              style: TextStyle(fontSize: 16, height: 1.4),
+              about != '' ? about : "Some thing about me",
+              style: const TextStyle(fontSize: 16, height: 1.4),
             ),
           ],
         ),

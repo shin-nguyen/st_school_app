@@ -42,6 +42,15 @@ class CoursesNotifier with ChangeNotifier {
         orElse: () => Course.empty());
   }
 
+  int findByDone() {
+    return _myLearning.where((element) => element.progress >= 100).length;
+  }
+
+  int findByInProgress() {
+    return _myLearning.length -
+        _myLearning.where((element) => element.progress >= 100).length;
+  }
+
   Course findByMeLearning(int id) {
     return _myLearning.firstWhere((course) => course.id == id,
         orElse: () => Course.empty());

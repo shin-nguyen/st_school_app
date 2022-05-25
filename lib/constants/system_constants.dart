@@ -73,4 +73,4 @@ const Color bgTextField = Color(0xFFF7F8F8);
 const Color facebookColor = Color(0xFF3b5998);
 const Color googleColor = Color(0xFFDB4437);
 
-const String baseUrl = "http://192.168.1.26:8080";
+const String baseUrl = "http://172.24.144.1:8080";

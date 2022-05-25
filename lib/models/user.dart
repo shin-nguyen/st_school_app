@@ -5,23 +5,28 @@ class User {
   String address;
   String email;
   String avatar;
+  String about;
 
-  User(
-      {required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.address,
-      required this.email,
-      required this.avatar});
+  User({
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.address,
+    required this.email,
+    required this.avatar,
+    required this.about,
+  });
 
   factory User.empty() {
     return User(
-        firstName: '',
-        lastName: '',
-        phone: '',
-        address: '',
-        email: '',
-        avatar: '');
+      firstName: '',
+      lastName: '',
+      phone: '',
+      address: '',
+      email: '',
+      avatar: '',
+      about: '',
+    );
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -32,6 +37,7 @@ class User {
       address: json['address'] ?? '',
       email: json['email'] ?? '',
       avatar: json['avatar'] ?? '',
+      about: json['about'] ?? '',
     );
   }
 }
