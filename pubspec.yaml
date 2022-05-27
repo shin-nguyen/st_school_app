@@ -54,6 +54,8 @@ dependencies:
   awesome_select: ^5.0.0-nullsafety
   fl_chart: ^0.50.6
   image_picker: ^0.8.5+3
+  google_fonts: ^3.0.1
+  graphql_flutter: ^5.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

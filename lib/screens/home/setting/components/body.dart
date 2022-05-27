@@ -7,8 +7,6 @@ import 'package:st_school_app/widgets/custom_button_box.dart';
 import 'package:st_school_app/widgets/custom_place_holder.dart';
 import 'package:st_school_app/widgets/custom_title.dart';
 
-import 'package:st_school_app/widgets/profile_image.dart';
-
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
 
@@ -19,13 +17,6 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: spacer - 1.0),
-          ProfileImage(
-            imagePath:
-                "https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg",
-            isEdit: true,
-            onClicked: () async {},
-          ),
-          const SizedBox(height: spacer),
           Column(
             children: List.generate(accountMenuJson.length, (indexTitle) {
               List data = accountMenuJson[indexTitle]['categories'];

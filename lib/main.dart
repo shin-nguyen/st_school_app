@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:st_school_app/models/order.dart';
 import 'package:st_school_app/models/user.dart';
 import 'package:st_school_app/providers/auth_notifier.dart';
+import 'package:st_school_app/providers/blogs_notifier.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/providers/orders_notifier.dart';
@@ -45,6 +46,12 @@ class MyApp extends StatelessWidget {
             create: (context) => VideosNotifier([]),
             update: (_, auth, previousVideos) => VideosNotifier(
               previousVideos == null ? [] : previousVideos.getVideos,
+            ),
+          ),
+          ChangeNotifierProxyProvider<AuthNotifier, BlogsNotifier>(
+            create: (context) => BlogsNotifier([]),
+            update: (_, auth, previousVideos) => BlogsNotifier(
+              previousVideos == null ? [] : previousVideos.getBlogs,
             ),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, OrdersNotifier>(

@@ -1,6 +1,6 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/screens/home/blog/blogs_page.dart';
 import 'package:st_school_app/screens/home/home-page/home_page.dart';
 import 'package:st_school_app/screens/home/my-courses/my-courses-page.dart';
 import 'package:st_school_app/screens/home/profile/profile_page.dart';
@@ -20,52 +20,55 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const SearchsPage(),
     const MyCoursesPage(),
+    const BlogPage(),
     const ProfilePage(),
     const SettingPage(),
   ];
   int _selectedIndex = 0;
+  void onTapHandler(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[_selectedIndex],
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _selectedIndex,
-        showElevation: true,
-        onItemSelected: (index) => setState(() {
-          _selectedIndex = index;
-        }),
-        items: [
-          BottomNavyBarItem(
-              icon: const Icon(Icons.home),
-              title: const Text('Home'),
-              activeColor: kpink,
-              inactiveColor: Colors.grey[300]),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.search),
-            title: const Text('Search'),
-            inactiveColor: Colors.grey[300],
-            activeColor: kpink,
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        selectedItemColor: primary,
+        elevation: 0.0,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.auto_stories),
-            title: const Text('Learning'),
-            inactiveColor: Colors.grey[300],
-            activeColor: kpink,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.person),
-            title: const Text('Profile'),
-            inactiveColor: Colors.grey[300],
-            activeColor: kpink,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.auto_stories),
+            label: 'Learning',
           ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            inactiveColor: Colors.grey[300],
-            activeColor: kpink,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Blog',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
+        onTap: (int index) {
+          onTapHandler(index);
+        },
       ),
     );
   }
