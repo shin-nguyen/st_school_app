@@ -50,8 +50,8 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProxyProvider<AuthNotifier, BlogsNotifier>(
             create: (context) => BlogsNotifier([]),
-            update: (_, auth, previousVideos) => BlogsNotifier(
-              previousVideos == null ? [] : previousVideos.getBlogs,
+            update: (_, auth, previousBlogs) => BlogsNotifier(
+              previousBlogs == null ? [] : previousBlogs.getBlogs,
             ),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, OrdersNotifier>(

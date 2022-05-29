@@ -5,14 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
-import 'package:st_school_app/utils/app_color.dart';
 import 'package:st_school_app/widgets/app_text.dart';
-import 'package:st_school_app/widgets/large_buttons.dart';
 
 class DetailPage extends StatelessWidget {
-  static const routeName = '/detail';
+  static const routeName = '/coursedetail';
 
   int gottenStars = 4;
+
+  DetailPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final courseId =

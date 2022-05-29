@@ -7,6 +7,8 @@ class Blog {
   final String user;
   final String createdTime;
   final int view;
+  int recordLove;
+  bool love;
 
   Blog({
     required this.id,
@@ -17,6 +19,8 @@ class Blog {
     required this.user,
     required this.createdTime,
     required this.view,
+    required this.love,
+    required this.recordLove,
   });
 
   factory Blog.empty() {
@@ -29,12 +33,16 @@ class Blog {
       content: "",
       view: 0,
       summary: "",
+      love: false,
+      recordLove: 0,
     );
   }
 
-  factory Blog.fromJson(Map<String, dynamic> json) {
+  factory Blog.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return Blog(
-      id: json['id'] ?? '',
+      id: json['id'] ?? -1,
       image: json['image'] ?? '',
       title: json['title'] ?? '',
       user: json['user']['firstName'] ?? '',
@@ -42,39 +50,50 @@ class Blog {
       content: json['content'] ?? '',
       view: json['view'] ?? 0,
       summary: json['summary'] ?? '',
+      love: json['isLove'] ?? false,
+      recordLove: json['recordLove'] ?? 0,
     );
   }
 }
 
 final dataBlogs = [
   Blog(
-      id: 1,
-      image:
-          'https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png',
-      title: 'Finding your ikigai in your middle age',
-      user: 'John Johny',
-      createdTime: '25 Mar 2020',
-      content: "Finding your ikigai in your middle age",
-      view: 0,
-      summary: "Finding your ikigai in your middle age"),
+    id: 1,
+    image:
+        'https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png',
+    title: 'Finding your ikigai in your middle age',
+    user: 'John Johny',
+    createdTime: '25 Mar 2020',
+    content: "Finding your ikigai in your middle age",
+    view: 0,
+    summary: "Finding your ikigai in your middle age",
+    love: true,
+    recordLove: 0,
+  ),
   Blog(
-      id: 2,
-      image:
-          'https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png',
-      title: 'Finding your ikigai in your middle age',
-      user: 'John Johny',
-      createdTime: '25 Mar 2020',
-      content: "Finding your ikigai in your middle age",
-      view: 0,
-      summary: "Finding your ikigai in your middle age"),
+    id: 2,
+    image:
+        'https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png',
+    title: 'Finding your ikigai in your middle age',
+    user: 'John Johny',
+    createdTime: '25 Mar 2020',
+    content: "Finding your ikigai in your middle age",
+    view: 0,
+    summary: "Finding your ikigai in your middle age",
+    love: true,
+    recordLove: 0,
+  ),
   Blog(
-      id: 3,
-      image:
-          'https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png',
-      title: 'Finding your ikigai in your middle age',
-      user: 'John Johny',
-      createdTime: '25 Mar 2020',
-      content: "Finding your ikigai in your middle age",
-      view: 0,
-      summary: "Finding your ikigai in your middle age"),
+    id: 3,
+    image:
+        'https://res.cloudinary.com/qscloud/image/upload/v1632104647/st-school/images/java.png.png',
+    title: 'Finding your ikigai in your middle age',
+    user: 'John Johny',
+    createdTime: '25 Mar 2020',
+    content: "Finding your ikigai in your middle age",
+    view: 0,
+    summary: "Finding your ikigai in your middle age",
+    love: true,
+    recordLove: 0,
+  ),
 ];

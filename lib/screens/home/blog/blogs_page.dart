@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
-import 'package:st_school_app/models/blog.dart';
 import 'package:st_school_app/providers/blogs_notifier.dart';
+import 'package:st_school_app/screens/detail/detail_page.dart';
 import 'package:st_school_app/screens/home/blog/components/blog_details_page.dart';
 import 'package:st_school_app/widgets/custom_heading.dart';
 import 'package:st_school_app/widgets/custome_search_field.dart';
-import 'package:st_school_app/widgets/post_cell_widget.dart';
+import 'package:st_school_app/screens/home/blog/components/blog_cell_widget.dart';
 
 class BlogPage extends StatefulWidget {
   const BlogPage({Key? key}) : super(key: key);
@@ -44,17 +44,16 @@ class _BlogPageState extends State<BlogPage> {
 
   String query = '';
   int selectedIndex = 0;
+  List<String> blogTypes = [
+    "All",
+    "Fashion",
+    "UI/UX Design",
+    "Health",
+    "Technology",
+    "Sports",
+  ];
   @override
   Widget build(BuildContext context) {
-    List<String> blogTypes = [
-      "All",
-      "Fashion",
-      "UI/UX Design",
-      "Health",
-      "Technology",
-      "Sports",
-    ];
-
     final blog = Provider.of<BlogsNotifier>(context);
 
     return Scaffold(
@@ -153,10 +152,17 @@ class _BlogPageState extends State<BlogPage> {
                         ),
                         child: Column(
                           children: [
-                            PostCellWidget(
-                              blog: blog.getBlogs[index],
-                              onClick: () {},
-                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    BlogDetailsPage.routeName,
+                                    arguments: blog.getBlogs[index].id,
+                                  );
+                                },
+                                child: PostCellWidget(
+                                  blog: blog.getBlogs[index],
+                                )),
                             const Divider(),
                           ],
                         ),

@@ -1,56 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/blog.dart';
+import 'package:st_school_app/providers/blogs_notifier.dart';
+import 'package:flutter_html/flutter_html.dart';
 
-class PostDetailsPage extends StatelessWidget {
-  final Blog blog;
-
-  const PostDetailsPage({
+class BlogDetailsPage extends StatefulWidget {
+  const BlogDetailsPage({
     Key? key,
-    required this.blog,
   }) : super(key: key);
+
+  static const routeName = '/blog-detail';
+  @override
+  State<BlogDetailsPage> createState() => _BlogDetailsPageState();
+}
+
+class _BlogDetailsPageState extends State<BlogDetailsPage> {
+  var blogId = -1;
+
+  Future<void> _likeBlog() async {
+    try {
+      await Provider.of<BlogsNotifier>(context, listen: false)
+          .updateLike(blogId);
+      setState(() {});
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('An error occurred!'),
+          content: Text('Something went wrong.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    blogId = ModalRoute.of(context)?.settings.arguments as int; // is the id!
+
+    final blog = Provider.of<BlogsNotifier>(
+      context,
+      listen: false,
+    ).findById(blogId);
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10.0),
               child: Container(
                 color: Colors.grey[200],
                 child: IconButton(
-                  icon: Icon(
-                    Icons.bookmark_outline,
-                    size: 20,
-                  ),
-                  color: Colors.grey,
-                  onPressed: () {},
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                color: Colors.grey[200],
-                child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.favorite_outline,
                     size: 20,
                   ),
-                  color: Colors.grey,
-                  onPressed: () {},
+                  color: blog.love ? Colors.red : Colors.grey,
+                  onPressed: () {
+                    _likeBlog();
+                  },
                 ),
               ),
             ),
@@ -58,11 +82,11 @@ class PostDetailsPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10.0),
               child: Container(
                 color: Colors.grey[200],
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.share_outlined,
                     size: 20,
                   ),
@@ -77,12 +101,12 @@ class PostDetailsPage extends StatelessWidget {
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
-          padding: const EdgeInsets.only(top: 32),
+          padding: const EdgeInsets.only(top: miniSpacer),
           child: ListView(
             children: [
               Text(
                 blog.title,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 32,
                 ),
@@ -94,17 +118,31 @@ class PostDetailsPage extends StatelessWidget {
                 alignment: WrapAlignment.start,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 16,
-                    backgroundImage: AssetImage('assets/images/profile.jpg'),
+                  RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: blog.user,
+                          ),
+                        ],
+                        style: const TextStyle(
+                            color: Colors.grey, fontSize: 14.0)),
                   ),
                   const SizedBox(
-                    width: 8,
+                    width: miniSpacer,
                   ),
-                  // Text('$author, '),
-                  Text(
-                    blog.createdTime,
-                    style: TextStyle(color: Colors.grey),
+                  RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: blog.createdTime,
+                          ),
+                        ],
+                        style: const TextStyle(
+                            color: Colors.grey, fontSize: 14.0)),
+                  ),
+                  const SizedBox(
+                    width: miniSpacer,
                   ),
                 ],
               ),
@@ -120,14 +158,14 @@ class PostDetailsPage extends StatelessWidget {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: 4,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.remove_red_eye_outlined,
                         color: Colors.grey,
                         size: 18,
                       ),
                       Text(
-                        '6.5K Views',
-                        style: TextStyle(
+                        blog.view.toString() + ' Views',
+                        style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 14,
                           fontWeight: FontWeight.w100,
@@ -139,33 +177,14 @@ class PostDetailsPage extends StatelessWidget {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: 4,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.favorite,
                         color: Colors.grey,
                         size: 18,
                       ),
                       Text(
-                        '106 Likes',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w100,
-                        ),
-                      )
-                    ],
-                  ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 4,
-                    children: [
-                      Icon(
-                        Icons.bookmark,
-                        color: Colors.grey,
-                        size: 18,
-                      ),
-                      Text(
-                        '55 Saves',
-                        style: TextStyle(
+                        blog.recordLove.toString() + ' Likes',
+                        style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 14,
                           fontWeight: FontWeight.w100,
@@ -178,38 +197,19 @@ class PostDetailsPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    blog.image,
-                    fit: BoxFit.cover,
-                  ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  blog.image,
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                        text: 'A',
-                        style: GoogleFonts.notoSerif(
-                            color: Colors.black, fontSize: 32)),
-                    TextSpan(
-                      text:
-                          ' contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.',
-                      style: GoogleFonts.notoSerif(
-                        color: Colors.black,
-                        fontSize: 18,
-                        height: 1.7,
-                        wordSpacing: 2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              Html(
+                data: blog.content,
+              )
             ],
           ),
         ),

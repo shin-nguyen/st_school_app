@@ -1,4 +1,5 @@
 class User {
+  int id;
   String firstName;
   String lastName;
   String phone;
@@ -8,6 +9,7 @@ class User {
   String about;
 
   User({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.phone,
@@ -19,6 +21,7 @@ class User {
 
   factory User.empty() {
     return User(
+      id: -1,
       firstName: '',
       lastName: '',
       phone: '',
@@ -38,6 +41,7 @@ class User {
       email: json['email'] ?? '',
       avatar: json['avatar'] ?? '',
       about: json['about'] ?? '',
+      id: json['id'] ?? -1,
     );
   }
 }

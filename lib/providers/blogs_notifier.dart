@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/models/blog_love.dart';
 import 'package:st_school_app/models/blog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:st_school_app/utils/gql_parser.dart';
 
 class BlogsNotifier with ChangeNotifier {
   List<Blog> _items = [];
@@ -38,27 +38,52 @@ class BlogsNotifier with ChangeNotifier {
     }
   }
 
+  Future<void> updateLike(int blogId) async {
+    final prodIndex = _items.indexWhere((prod) => prod.id == blogId);
+    if (prodIndex >= 0) {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.get("token").toString();
+
+      final response = await http.put(
+          Uri.parse(baseUrl + '/api/v1/blogs/love/' + blogId.toString()),
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          });
+
+      if (response.statusCode == 200) {
+        _items[prodIndex].love = !_items[prodIndex].love;
+        _items[prodIndex].recordLove =
+            (json.decode(response.body) as List).length;
+        notifyListeners();
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    }
+  }
+
   Future<void> fetchAndSetBlogs() async {
-    const parser = GqlParser('graphql/');
-    const filterString = '/api/v1/blogs/graphql/blogs';
+    const filterString = '/api/v1/blogs/user-love';
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.get("token").toString();
 
     try {
-      final response = await http.post(
-        Uri.parse(baseUrl + filterString),
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: parser.gqlRequestBody('blog-query', {'type': 'true'}),
-      );
-
-      final dataJson = jsonDecode(response.body)['data']['blogs'] as List;
-      final List<Blog> blogs = [];
-
-      dataJson.forEach((course) {
-        blogs.add(Blog.fromJson(course));
+      final response =
+          await http.get(Uri.parse(baseUrl + filterString), headers: {
+        "Authorization": token,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
       });
 
+      final dataJson = json.decode(response.body);
+      final List<Blog> blogs = [];
+
+      for (var blog in dataJson) {
+        blogs.add(
+          Blog.fromJson(blog),
+        );
+      }
       _items = blogs;
       notifyListeners();
     } catch (error) {

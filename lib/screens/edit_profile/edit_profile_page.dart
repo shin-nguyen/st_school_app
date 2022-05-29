@@ -43,6 +43,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     address: '',
     about: '',
     avatar: '',
+    id: -1,
   );
 
   var _initValues = {
@@ -292,6 +293,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               lastName: _editedProfile.lastName,
                               avatar: _editedProfile.avatar,
                               phone: _editedProfile.phone,
+                              id: _editedProfile.id,
                             );
                           },
                         ),
@@ -340,6 +342,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               lastName: value!,
                               avatar: _editedProfile.avatar,
                               phone: _editedProfile.phone,
+                              id: _editedProfile.id,
                             );
                           },
                         ),
@@ -397,6 +400,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               lastName: _editedProfile.lastName,
                               avatar: _editedProfile.avatar,
                               phone: value!,
+                              id: _editedProfile.id,
                             );
                           },
                         ),
@@ -440,14 +444,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           },
                           onSaved: (value) {
                             _editedProfile = User(
-                              firstName: _editedProfile.firstName,
-                              about: value!,
-                              address: _editedProfile.address,
-                              email: _editedProfile.email,
-                              lastName: _editedProfile.lastName,
-                              avatar: _editedProfile.avatar,
-                              phone: _editedProfile.phone,
-                            );
+                                firstName: _editedProfile.firstName,
+                                about: value!,
+                                address: _editedProfile.address,
+                                email: _editedProfile.email,
+                                lastName: _editedProfile.lastName,
+                                avatar: _editedProfile.avatar,
+                                phone: _editedProfile.phone,
+                                id: _editedProfile.id);
                           },
                         ),
                       ],

@@ -28,7 +28,7 @@ class UserNotifier with ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseData = json.decode(response.body);
       user = User.fromJson(responseData);
-
+      await prefs.setInt('idUser', user.id);
       notifyListeners();
     } else {
       throw Exception('Failed to load data!');

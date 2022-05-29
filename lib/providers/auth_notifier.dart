@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/widgets.dart';
-import 'package:st_school_app/providers/user_notifier.dart';
 
 class LoginRequestModel {
   String email;
