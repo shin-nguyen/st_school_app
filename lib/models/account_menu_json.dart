@@ -43,18 +43,22 @@ List accountMenuJson = [
       {
         'title': 'About Us',
         'isSwitch': false,
+        'file': 'about_us',
       },
       {
         'title': 'Help and Support',
         'isSwitch': false,
+        'file': "help",
       },
       {
         'title': 'Terms and Conditions',
         'isSwitch': false,
+        'file': "terms_and_conditons",
       },
       {
         'title': 'Privacy Policy',
         'isSwitch': false,
+        'file': "privacy_policy",
       },
     ],
   },

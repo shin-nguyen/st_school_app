@@ -6,6 +6,7 @@ import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/orders_notifier.dart';
 import 'package:st_school_app/screens/checkout/components/cart_item_page.dart';
 import 'package:awesome_select/awesome_select.dart';
+import 'package:st_school_app/screens/checkout/components/paypal_payment.dart';
 import 'package:st_school_app/screens/payment/payment_page.dart';
 
 class CartPage extends StatefulWidget {
@@ -237,26 +238,47 @@ class _CartPageState extends State<CartPage> {
                                     child: CircularProgressIndicator(),
                                   ),
                                 )
-                              : Container()
-                          // FlatButton(
-                          //   child: const Text('ORDER NOW'),
-                          //   onPressed: (cart.totalAmount <= 0)
-                          //       ? null
-                          //       : () {
-                          //           // setState(() {
-                          //           //   _isLoading = true;
-                          //           // });
-                          //           // await Provider.of<Orders>(context, listen: false).addOrder(
-                          //           //   widget.cart.items.values.toList(),
-                          //           //   widget.cart.totalAmount,
-                          //           // );
-                          //           // setState(() {
-                          //           //   _isLoading = false;
-                          //           // });
-                          //           // widget.cart.clear();
-                          //         },
-                          //   textColor: Theme.of(context).primaryColor,
-                          // )
+                              : SizedBox(
+                                  width: w * 0.4,
+                                  height: 40,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      // lets assume that product price is 5.99 usd
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const PaypalPayment(
+                                              amount: 0.99,
+                                              currency: 'USD',
+                                            ),
+                                          ));
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) => Colors.blue),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Image(
+                                          image: AssetImage(
+                                              'assets/images/paypal.png'),
+                                          height: 40,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          'Pay with Paypal',
+                                          style: TextStyle(color: Colors.black),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                         ],
                       ),
                     ),
