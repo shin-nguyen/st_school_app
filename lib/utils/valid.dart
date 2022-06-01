@@ -1,6 +1,6 @@
 bool isValidPhoneNumber(String string) {
   // Null or empty string is invalid phone number
-  if (string == null || string.isEmpty) {
+  if (string.isEmpty) {
     return false;
   }
 
@@ -13,4 +13,11 @@ bool isValidPhoneNumber(String string) {
     return false;
   }
   return true;
+}
+
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return double.parse(s) != null;
 }

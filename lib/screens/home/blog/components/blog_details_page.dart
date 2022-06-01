@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/blog.dart';
 import 'package:st_school_app/providers/blogs_notifier.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 class BlogDetailsPage extends StatefulWidget {
   const BlogDetailsPage({
@@ -16,6 +20,29 @@ class BlogDetailsPage extends StatefulWidget {
 }
 
 class _BlogDetailsPageState extends State<BlogDetailsPage> {
+  StreamController<String> controllerUrl = StreamController<String>();
+
+  void generateLink(
+      BranchUniversalObject buo, BranchLinkProperties lp, Blog blog) async {
+    BranchResponse response =
+        await FlutterBranchSdk.getShortUrl(buo: buo, linkProperties: lp);
+    if (response.success) {
+      await share(blog, response.result);
+      //debugPrint(response.result);
+      controllerUrl.sink.add('${response.result}');
+    } else {
+      controllerUrl.sink
+          .add('Error : ${response.errorCode} - ${response.errorMessage}');
+    }
+  }
+
+  Future<void> share(Blog blog, String link) async {
+    await FlutterShare.share(
+      title: blog.title,
+      linkUrl: link,
+    );
+  }
+
   var blogId = -1;
 
   Future<void> _likeBlog() async {
@@ -27,11 +54,11 @@ class _BlogDetailsPageState extends State<BlogDetailsPage> {
       await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: Text('An error occurred!'),
-          content: Text('Something went wrong.'),
+          title: const Text('An error occurred!'),
+          content: const Text('Something went wrong.'),
           actions: <Widget>[
             FlatButton(
-              child: Text('Okay'),
+              child: const Text('Okay'),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -91,7 +118,35 @@ class _BlogDetailsPageState extends State<BlogDetailsPage> {
                     size: 20,
                   ),
                   color: Colors.grey,
-                  onPressed: () {},
+                  onPressed: () async {
+                    BranchLinkProperties lp = BranchLinkProperties(
+                        channel: 'facebook',
+                        feature: 'sharing',
+                        stage: 'new share',
+                        campaign: 'xxxxx',
+                        tags: ['one', 'two', 'three'])
+                      ..addControlParam('referring_user_id', 'asdf');
+                    lp.addControlParam('\$uri_redirect_mode', '1');
+                    return generateLink(
+                      BranchUniversalObject(
+                          canonicalIdentifier: 'flutter/branch',
+                          canonicalUrl: 'https://flutter.dev',
+                          title: 'Blogs Plugin',
+                          imageUrl:
+                              'https://res.cloudinary.com/qscloud/image/upload/v1653703118/st-school/images/image_picker6898674863682973209.jpg.jpg',
+                          contentDescription: 'Blogs Pages',
+                          contentMetadata: BranchContentMetaData()
+                            ..addCustomMetadata('key', blogId),
+                          keywords: ['Plugin', 'Branch', 'Flutter'],
+                          publiclyIndex: true,
+                          locallyIndex: true,
+                          expirationDateInMilliSec: DateTime.now()
+                              .add(const Duration(days: 365))
+                              .millisecondsSinceEpoch),
+                      lp,
+                      blog,
+                    );
+                  },
                 ),
               ),
             ),
@@ -104,6 +159,41 @@ class _BlogDetailsPageState extends State<BlogDetailsPage> {
           padding: const EdgeInsets.only(top: miniSpacer),
           child: ListView(
             children: [
+              // ElevatedButton(
+              //     onPressed: () {
+              //       BranchLinkProperties lp = BranchLinkProperties(
+              //           channel: 'facebook',
+              //           feature: 'sharing',
+              //           stage: 'new share',
+              //           campaign: 'xxxxx',
+              //           tags: ['one', 'two', 'three'])
+              //         ..addControlParam('referring_user_id', 'asdf');
+              //       lp.addControlParam('\$uri_redirect_mode', '1');
+              //       return generateLink(
+              //         BranchUniversalObject(
+              //             canonicalIdentifier: 'flutter/branch',
+              //             canonicalUrl: 'https://flutter.dev',
+              //             title: 'Blogs Plugin',
+              //             imageUrl:
+              //                 'https://res.cloudinary.com/qscloud/image/upload/v1653703118/st-school/images/image_picker6898674863682973209.jpg.jpg',
+              //             contentDescription: 'Blogs Pages',
+              //             contentMetadata: BranchContentMetaData()
+              //               ..addCustomMetadata('key', blogId),
+              //             keywords: ['Plugin', 'Branch', 'Flutter'],
+              //             publiclyIndex: true,
+              //             locallyIndex: true,
+              //             expirationDateInMilliSec: DateTime.now()
+              //                 .add(const Duration(days: 365))
+              //                 .millisecondsSinceEpoch),
+              //         lp,
+              //       );
+              //     },
+              //     child: Text(
+              //       "Generate Link",
+              //       style: TextStyle(
+              //         fontSize: 20.0,
+              //       ),
+              //     )),
               Text(
                 blog.title,
                 style: const TextStyle(

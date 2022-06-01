@@ -73,4 +73,15 @@ const Color bgTextField = Color(0xFFF7F8F8);
 const Color facebookColor = Color(0xFF3b5998);
 const Color googleColor = Color(0xFFDB4437);
 
+const String branchIoDeepLink = "Generate Branch IO Deep Link";
+const String deepLinkTitle = "deep_link_title";
+const String clickedBranchLink = "+clicked_branch_link";
+const String controlParamsKey = '\$uri_redirect_mode';
+const String deepLinkData = 'flutter deep link';
+const String branchIoCanonicalIdentifier = 'flutter/branch';
+const String nextScreenAppBarTitle = "Data From Branch Io";
+const String homeScreenAppBarTitle = "Generate Branch IO";
+const String gettingData = "Getting Data";
+const String appTitle = 'Deep Link With Flutter';
+
 const String baseUrl = "http://192.168.1.27:8080";
