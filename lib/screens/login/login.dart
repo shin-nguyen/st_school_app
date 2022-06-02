@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/auth_notifier.dart';
-import 'package:st_school_app/providers/user_notifier.dart';
 import 'package:st_school_app/screens/forgot_password/forgot_password_screen.dart';
+import 'package:st_school_app/utils/valid.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => new _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final FocusNode myFocusNodeEmailLogin = FocusNode();
   final FocusNode myFocusNodePasswordLogin = FocusNode();
@@ -23,32 +24,34 @@ class _LoginPageState extends State<LoginPage>
   final FocusNode myFocusNodeCofirmPassword = FocusNode();
   final FocusNode myFocusNodePassword = FocusNode();
   final FocusNode myFocusNodeEmail = FocusNode();
-  final FocusNode myFocusNodeName = FocusNode();
+  final FocusNode myFocusNodeLastName = FocusNode();
+  final FocusNode myFocusNodeFirstName = FocusNode();
 
-  TextEditingController loginEmailController = new TextEditingController();
-  TextEditingController loginPasswordController = new TextEditingController();
+  TextEditingController loginEmailController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
 
   bool _obscureTextLogin = true;
   bool _obscureTextSignup = true;
   bool _obscureTextSignupConfirm = true;
 
-  TextEditingController signupEmailController = new TextEditingController();
-  TextEditingController signupNameController = new TextEditingController();
-  TextEditingController signupPasswordController = new TextEditingController();
+  TextEditingController signupEmailController = TextEditingController();
+  TextEditingController signupFirstNameController = TextEditingController();
+  TextEditingController signupLastNameController = TextEditingController();
+  TextEditingController signupPasswordController = TextEditingController();
   TextEditingController signupConfirmPasswordController =
-      new TextEditingController();
+      TextEditingController();
 
   late PageController _pageController;
 
   Color left = Colors.black;
   Color right = Colors.white;
 
-  Color loginGradientStart = const Color(0xFFfbab66);
-  Color loginGradientEnd = const Color(0xFFf7418c);
+  Color loginGradientStart = primary;
+  Color loginGradientEnd = background;
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       key: _scaffoldKey,
       body: NotificationListener<OverscrollIndicatorNotification>(
         child: SingleChildScrollView(
@@ -57,8 +60,8 @@ class _LoginPageState extends State<LoginPage>
             height: MediaQuery.of(context).size.height >= 775.0
                 ? MediaQuery.of(context).size.height
                 : 775.0,
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
                   colors: [loginGradientStart, loginGradientEnd],
                   begin: const FractionalOffset(0.0, 0.0),
                   end: const FractionalOffset(1.0, 1.0),
@@ -68,9 +71,52 @@ class _LoginPageState extends State<LoginPage>
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                const SizedBox(
-                  height: 110,
+                const SizedBox(height: 100),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 50.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: textWhite,
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 8,
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'ST School',
+                          style: TextStyle(
+                            color: grey,
+                            fontSize: 50,
+                            fontFamily: 'Anton',
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        const SizedBox(width: miniSpacer),
+                        Container(
+                          width: 50,
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              'assets/images/kai.jpg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+                const SizedBox(height: miniSpacer),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: _buildMenuBar(context),
@@ -93,11 +139,11 @@ class _LoginPageState extends State<LoginPage>
                       }
                     },
                     children: <Widget>[
-                      new ConstrainedBox(
+                      ConstrainedBox(
                         constraints: const BoxConstraints.expand(),
                         child: _buildSignIn(context),
                       ),
-                      new ConstrainedBox(
+                      ConstrainedBox(
                         constraints: const BoxConstraints.expand(),
                         child: _buildSignUp(context),
                       ),
@@ -116,7 +162,8 @@ class _LoginPageState extends State<LoginPage>
   void dispose() {
     myFocusNodePassword.dispose();
     myFocusNodeEmail.dispose();
-    myFocusNodeName.dispose();
+    myFocusNodeFirstName.dispose();
+    myFocusNodeLastName.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -182,9 +229,6 @@ class _LoginPageState extends State<LoginPage>
   }
 
   Widget _buildSignIn(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey();
-    final _passwordController = TextEditingController();
-
     return Container(
       padding: const EdgeInsets.only(top: 23.0),
       child: Column(
@@ -201,8 +245,10 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 child: SizedBox(
                   width: 300.0,
-                  height: 190.0,
+                  height: 200.0,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
@@ -215,16 +261,20 @@ class _LoginPageState extends State<LoginPage>
                               fontFamily: "WorkSansSemiBold",
                               fontSize: 16.0,
                               color: Colors.black),
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            icon: Icon(
+                            icon: const Icon(
                               FontAwesomeIcons.envelope,
                               color: Colors.black,
                               size: 22.0,
                             ),
                             hintText: "Email address...",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+                            hintStyle: const TextStyle(
+                              fontFamily: "WorkSansSemiBold",
+                              fontSize: 17.0,
+                            ),
+                            errorText:
+                                validatePassword(loginEmailController.text),
                           ),
                         ),
                       ),
@@ -270,23 +320,11 @@ class _LoginPageState extends State<LoginPage>
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.only(top: 170.0),
-                  decoration: new BoxDecoration(
+                  margin: const EdgeInsets.only(top: 250.0),
+                  decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: loginGradientStart,
-                        offset: const Offset(1.0, 6.0),
-                        blurRadius: 20.0,
-                      ),
-                      BoxShadow(
-                        color: loginGradientEnd,
-                        offset: const Offset(1.0, 6.0),
-                        blurRadius: 20.0,
-                      ),
-                    ],
-                    gradient: new LinearGradient(
-                        colors: [loginGradientEnd, loginGradientStart],
+                    gradient: LinearGradient(
+                        colors: [loginGradientStart, loginGradientStart],
                         begin: const FractionalOffset(0.2, 0.2),
                         end: const FractionalOffset(1.0, 1.0),
                         stops: const [0.0, 1.0],
@@ -294,7 +332,6 @@ class _LoginPageState extends State<LoginPage>
                   ),
                   child: MaterialButton(
                     highlightColor: Colors.transparent,
-                    splashColor: loginGradientEnd,
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(
@@ -348,7 +385,7 @@ class _LoginPageState extends State<LoginPage>
                   height: 1.0,
                 ),
                 const Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Text(
                     "Or",
                     style: TextStyle(
@@ -390,7 +427,7 @@ class _LoginPageState extends State<LoginPage>
                     ),
                     child: const Icon(
                       FontAwesomeIcons.facebookF,
-                      color: const Color(0xFF0084ff),
+                      color: Color(0xFF0084ff),
                     ),
                   ),
                 ),
@@ -407,7 +444,7 @@ class _LoginPageState extends State<LoginPage>
                     ),
                     child: const Icon(
                       FontAwesomeIcons.google,
-                      color: const Color(0xFF0084ff),
+                      color: Color(0xFF0084ff),
                     ),
                   ),
                 ),
@@ -422,23 +459,53 @@ class _LoginPageState extends State<LoginPage>
   Future<void> _submit() async {
     try {
       // Log user in
+      // await Provider.of<AuthNotifier>(context, listen: false)
+      //     .login(LoginRequestModel(
+      //   loginEmailController.text,
+      //   loginPasswordController.text,
+      // ));
       await Provider.of<AuthNotifier>(context, listen: false)
-          .login(LoginRequestModel("thongchuthanh2000@gmail.com", "123456"));
+          .login(LoginRequestModel(
+        "thongchuthanh2000@gmail.com",
+        "123456",
+      ));
     } catch (error) {
-      var errorMessage = 'Authentication failed';
-      if (error.toString().contains('EMAIL_EXISTS')) {
-        errorMessage = 'This email address is already in use.';
-      } else if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'This is not a valid email address';
-      } else if (error.toString().contains('WEAK_PASSWORD')) {
-        errorMessage = 'This password is too weak.';
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Could not find a user with that email.';
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Invalid password.';
-      }
-      // _showErrorDialog(errorMessage);
+      _showErrorDialog(error.toString());
     }
+  }
+
+  Future<void> _submitSignUp() async {
+    try {
+      // Log user in
+      await Provider.of<AuthNotifier>(context, listen: false).signup(
+        email: signupEmailController.text,
+        firstName: signupFirstNameController.text,
+        lastName: signupLastNameController.text,
+        password: signupPasswordController.text,
+        password2: signupConfirmPasswordController.text,
+      );
+      _onSignInButtonPress();
+    } catch (error) {
+      _showErrorDialog(error.toString());
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: const Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
   }
 
   Widget _buildSignUp(BuildContext context) {
@@ -465,8 +532,8 @@ class _LoginPageState extends State<LoginPage>
                         padding: const EdgeInsets.only(
                             top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                         child: TextField(
-                          focusNode: myFocusNodeName,
-                          controller: signupNameController,
+                          focusNode: myFocusNodeFirstName,
+                          controller: signupFirstNameController,
                           keyboardType: TextInputType.text,
                           textCapitalization: TextCapitalization.words,
                           style: const TextStyle(
@@ -479,7 +546,36 @@ class _LoginPageState extends State<LoginPage>
                               FontAwesomeIcons.user,
                               color: Colors.black,
                             ),
-                            hintText: "Fullname...",
+                            hintText: "First Name...",
+                            hintStyle: TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextField(
+                          focusNode: myFocusNodeLastName,
+                          controller: signupLastNameController,
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.words,
+                          style: const TextStyle(
+                              fontFamily: "WorkSansSemiBold",
+                              fontSize: 16.0,
+                              color: Colors.black),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              FontAwesomeIcons.user,
+                              color: Colors.black,
+                            ),
+                            hintText: "Last Name...",
                             hintStyle: TextStyle(
                                 fontFamily: "WorkSansSemiBold", fontSize: 16.0),
                           ),
@@ -549,85 +645,73 @@ class _LoginPageState extends State<LoginPage>
                           ),
                         ),
                       ),
-                      // Container(
-                      //   width: 250.0,
-                      //   height: 1.0,
-                      //   color: Colors.grey[400],
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(
-                      //       top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                      //   child: TextField(
-                      //     focusNode: myFocusNodeCofirmPassword,
-                      //     controller: signupConfirmPasswordController,
-                      //     obscureText: _obscureTextSignupConfirm,
-                      //     style: const TextStyle(
-                      //         fontFamily: "WorkSansSemiBold",
-                      //         fontSize: 16.0,
-                      //         color: Colors.black),
-                      //     decoration: InputDecoration(
-                      //       border: InputBorder.none,
-                      //       icon: const Icon(
-                      //         FontAwesomeIcons.lock,
-                      //         color: Colors.black,
-                      //       ),
-                      //       hintText: "Confirm password...",
-                      //       hintStyle: const TextStyle(
-                      //           fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                      //       suffixIcon: GestureDetector(
-                      //         onTap: _toggleSignupConfirm,
-                      //         child: const Icon(
-                      //           FontAwesomeIcons.eye,
-                      //           size: 15.0,
-                      //           color: Colors.black,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextField(
+                          focusNode: myFocusNodeCofirmPassword,
+                          controller: signupConfirmPasswordController,
+                          obscureText: _obscureTextSignupConfirm,
+                          style: const TextStyle(
+                              fontFamily: "WorkSansSemiBold",
+                              fontSize: 16.0,
+                              color: Colors.black),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: const Icon(
+                              FontAwesomeIcons.lock,
+                              color: Colors.black,
+                            ),
+                            hintText: "Confirm password...",
+                            hintStyle: const TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                            suffixIcon: GestureDetector(
+                              onTap: _toggleSignupConfirm,
+                              child: const Icon(
+                                FontAwesomeIcons.eye,
+                                size: 15.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 250.0),
-                decoration: new BoxDecoration(
+                margin: const EdgeInsets.only(top: 460.0),
+                decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: loginGradientStart,
-                      offset: const Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                    BoxShadow(
-                      color: loginGradientEnd,
-                      offset: const Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                  ],
-                  gradient: new LinearGradient(
-                      colors: [loginGradientEnd, loginGradientStart],
+                  gradient: LinearGradient(
+                      colors: [loginGradientStart, loginGradientStart],
                       begin: const FractionalOffset(0.2, 0.2),
                       end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
+                      stops: const [0.0, 1.0],
                       tileMode: TileMode.clamp),
                 ),
                 child: MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
-                      ),
+                  highlightColor: Colors.transparent,
+                  splashColor: loginGradientEnd,
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
+                    child: Text(
+                      "SIGN UP",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25.0,
+                          fontFamily: "WorkSansBold"),
                     ),
-                    onPressed: () => {}),
+                  ),
+                  onPressed: _submitSignUp,
+                ),
               ),
             ],
           ),
@@ -666,7 +750,7 @@ class _LoginPageState extends State<LoginPage>
 }
 
 class TabIndicationPainter extends CustomPainter {
-  Paint painter = new Paint();
+  Paint painter = Paint();
   final double dxTarget = 125.0;
   final double dxEntry = 25.0;
   final double radius = 21.0;
@@ -677,7 +761,7 @@ class TabIndicationPainter extends CustomPainter {
 
   TabIndicationPainter({required this.pageController})
       : super(repaint: pageController) {
-    painter = new Paint()
+    painter = Paint()
       ..color = const Color(0xFFFFFFFF)
       ..style = PaintingStyle.fill;
   }
@@ -691,16 +775,15 @@ class TabIndicationPainter extends CustomPainter {
     double pageOffset = pos.extentBefore / fullExtent;
 
     bool left2right = dxEntry < dxTarget;
-    Offset entry = new Offset(left2right ? dxEntry : dxTarget, dy);
-    Offset target = new Offset(left2right ? dxTarget : dxEntry, dy);
+    Offset entry = Offset(left2right ? dxEntry : dxTarget, dy);
+    Offset target = Offset(left2right ? dxTarget : dxEntry, dy);
 
     Path path = new Path();
     path.addArc(
-        new Rect.fromCircle(center: entry, radius: radius), 0.5 * pi, 1 * pi);
-    path.addRect(
-        new Rect.fromLTRB(entry.dx, dy - radius, target.dx, dy + radius));
+        Rect.fromCircle(center: entry, radius: radius), 0.5 * pi, 1 * pi);
+    path.addRect(Rect.fromLTRB(entry.dx, dy - radius, target.dx, dy + radius));
     path.addArc(
-        new Rect.fromCircle(center: target, radius: radius), 1.5 * pi, 1 * pi);
+        Rect.fromCircle(center: target, radius: radius), 1.5 * pi, 1 * pi);
 
     canvas.translate(size.width * pageOffset, 0.0);
     canvas.drawShadow(path, const Color(0xFFfbab66), 3.0, true);

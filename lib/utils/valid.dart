@@ -21,3 +21,18 @@ bool isNumeric(String s) {
   }
   return double.parse(s) != null;
 }
+
+String? validatePassword(String value) {
+  bool emailValid = RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(value);
+  if (value.isEmpty) {
+    return null;
+  }
+
+  if (!emailValid) {
+    return "Please enter email";
+  }
+
+  return null;
+}

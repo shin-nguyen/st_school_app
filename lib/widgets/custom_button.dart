@@ -3,6 +3,7 @@
 // Date: 2020-02-06
 
 import 'package:flutter/material.dart';
+import 'package:st_school_app/constants/system_constants.dart';
 
 class OpenFlutterButton extends StatelessWidget {
   double? width;
@@ -22,9 +23,9 @@ class OpenFlutterButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     this.icon,
-    this.backgroundColor = Colors.red,
+    this.backgroundColor = primary,
     this.textColor = Colors.white,
-    this.borderColor = Colors.red,
+    this.borderColor = Colors.white,
     this.iconSize = 18.0,
   }) : super(key: key);
 
@@ -33,7 +34,7 @@ class OpenFlutterButton extends StatelessWidget {
     var _theme = Theme.of(context);
     EdgeInsetsGeometry edgeInsets = EdgeInsets.all(0);
     if (width == null || height == null) {
-      edgeInsets = EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
+      edgeInsets = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
     }
     return Padding(
       padding: edgeInsets,
@@ -51,10 +52,11 @@ class OpenFlutterButton extends StatelessWidget {
                 BoxShadow(
                     color: backgroundColor.withOpacity(0.3),
                     blurRadius: 4.0,
-                    offset: Offset(0.0, 5.0)),
+                    offset: const Offset(0.0, 5.0)),
               ]),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

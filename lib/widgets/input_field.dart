@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:st_school_app/constants/system_constants.dart';
 
 class OpenFlutterInputField extends StatefulWidget {
   final TextEditingController controller;
@@ -20,7 +21,7 @@ class OpenFlutterInputField extends StatefulWidget {
       this.keyboard = TextInputType.text,
       this.focusNode,
       this.onFinished,
-      this.isPassword = false,
+      this.isPassword = true,
       this.horizontalPadding = 16.0,
       this.onValueChanged,
       this.error})
@@ -48,19 +49,19 @@ class OpenFlutterInputFieldState extends State<OpenFlutterInputField> {
             elevation: 3,
             shape: error != null
                 ? RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.red, width: 1.0),
+                    side: const BorderSide(color: Colors.red, width: 1.0),
                     borderRadius: BorderRadius.circular(4.0),
                   )
                 : RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white, width: 1.0),
+                    side: const BorderSide(color: Colors.white, width: 1.0),
                     borderRadius: BorderRadius.circular(4.0),
                   ),
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.only(left: 16.0),
+              padding: const EdgeInsets.only(left: 16.0),
               child: TextField(
                 onChanged: (value) => widget.onValueChanged!(value),
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.normal,
                     fontSize: 16),
@@ -73,15 +74,15 @@ class OpenFlutterInputFieldState extends State<OpenFlutterInputField> {
                     labelText: widget.hint,
                     hintText: widget.hint,
                     suffixIcon: error != null
-                        ? Icon(
+                        ? const Icon(
                             Icons.close,
                             color: Colors.red,
                           )
                         : isChecked
-                            ? Icon(Icons.done)
+                            ? const Icon(Icons.done)
                             : null,
-                    hintStyle: TextStyle(
-                        color: Color(0xFF9B9B9B),
+                    hintStyle: const TextStyle(
+                        color: background,
                         fontSize: 16,
                         fontWeight: FontWeight.w300)),
               ),

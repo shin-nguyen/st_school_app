@@ -37,7 +37,7 @@ class AuthNotifier with ChangeNotifier {
       "Content-Type": "application/json",
       "Accept": "application/json",
     });
-    if (response.statusCode == 200 || response.statusCode == 400) {
+    if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
 
       token = responseData['token'];
@@ -51,6 +51,38 @@ class AuthNotifier with ChangeNotifier {
       await prefs.setString('token', token!);
 
       notifyListeners();
+    } else if (response.statusCode == 403) {
+      throw Exception(response.body);
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+
+  Future<void> signup({
+    required String email,
+    required String password,
+    required String password2,
+    required String firstName,
+    required String lastName,
+  }) async {
+    String url = baseUrl + '/api/v1/registration/mobile';
+
+    final response = await http.post(Uri.parse(url),
+        body: json.encode({
+          "email": email,
+          "firstName": firstName,
+          "password": password,
+          "password2": password2,
+          "lastName": lastName,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        });
+
+    if (response.statusCode == 200) {
+    } else if (response.statusCode == 403) {
+      throw Exception(response.body);
     } else {
       throw Exception('Failed to load data!');
     }

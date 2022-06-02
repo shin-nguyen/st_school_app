@@ -49,7 +49,7 @@ class _SettingsViewState extends State<SettingPage> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Ok'),
+              child: const Text('Ok'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -71,9 +71,9 @@ class _SettingsViewState extends State<SettingPage> {
 
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(34), topRight: Radius.circular(34)),
+              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         ),
         builder: (BuildContext context) => BlocProvider<PasswordBloc>(
               create: (context) => passwordBloc,
@@ -98,38 +98,34 @@ class _SettingsViewState extends State<SettingPage> {
 
                     return Container(
                       height: 472,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      decoration: BoxDecoration(
-                          color: Color(0xFFE5E5E5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      decoration: const BoxDecoration(
+                          color: background,
                           borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(34),
-                              topRight: Radius.circular(34)),
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30)),
                           boxShadow: []),
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
                             Container(
                               height: 6,
-                              width: 60,
+                              width: 50,
                               decoration: BoxDecoration(
-                                color: Color(0xFF9B9B9B),
+                                color: background,
                                 borderRadius: BorderRadius.circular(3),
                               ),
                             ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Text(
+                            const SizedBox(height: 5),
+                            const Text(
                               'Password Change',
                               style: TextStyle(
                                   color: Color(0xFF222222),
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
-                              height: 18,
-                            ),
+                            const SizedBox(height: 18),
                             OpenFlutterInputField(
                               controller: _currentPasswordController,
                               hint: 'Old Password',
@@ -139,21 +135,17 @@ class _SettingsViewState extends State<SettingPage> {
                                       ? 'incorrect current password'
                                       : null,
                             ),
-                            SizedBox(
-                              height: 18,
-                            ),
+                            const SizedBox(height: 18),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
+                              children: const <Widget>[
                                 Text(
                                   'Forgot Password?',
                                   style: TextStyle(color: Color(0xFF9B9B9B)),
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 18,
-                            ),
+                            const SizedBox(height: 18),
                             OpenFlutterInputField(
                               controller: _newPasswordController,
                               hint: 'New Password',
@@ -163,9 +155,7 @@ class _SettingsViewState extends State<SettingPage> {
                                       ? 'password should be at least 6 characters'
                                       : null,
                             ),
-                            SizedBox(
-                              height: 18,
-                            ),
+                            const SizedBox(height: 18),
                             OpenFlutterInputField(
                               controller: _repeatPasswordController,
                               hint: 'Repeat New Password',
@@ -175,22 +165,19 @@ class _SettingsViewState extends State<SettingPage> {
                                       ? 'password mismatch'
                                       : null,
                             ),
-                            SizedBox(
-                              height: 18,
-                            ),
+                            const SizedBox(height: 18),
                             OpenFlutterButton(
                                 title: 'Save Password',
                                 height: 48,
-                                onPressed: () => passwordBloc.add(
-                                    ChangePasswordEvent(
-                                        currentPassword:
-                                            _currentPasswordController.text
-                                                .trim(),
-                                        newPassword:
-                                            _newPasswordController.text.trim(),
-                                        repeatNewPassword:
-                                            _repeatPasswordController.text
-                                                .trim())))
+                                onPressed: () => passwordBloc
+                                  ..add(ChangePasswordEvent(
+                                    currentPassword:
+                                        _currentPasswordController.text.trim(),
+                                    newPassword:
+                                        _newPasswordController.text.trim(),
+                                    repeatNewPassword:
+                                        _repeatPasswordController.text.trim(),
+                                  )))
                           ],
                         ),
                       ),
@@ -229,8 +216,12 @@ class _SettingsViewState extends State<SettingPage> {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => LicensesCustomPage(
                                     title: data[indexSubTitle]['title'],
-                                    file: data[indexSubTitle]['file']),
+                                    file: data[indexSubTitle]['key']),
                               ));
+                            }
+                            if (data[indexSubTitle]['key'] ==
+                                'change_password') {
+                              _showChangePasswordBottomSheet(context);
                             }
                           },
                         );
@@ -240,28 +231,6 @@ class _SettingsViewState extends State<SettingPage> {
                 ),
               );
             }),
-          ),
-          const SizedBox(height: miniSpacer),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Password',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-              GestureDetector(
-                onTap: () {
-                  _showChangePasswordBottomSheet(context);
-                },
-                child: Text(
-                  'Change',
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF9B9B9B),
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: miniSpacer),
           GestureDetector(

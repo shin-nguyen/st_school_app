@@ -22,18 +22,22 @@ List accountMenuJson = [
       {
         'title': 'Payment Methods',
         'isSwitch': false,
+        'key': 'payment',
       },
       {
         'title': 'Change Password',
         'isSwitch': false,
+        'key': 'change_password',
       },
       {
         'title': 'Push Notifications',
         'isSwitch': false,
+        'key': 'payment',
       },
       {
         'title': 'Deactivate Account',
         'isSwitch': false,
+        'key': 'payment',
       },
     ],
   },
@@ -43,22 +47,22 @@ List accountMenuJson = [
       {
         'title': 'About Us',
         'isSwitch': false,
-        'file': 'about_us',
+        'key': 'about_us',
       },
       {
         'title': 'Help and Support',
         'isSwitch': false,
-        'file': "help",
+        'key': "help",
       },
       {
         'title': 'Terms and Conditions',
         'isSwitch': false,
-        'file': "terms_and_conditons",
+        'key': "terms_and_conditons",
       },
       {
         'title': 'Privacy Policy',
         'isSwitch': false,
-        'file': "privacy_policy",
+        'key': "privacy_policy",
       },
     ],
   },

@@ -13,10 +13,11 @@ class ChangePasswordEvent extends PasswordEvent {
   final String newPassword;
   final String repeatNewPassword;
 
-  ChangePasswordEvent(
-      {required this.currentPassword,
-      required this.newPassword,
-      required this.repeatNewPassword});
+  ChangePasswordEvent({
+    required this.currentPassword,
+    required this.newPassword,
+    required this.repeatNewPassword,
+  });
 
   @override
   List<Object> get props => [currentPassword, newPassword, repeatNewPassword];

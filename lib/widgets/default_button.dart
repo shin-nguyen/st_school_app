@@ -20,12 +20,12 @@ class DefaultButton extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           primary: Colors.white,
-          backgroundColor: kPrimaryColor,
+          backgroundColor: primary,
         ),
         onPressed: press as void Function()?,
         child: Text(
           text!,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: (18),
             color: Colors.white,
           ),

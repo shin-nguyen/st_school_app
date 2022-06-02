@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/screens/login/login.dart';
 
 class NoAccountText extends StatelessWidget {
   const NoAccountText({
@@ -11,15 +12,17 @@ class NoAccountText extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           "Don’t have an account? ",
           style: TextStyle(fontSize: (16)),
         ),
         GestureDetector(
-          // onTap: () => Navigator.pushNamed(context, SignUpScreen.routeName),
-          child: Text(
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          )),
+          child: const Text(
             "Sign Up",
-            style: TextStyle(fontSize: (16), color: kPrimaryColor),
+            style: TextStyle(fontSize: (16), color: primary),
           ),
         ),
       ],

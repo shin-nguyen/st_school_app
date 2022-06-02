@@ -1,49 +1,64 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
+import 'package:st_school_app/providers/auth_notifier.dart';
 import 'package:st_school_app/widgets/custom_surfix_icon.dart';
 import 'package:st_school_app/widgets/default_button.dart';
 import 'package:st_school_app/widgets/form_error.dart';
 import 'package:st_school_app/widgets/no_account_text.dart';
-
-class Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: (20)),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              Text(
-                "Forgot Password",
-                style: TextStyle(
-                  fontSize: (28),
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                "Please enter your email and we will send \nyou a link to return to your account",
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
-              ForgotPassForm(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+import 'package:http/http.dart' as http;
 
 class ForgotPassForm extends StatefulWidget {
+  const ForgotPassForm({Key? key}) : super(key: key);
+
   @override
   _ForgotPassFormState createState() => _ForgotPassFormState();
 }
 
 class _ForgotPassFormState extends State<ForgotPassForm> {
+  Future<void> _saveForm() async {
+    final isValid = _formKey.currentState?.validate();
+    if (!isValid!) {
+      return;
+    }
+    _formKey.currentState?.save();
+
+    try {
+      String url = baseUrl + '/api/v1/auth/forgot';
+
+      final response = await http
+          .post(Uri.parse(url), body: json.encode({"email": email}), headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      });
+      debugPrint(json.encode({"email": email}));
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('An error occurred!'),
+          content: const Text('Something went wrong.'),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+    Navigator.of(context).pop();
+  }
+
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
   String? email;
@@ -55,7 +70,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue,
+            onSaved: (newValue) => email = newValue!,
             onChanged: (value) {
               if (value.isNotEmpty && errors.contains(kEmailNullError)) {
                 setState(() {
@@ -67,7 +82,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                   errors.remove(kInvalidEmailError);
                 });
               }
-              return null;
+              return;
             },
             validator: (value) {
               if (value!.isEmpty && !errors.contains(kEmailNullError)) {
@@ -82,7 +97,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               }
               return null;
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Email",
               hintText: "Enter your email",
               // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -91,19 +106,15 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
             ),
           ),
-          SizedBox(height: (30)),
+          const SizedBox(height: (30)),
           FormError(errors: errors),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           DefaultButton(
             text: "Continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                // Do what you want to do
-              }
-            },
+            press: _saveForm,
           ),
-          SizedBox(height: 10),
-          NoAccountText(),
+          const SizedBox(height: 10),
+          const NoAccountText(),
         ],
       ),
     );
