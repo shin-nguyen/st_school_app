@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:st_school_app/models/dashboard_progress.dart';
 import 'package:st_school_app/models/order.dart';
 import 'package:st_school_app/models/user.dart';
 import 'package:st_school_app/providers/auth_notifier.dart';
 import 'package:st_school_app/providers/blogs_notifier.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/providers/dashboard_progress_notification.dart';
 import 'package:st_school_app/providers/notification_notifier.dart';
 import 'package:st_school_app/providers/orders_notifier.dart';
 import 'package:st_school_app/providers/user_notifier.dart';
@@ -89,6 +91,11 @@ class MyApp extends StatelessWidget {
             create: (context) => UserNotifier(User.empty()),
             update: (_, auth, previousUser) =>
                 UserNotifier(previousUser!.getUser),
+          ),
+          ChangeNotifierProxyProvider<AuthNotifier, DashboardProgressNotifier>(
+            create: (context) => DashboardProgressNotifier([]),
+            update: (_, auth, previousUser) =>
+                DashboardProgressNotifier(previousUser!.getDashboardProgress),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, VideosNotifier>(
             create: (context) => VideosNotifier([]),
