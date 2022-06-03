@@ -1,9 +1,11 @@
+import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/account_menu_json.dart';
 import 'package:st_school_app/providers/auth_notifier.dart';
+import 'package:st_school_app/providers/cart_notifier.dart';
 import 'package:st_school_app/providers/password_repository.dart';
 import 'package:st_school_app/screens/home/setting/components/licenses_custom_page.dart';
 import 'package:st_school_app/widgets/custom_button.dart';
@@ -188,6 +190,7 @@ class _SettingsViewState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartNotifier>(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(appPadding),
       child: Column(
@@ -207,24 +210,51 @@ class _SettingsViewState extends State<SettingPage> {
                     const SizedBox(height: smallSpacer),
                     Column(
                       children: List.generate(data.length, (indexSubTitle) {
-                        return CunstomPlaceHolder(
-                          title: data[indexSubTitle]['title'],
-                          isSwitch: data[indexSubTitle]['isSwitch'],
-                          onTap: () {
-                            if (accountMenuJson[indexTitle]['title'] ==
-                                'Support') {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => LicensesCustomPage(
-                                    title: data[indexSubTitle]['title'],
-                                    file: data[indexSubTitle]['key']),
-                              ));
-                            }
-                            if (data[indexSubTitle]['key'] ==
-                                'change_password') {
-                              _showChangePasswordBottomSheet(context);
-                            }
-                          },
-                        );
+                        return data[indexSubTitle]['key'] == 'payment'
+                            ? SmartSelect<String>.single(
+                                title: "Payment Methods",
+                                selectedValue: cart.choosePay,
+                                modalStyle: const S2ModalStyle(
+                                    backgroundColor: Colors.white,
+                                    clipBehavior: Clip.none,
+                                    elevation: 0.0),
+                                modalHeaderStyle: const S2ModalHeaderStyle(
+                                  backgroundColor: background,
+                                  textStyle: TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: textBlack,
+                                  ),
+                                  iconTheme: IconThemeData(
+                                    color:
+                                        Colors.black, //change your color here
+                                  ),
+                                ),
+                                choiceItems: cart.options,
+                                onChange: (state) => setState(
+                                    () => cart.choosePay = state.value!),
+                              )
+                            : CunstomPlaceHolder(
+                                title: data[indexSubTitle]['title'],
+                                isSwitch: data[indexSubTitle]['isSwitch'],
+                                onTap: () {
+                                  if (data[indexSubTitle]['key'] ==
+                                      'payment') {}
+                                  if (accountMenuJson[indexTitle]['title'] ==
+                                      'Support') {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => LicensesCustomPage(
+                                          title: data[indexSubTitle]['title'],
+                                          file: data[indexSubTitle]['key']),
+                                    ));
+                                  }
+                                  if (data[indexSubTitle]['key'] ==
+                                      'change_password') {
+                                    _showChangePasswordBottomSheet(context);
+                                  }
+                                },
+                              );
                       }),
                     )
                   ],

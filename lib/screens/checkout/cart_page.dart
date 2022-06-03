@@ -67,12 +67,6 @@ class _CartPageState extends State<CartPage> {
   //   }
   // }
 
-  String choosePay = 'gpay';
-  List<S2Choice<String>> options = [
-    S2Choice<String>(value: 'gpay', title: 'Gooogle Pay'),
-    S2Choice<String>(value: 'paypal', title: 'Pay Pal'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -159,12 +153,14 @@ class _CartPageState extends State<CartPage> {
                               cart.items.values.toList()[i].description,
                           image: cart.items.values.toList()[i].image,
                           lecturer: cart.items.values.toList()[i].lecturer,
-                          choosePay: choosePay),
+                          subPrice:
+                              cart.items.values.toList()[i].subPrice.toDouble(),
+                          choosePay: cart.choosePay),
                     ),
                   ),
                   SmartSelect<String>.single(
                     title: "CHOOSE PAYMENT",
-                    selectedValue: choosePay,
+                    selectedValue: cart.choosePay,
                     modalStyle: const S2ModalStyle(
                         backgroundColor: Colors.white,
                         clipBehavior: Clip.none,
@@ -180,9 +176,9 @@ class _CartPageState extends State<CartPage> {
                         color: Colors.black, //change your color here
                       ),
                     ),
-                    choiceItems: options,
+                    choiceItems: cart.options,
                     onChange: (state) =>
-                        setState(() => choosePay = state.value!),
+                        setState(() => cart.choosePay = state.value!),
                   ),
                   Card(
                     margin: const EdgeInsets.all(15),
@@ -204,7 +200,7 @@ class _CartPageState extends State<CartPage> {
                             ),
                             backgroundColor: primary,
                           ),
-                          (choosePay == 'gpay')
+                          (cart.choosePay == 'gpay')
                               ? GooglePayButton(
                                   paymentConfigurationAsset: 'gpay.json',
                                   paymentItems: [

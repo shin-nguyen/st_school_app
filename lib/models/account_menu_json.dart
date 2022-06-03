@@ -20,11 +20,6 @@ List accountMenuJson = [
     'title': 'Account Setting',
     'categories': [
       {
-        'title': 'Payment Methods',
-        'isSwitch': false,
-        'key': 'payment',
-      },
-      {
         'title': 'Change Password',
         'isSwitch': false,
         'key': 'change_password',
@@ -32,10 +27,15 @@ List accountMenuJson = [
       {
         'title': 'Push Notifications',
         'isSwitch': false,
-        'key': 'payment',
+        'key': '',
       },
       {
         'title': 'Deactivate Account',
+        'isSwitch': false,
+        'key': '',
+      },
+      {
+        'title': 'Payment Methods',
         'isSwitch': false,
         'key': 'payment',
       },

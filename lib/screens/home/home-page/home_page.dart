@@ -70,9 +70,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
@@ -107,14 +105,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-
                   //now we create model of our images and colors which we will use in our app
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  //we can not use gridview inside column
-                  //use shrinkwrap and physical scroll
-                  // const CategoryList(),
                   const SizedBox(
                     height: 20,
                   ),

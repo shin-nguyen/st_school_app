@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:http/http.dart' as http;
@@ -21,12 +23,24 @@ class LoginRequestModel {
 }
 
 class AuthNotifier with ChangeNotifier {
-  String? token;
+  String? _token;
   String? email;
   String? userRole;
+  DateTime? _expiryDate;
+  Timer? _authTimer;
 
   bool get isAuth {
-    return token != "";
+    return _token != null && _token != "";
+  }
+
+  String? get getToken {
+    if (_expiryDate != null &&
+        _expiryDate!.isAfter(DateTime.now()) &&
+        _token != null &&
+        _token != "") {
+      return _token;
+    }
+    return null;
   }
 
   Future<void> login(LoginRequestModel requestModel) async {
@@ -40,22 +54,32 @@ class AuthNotifier with ChangeNotifier {
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
 
-      token = responseData['token'];
+      _token = responseData['token'];
       email = responseData['email'];
       userRole = responseData['userRole'];
 
+      _expiryDate = Jwt.getExpiryDate(_token!);
+      _autoLogout();
+      notifyListeners();
       // Create storage
       // Obtain shared preferences.
       final prefs = await SharedPreferences.getInstance();
       // Write value
-      await prefs.setString('token', token!);
-
-      notifyListeners();
+      await prefs.setString('token', _token!);
+      await prefs.setString('expiryDate', _expiryDate!.toIso8601String());
     } else if (response.statusCode == 403) {
       throw Exception(response.body);
     } else {
       throw Exception('Failed to load data!');
     }
+  }
+
+  void _autoLogout() {
+    if (_authTimer != null) {
+      _authTimer!.cancel();
+    }
+    final timeToExpiry = _expiryDate!.difference(DateTime.now()).inSeconds;
+    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }
 
   Future<void> signup({
@@ -89,9 +113,35 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Future<void> logout() async {
-    token = "";
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove("token");
+    _token = null;
+    _expiryDate = null;
+    if (_authTimer != null) {
+      _authTimer!.cancel();
+      _authTimer = null;
+    }
     notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('expiryDate')) {
+      return false;
+    }
+    if (!prefs.containsKey('token')) {
+      return false;
+    }
+
+    final expiryDate = DateTime.parse(prefs.getString('expiryDate')!);
+
+    if (expiryDate.isBefore(DateTime.now())) {
+      return false;
+    }
+    _token = prefs.getString('token');
+    _expiryDate = expiryDate;
+    notifyListeners();
+    _autoLogout();
+    return true;
   }
 }

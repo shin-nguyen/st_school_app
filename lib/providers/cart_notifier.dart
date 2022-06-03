@@ -1,52 +1,77 @@
+import 'dart:ffi';
+
+import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/foundation.dart';
 import 'package:st_school_app/models/course.dart';
 
 class CartNotifier with ChangeNotifier {
   CartNotifier() {
     _items.putIfAbsent(
-      '1231',
+      '11',
       () => const Course(
-          id: 1,
+          id: 11,
           name: 'The Complete 2020 Fullstack Web Developer Course',
           description:
               'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
           lecturer: 'Kari Noman',
           language: 'English',
-          price: 1,
+          price: 123,
           image:
               "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
           subTotal: 1,
           videoTotal: 20,
           topic: "ADs",
           progress: 12,
-          subPrice: 123,
-          video: 123),
+          subPrice: 2,
+          video: 123,
+          averageRate: 1,
+          createdTime: "123"),
     );
     _items.putIfAbsent(
-      '312312',
+      '10',
       () => const Course(
-          id: 1,
+          id: 10,
           name:
               'Python Django - The Practical GuideLearn how to build web applications and websites with Python and the Django framework',
           description:
               'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
           lecturer: 'Kari Noman',
           language: 'English',
-          price: 1,
+          price: 10,
           image:
               "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
           subTotal: 1,
           videoTotal: 20,
           topic: "ADs",
           progress: 12,
-          subPrice: 123,
-          video: 123),
+          subPrice: 4,
+          video: 123,
+          averageRate: 1,
+          createdTime: "123"),
     );
   }
+
+  List<S2Choice<String>> options = [
+    S2Choice<String>(value: 'gpay', title: 'Gooogle Pay'),
+    S2Choice<String>(value: 'paypal', title: 'Pay Pal'),
+  ];
+
   Map<String, Course> _items = {};
+  String choosePay = 'gpay';
 
   Map<String, Course> get items {
     return {..._items};
+  }
+
+  List<Course> findById(String type) {
+    Course course = Course.empty();
+    _items.forEach((key, value) {
+      if (key == type) {
+        course = value;
+      }
+    });
+    List<Course> courses = [course];
+    return courses;
   }
 
   int get itemCount {
@@ -56,7 +81,11 @@ class CartNotifier with ChangeNotifier {
   double get totalAmount {
     var total = 0.0;
     _items.forEach((key, cartItem) {
-      total += cartItem.price;
+      if (cartItem.subPrice != 0) {
+        total += cartItem.subPrice;
+      } else {
+        total += cartItem.price;
+      }
     });
     return total;
   }

@@ -3,38 +3,37 @@ import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/cart_notifier.dart';
+import 'package:st_school_app/providers/orders_notifier.dart';
+import 'package:st_school_app/screens/checkout/components/paypal_payment.dart';
+import 'package:st_school_app/screens/payment/payment_page.dart';
 
 class CartItemPage extends StatelessWidget {
-  CartItemPage({
-    Key? key,
-    required this.id,
-    required this.price,
-    required this.description,
-    required this.image,
-    required this.lecturer,
-    required this.choosePay,
-  }) : super(key: key);
+  const CartItemPage(
+      {Key? key,
+      required this.id,
+      required this.price,
+      required this.description,
+      required this.image,
+      required this.lecturer,
+      required this.choosePay,
+      required this.subPrice})
+      : super(key: key);
 
   final String id;
   final double price;
+  final double subPrice;
   final String description;
   final String image;
   final String lecturer;
   final String choosePay;
 
-  final _paymentItems = [
-    const PaymentItem(
-      label: 'Total',
-      amount: '0.99',
-      status: PaymentItemStatus.final_price,
-    )
-  ];
   void onGooglePayResult(paymentResult) {
     debugPrint(paymentResult.toString());
   }
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartNotifier>(context);
     var w = MediaQuery.of(context).size.width;
 
     return Dismissible(
@@ -153,41 +152,128 @@ class CartItemPage extends StatelessWidget {
                   ],
                 ),
               ),
+              // Row(
+              //   children: [
+              //     SizedBox(
+              //       width: w * .16,
+              //     ),
+              //     Text(
+              //       '\$ $price',
+              //       style: const TextStyle(
+              //         color: textBlack,
+              //         fontSize: 15.0,
+              //         fontWeight: FontWeight.w700,
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       width: w * .1,
+              //     )
+              //   ],
+              // ),
               Row(
                 children: [
                   SizedBox(
                     width: w * .16,
                   ),
                   Text(
-                    '\$ ${price}',
+                    '\$' +
+                        (subPrice != 0
+                            ? subPrice.toString()
+                            : price.toString()),
                     style: const TextStyle(
-                      color: textBlack,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w700,
-                    ),
+                        color: textBlack,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w800),
                   ),
-                  SizedBox(
-                    width: w * .1,
-                  )
+                  subPrice != 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: RichText(
+                            text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '\$' + price.toString(),
+                                  ),
+                                ],
+                                style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey.shade500,
+                                    fontSize: 14.0)),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
+              const SizedBox(height: 10),
               (choosePay == 'gpay')
                   ? GooglePayButton(
                       paymentConfigurationAsset: 'gpay.json',
-                      paymentItems: _paymentItems,
+                      paymentItems: [
+                        PaymentItem(
+                          label: 'Total',
+                          amount: price.toString(),
+                          status: PaymentItemStatus.final_price,
+                        )
+                      ],
                       width: w * 0.9,
                       height: 40,
                       style: GooglePayButtonStyle.black,
                       type: GooglePayButtonType.pay,
-                      margin: const EdgeInsets.only(top: 15.0),
-                      onPaymentResult: (data) {
+                      onPaymentResult: (data) async {
                         debugPrint(data.toString());
+                        await Provider.of<OrdersNotifier>(context,
+                                listen: false)
+                            .addOrder(
+                          cart.findById(id),
+                        );
+                        Navigator.pushNamed(
+                          context,
+                          PaymentPage.routeName,
+                          // arguments: courses[index].id,
+                        );
+                        cart.removeItem(id);
                       },
                       loadingIndicator: const Center(
                         child: CircularProgressIndicator(),
                       ),
                     )
-                  : Container(),
+                  : SizedBox(
+                      width: w * 0.9,
+                      height: 40,
+                      child: TextButton(
+                        onPressed: () {
+                          // lets assume that product price is 5.99 usd
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaypalPayment(
+                                  amount: price,
+                                  currency: 'USD',
+                                ),
+                              ));
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                              (states) => Colors.blue),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Image(
+                              image: AssetImage('assets/images/paypal.png'),
+                              height: 40,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Pay with Paypal',
+                              style: TextStyle(color: Colors.black),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
             ],
           ),
         ));

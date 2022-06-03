@@ -12,6 +12,8 @@ class Course {
   final double progress;
   final int video;
   final String topic;
+  final double averageRate;
+  final String createdTime;
 
   const Course({
     required this.id,
@@ -27,6 +29,8 @@ class Course {
     required this.progress,
     required this.video,
     required this.topic,
+    required this.averageRate,
+    required this.createdTime,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -42,43 +46,51 @@ class Course {
       videoTotal: json['videoTotal'] ?? 0,
       subPrice: json['subPrice'] ?? 0,
       topic: json['topic'] ?? '',
-      progress: 0,
-      video: 0,
+      progress: json['duration'] ?? 0,
+      video: json['videoTotal'] ?? 0,
+      averageRate: json['averageRate'] ?? 0,
+      createdTime: json['createdTime'] ?? '21/05/2022',
     );
   }
 
   factory Course.fromOrder(
       Map<String, dynamic> json, double progress, int video) {
     return Course(
-        id: json['id'] ?? '',
-        name: json['name'] ?? '',
-        description: json['description'] ?? '',
-        lecturer: json['lecturer'] ?? 'Cheng',
-        language: json['language'] ?? '',
-        price: json['price'] ?? '',
-        image: json['image'] ?? '',
-        subTotal: json['subTotal'] ?? 0,
-        videoTotal: json['videoTotal'] ?? 0,
-        subPrice: json['subPrice'] ?? 0,
-        topic: json['topic'] ?? '',
-        progress: progress,
-        video: video);
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      lecturer: json['lecturer'] ?? 'Cheng',
+      language: json['language'] ?? '',
+      price: json['price'] ?? '',
+      image: json['image'] ?? '',
+      subTotal: json['subTotal'] ?? 0,
+      videoTotal: json['videoTotal'] ?? 0,
+      subPrice: json['subPrice'] ?? 0,
+      topic: json['topic'] ?? '',
+      progress: progress,
+      video: video,
+      averageRate: json['averageRate'] ?? 0,
+      createdTime: json['createdTime'] ?? '21/05/2022',
+    );
   }
 
   factory Course.empty() {
     return const Course(
-        id: -1,
-        name: '',
-        description: '',
-        lecturer: '',
-        language: '',
-        price: 0,
-        image: "",
-        subTotal: 0,
-        videoTotal: 0,
-        topic: "",
-        progress: 0,
-        subPrice: 0,
-        video: 0);
+      id: -1,
+      name: '',
+      description: '',
+      lecturer: '',
+      language: '',
+      price: 0,
+      image: "",
+      subTotal: 0,
+      videoTotal: 0,
+      topic: "",
+      progress: 0,
+      subPrice: 0,
+      video: 0,
+      averageRate: 0,
+      createdTime: '21/05/2022',
+    );
   }
 }
