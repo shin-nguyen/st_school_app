@@ -19,9 +19,11 @@ class CoursesNotifier with ChangeNotifier {
     this._items,
     this._promotions,
     this._myLearning,
+    this._itemSearch,
   );
 
   List<Course> get getCourses {
+    _itemSearch = _items;
     return [..._items];
   }
 
@@ -62,13 +64,27 @@ class CoursesNotifier with ChangeNotifier {
         : _items.where((prod) => prod.topic == type).toList();
   }
 
+  List<Course>? findByCatogoryBegin(String type) {
+    return type == ''
+        ? _items
+        : _items
+            .where((prod) => prod.topic == type && prod.isFor == 'Beginner')
+            .toList();
+  }
+
   Future<void> findByQuery(String query) async {
+    query = query.toLowerCase();
     try {
       _itemSearch = query == ''
           ? _items
           : _items.where((course) {
               final name = course.name.toLowerCase();
-              return name.contains(query);
+              final language = course.language.toLowerCase();
+              final lecturer = course.lecturer.toLowerCase();
+
+              return name.contains(query) ||
+                  lecturer.contains(query) ||
+                  language.contains(query);
             }).toList();
 
       notifyListeners();

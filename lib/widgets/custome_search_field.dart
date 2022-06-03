@@ -51,16 +51,14 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
               controller: controller,
               decoration: InputDecoration(
                 icon: Icon(Icons.search, color: style.color),
-                suffixIcon: widget.text.isNotEmpty
-                    ? GestureDetector(
-                        child: Icon(Icons.close, color: style.color),
-                        onTap: () {
-                          controller.clear();
-                          widget.onChanged('');
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                      )
-                    : null,
+                suffixIcon: GestureDetector(
+                  child: Icon(Icons.close, color: style.color),
+                  onTap: () {
+                    controller.clear();
+                    widget.onChanged('');
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                ),
                 hintText: widget.hintText,
                 hintStyle: style,
                 border: InputBorder.none,
@@ -87,11 +85,17 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
                     offset: const Offset(0, 2),
                   )
                 ]),
-            child: SvgPicture.asset(
-              assetImg + 'filter_icon.svg',
-              color: textWhite,
-              height: 13.0,
-            ),
+            child: GestureDetector(
+                onTap: () {
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => SettingsSearchScreen()));
+                  debugPrint("Huhu");
+                },
+                child: SvgPicture.asset(
+                  assetImg + 'filter_icon.svg',
+                  color: textWhite,
+                  height: 13.0,
+                )),
           )
         ],
       ),

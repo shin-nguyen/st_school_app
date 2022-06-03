@@ -77,11 +77,12 @@ class MyApp extends StatelessWidget {
             value: NotificationsNotifier(),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, CoursesNotifier>(
-            create: (context) => CoursesNotifier([], [], []),
+            create: (context) => CoursesNotifier([], [], [], []),
             update: (_, auth, previousCourses) => CoursesNotifier(
               previousCourses == null ? [] : previousCourses.getCourses,
               previousCourses == null ? [] : previousCourses.getPromotions,
               previousCourses == null ? [] : previousCourses.getMyLearning,
+              previousCourses == null ? [] : previousCourses.getCourses,
             ),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, UserNotifier>(
@@ -96,8 +97,9 @@ class MyApp extends StatelessWidget {
             ),
           ),
           ChangeNotifierProxyProvider<AuthNotifier, BlogsNotifier>(
-            create: (context) => BlogsNotifier([]),
+            create: (context) => BlogsNotifier([], []),
             update: (_, auth, previousBlogs) => BlogsNotifier(
+              previousBlogs == null ? [] : previousBlogs.getBlogs,
               previousBlogs == null ? [] : previousBlogs.getBlogs,
             ),
           ),

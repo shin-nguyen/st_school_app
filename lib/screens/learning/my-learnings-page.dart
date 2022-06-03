@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/course.dart';
 import 'package:st_school_app/models/video.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/providers/video_notifier.dart';
 import 'package:video_player/video_player.dart';
-import "package:st_school_app/constants/colors.dart" as color;
+import 'package:http/http.dart' as http;
 
 class LearningPage extends StatefulWidget {
   const LearningPage({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _LearningPageState extends State<LearningPage> {
   int _isPlayingIndex = -1;
   VideoPlayerController? _controller;
   List<Video> videos = [];
-
+  int? courseId;
   @override
   void dispose() {
     _disposed = true;
@@ -40,13 +40,12 @@ class _LearningPageState extends State<LearningPage> {
 
   @override
   Widget build(BuildContext context) {
-    final courseId =
-        ModalRoute.of(context)!.settings.arguments as int; // is the id!
+    courseId = ModalRoute.of(context)!.settings.arguments as int; // is the id!
     Course course = Provider.of<CoursesNotifier>(
       context,
       listen: false,
-    ).findByMeLearning(courseId);
-    videos = Provider.of<VideosNotifier>(context).getByCourse(courseId);
+    ).findByMeLearning(courseId!);
+    videos = Provider.of<VideosNotifier>(context).getByCourse(courseId!);
 
     return Scaffold(
         backgroundColor: background,
@@ -191,20 +190,20 @@ class _LearningPageState extends State<LearningPage> {
     return Column(mainAxisSize: MainAxisSize.min, children: [
       SliderTheme(
         data: SliderTheme.of(context).copyWith(
-          activeTrackColor: Colors.red[700],
-          inactiveTrackColor: Colors.red[100],
-          trackShape: RoundedRectSliderTrackShape(),
+          activeTrackColor: Colors.blue[700],
+          inactiveTrackColor: Colors.blue[100],
+          trackShape: const RoundedRectSliderTrackShape(),
           trackHeight: 2.0,
-          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-          thumbColor: Colors.redAccent,
-          overlayColor: Colors.red.withAlpha(32),
-          overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-          tickMarkShape: RoundSliderTickMarkShape(),
-          activeTickMarkColor: Colors.red[700],
-          inactiveTickMarkColor: Colors.red[100],
-          valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-          valueIndicatorColor: Colors.redAccent,
-          valueIndicatorTextStyle: TextStyle(
+          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12.0),
+          thumbColor: Colors.blueAccent,
+          overlayColor: Colors.blue.withAlpha(32),
+          overlayShape: const RoundSliderOverlayShape(overlayRadius: 28.0),
+          tickMarkShape: const RoundSliderTickMarkShape(),
+          activeTickMarkColor: Colors.blue[700],
+          inactiveTickMarkColor: Colors.blue[100],
+          valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+          valueIndicatorColor: Colors.blueAccent,
+          valueIndicatorTextStyle: const TextStyle(
             color: Colors.white,
           ),
         ),
@@ -243,9 +242,11 @@ class _LearningPageState extends State<LearningPage> {
           children: [
             InkWell(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Container(
-                  decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                  decoration:
+                      const BoxDecoration(shape: BoxShape.circle, boxShadow: [
                     BoxShadow(
                       offset: Offset(0.0, 0.0),
                       blurRadius: 4.0,
@@ -273,28 +274,24 @@ class _LearningPageState extends State<LearningPage> {
                   if (index >= 0) {
                     _initializeVideo(index);
                   } else {
-                    Get.snackbar(
-                      "Video List",
-                      "",
-                      snackPosition: SnackPosition.BOTTOM,
-                      icon: Icon(
-                        Icons.face,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: color.AppColor.gradientSecond,
-                      colorText: Colors.white,
-                      messageText: Text(
-                        "No videos ahead !",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
+                    await showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('Video List'),
+                        content: const Text('No videos ahead !'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: const Text('Okay'),
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                            },
+                          )
+                        ],
                       ),
                     );
                   }
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.fast_rewind,
                   size: 36,
                   color: Colors.white,
@@ -324,32 +321,32 @@ class _LearningPageState extends State<LearningPage> {
                   if (index <= videos.length - 1) {
                     _initializeVideo(index);
                   } else {
-                    Get.snackbar("Video List", "",
-                        snackPosition: SnackPosition.BOTTOM,
-                        icon: Icon(
-                          Icons.face,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: color.AppColor.gradientSecond,
-                        colorText: Colors.white,
-                        messageText: Text(
-                          "You have finished watching all the videos. Congrats !",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ));
+                    await showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('Video List'),
+                        content: const Text(
+                            'You have finished watching all the videos. Congrats !'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: const Text('Okay'),
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                            },
+                          )
+                        ],
+                      ),
+                    );
                   }
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.fast_forward,
                   size: 36,
                   color: Colors.white,
                 )),
             Text(
               "$mins:$secs",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 shadows: <Shadow>[
                   Shadow(
@@ -374,7 +371,7 @@ class _LearningPageState extends State<LearningPage> {
         child: VideoPlayer(controller),
       );
     } else {
-      return AspectRatio(
+      return const AspectRatio(
           aspectRatio: 16 / 9,
           child: Center(
               child: Text(
@@ -409,9 +406,7 @@ class _LearningPageState extends State<LearningPage> {
       return;
     }
 
-    if (_duration == null) {
-      _duration = _controller?.value.duration;
-    }
+    _duration ??= _controller?.value.duration;
     var duration = _duration;
     if (duration == null) return;
 
@@ -431,6 +426,29 @@ class _LearningPageState extends State<LearningPage> {
   }
 
   _initializeVideo(int index) async {
+    const filterString = '/api/v1/order/progress';
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.get("token").toString();
+    try {
+      final response = await http.put(Uri.parse(baseUrl + filterString),
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: json.encode({
+            'courseId': courseId,
+            'video': {"id": videos[index].id}
+          }));
+
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    } catch (error) {
+      rethrow;
+    }
     final controller = VideoPlayerController.network(videos[index].source);
     final old = _controller;
     _controller = controller;
@@ -482,7 +500,7 @@ class _LearningPageState extends State<LearningPage> {
             borderRadius: BorderRadius.circular(
               25.0,
             ),
-            color: Colors.grey,
+            color: primary,
           ),
           unselectedLabelColor: Colors.black,
           tabs: const [

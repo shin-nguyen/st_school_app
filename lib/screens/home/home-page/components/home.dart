@@ -6,11 +6,14 @@ import 'package:st_school_app/screens/detail/detail_page.dart';
 import 'package:st_school_app/widgets/custom_course_card.dart';
 
 class HomeGrid extends StatelessWidget {
-  const HomeGrid({Key? key}) : super(key: key);
-
+  const HomeGrid({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+  final String type;
   @override
   Widget build(BuildContext context) {
-    final courses = Provider.of<CoursesNotifier>(context).getCourses;
+    final courses = Provider.of<CoursesNotifier>(context).findByCatogory(type);
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -19,7 +22,7 @@ class HomeGrid extends StatelessWidget {
         right: appPadding - 10.0,
       ),
       child: Wrap(
-        children: List.generate(courses.length, (index) {
+        children: List.generate(courses!.length, (index) {
           var data = courses[index];
 
           return Padding(
@@ -36,8 +39,6 @@ class HomeGrid extends StatelessWidget {
                 thumbNail: data.image,
                 videoAmount: data.videoTotal.toString(),
                 title: data.name,
-                userProfile:
-                    'https://images.unsplash.com/photo-1601582589907-f92af5ed9db8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80',
                 userName: data.lecturer,
                 price: data.price.toString(),
               ),

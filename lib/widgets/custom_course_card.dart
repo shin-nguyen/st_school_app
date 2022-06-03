@@ -7,7 +7,6 @@ class CustomCourseCardExpand extends StatefulWidget {
     required this.thumbNail,
     required this.videoAmount,
     required this.title,
-    required this.userProfile,
     required this.userName,
     required this.price,
   }) : super(key: key);
@@ -15,7 +14,6 @@ class CustomCourseCardExpand extends StatefulWidget {
   final String thumbNail;
   final String videoAmount;
   final String title;
-  final String userProfile;
   final String userName;
   final String price;
 

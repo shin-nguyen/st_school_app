@@ -1,8 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
-import 'package:st_school_app/models/course.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
+import 'package:st_school_app/screens/categories/categories_page.dart';
 import 'package:st_school_app/screens/home/search/components/search-item.dart';
 import 'package:st_school_app/widgets/custom_heading.dart';
 import 'package:st_school_app/widgets/custom_place_holder.dart';
@@ -58,49 +60,55 @@ class _SearchsPageState extends State<SearchsPage> {
 
             Column(
               children: List.generate(
-                course.getSearch.length,
+                min(course.getSearch.length, 5),
                 (index) {
                   final courseSearch = course.getSearch[index];
                   return SearchItemPage(course: courseSearch);
                 },
               ),
             ),
-            // Column(
-            //   children: [
             const SizedBox(height: spacer),
             //Top Searches
             const CustomTitle(title: 'Top Searches', extend: false),
             const SizedBox(height: smallSpacer),
-
             Wrap(
               spacing: 10.0,
               runSpacing: 10.0,
               children: List.generate(categoryJson.length, (index) {
-                return Container(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20.0,
-                    top: 10.0,
-                    bottom: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: primary.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(100.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: primary.withOpacity(0.5),
-                        spreadRadius: 0.0,
-                        blurRadius: 6.0,
-                        offset: const Offset(0, 2),
-                      )
-                    ],
-                  ),
-                  child: Text(
-                    categoryJson[index].title,
-                    style: const TextStyle(
-                      color: textWhite,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w700,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      CategoriesPage.routeName,
+                      arguments: categoryJson[index].title,
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      top: 10.0,
+                      bottom: 10.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: primary.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(100.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: primary.withOpacity(0.5),
+                          spreadRadius: 0.0,
+                          blurRadius: 6.0,
+                          offset: const Offset(0, 2),
+                        )
+                      ],
+                    ),
+                    child: Text(
+                      categoryJson[index].title,
+                      style: const TextStyle(
+                        color: textWhite,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 );
@@ -113,12 +121,18 @@ class _SearchsPageState extends State<SearchsPage> {
 
             //list categories
             Column(
-              children: List.generate(allCategories.length, (index) {
-                var data = allCategories[index];
+              children: List.generate(categoryJson.length, (index) {
+                var data = categoryJson[index];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: miniSpacer),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        CategoriesPage.routeName,
+                        arguments: categoryJson[index].title,
+                      );
+                    },
                     child: CunstomPlaceHolder(
                       title: data.title,
                     ),
@@ -128,8 +142,6 @@ class _SearchsPageState extends State<SearchsPage> {
             )
           ],
         ),
-        //   ],
-        // ),
       ),
     );
   }

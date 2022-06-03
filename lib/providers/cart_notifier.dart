@@ -25,7 +25,8 @@ class CartNotifier with ChangeNotifier {
           subPrice: 2,
           video: 123,
           averageRate: 1,
-          createdTime: "123"),
+          createdTime: "123",
+          isFor: "Beginner"),
     );
     _items.putIfAbsent(
       '10',
@@ -47,7 +48,8 @@ class CartNotifier with ChangeNotifier {
           subPrice: 4,
           video: 123,
           averageRate: 1,
-          createdTime: "123"),
+          createdTime: "123",
+          isFor: "Beginner"),
     );
   }
 

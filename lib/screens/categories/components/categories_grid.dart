@@ -19,16 +19,17 @@ class CategoriesGrid extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(left: 4, right: 15.0, bottom: 20.0),
             child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DetailPage.routeName,
-                    arguments: courses[index].id,
-                  );
-                },
-                child: CourseStarCard(
-                  course: courses[index],
-                )),
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  DetailPage.routeName,
+                  arguments: courses[index].id,
+                );
+              },
+              child: CourseStarCard(
+                course: courses[index],
+              ),
+            ),
           );
         }),
       ),

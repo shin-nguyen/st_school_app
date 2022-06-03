@@ -14,6 +14,7 @@ class Course {
   final String topic;
   final double averageRate;
   final String createdTime;
+  final String isFor;
 
   const Course({
     required this.id,
@@ -31,6 +32,7 @@ class Course {
     required this.topic,
     required this.averageRate,
     required this.createdTime,
+    required this.isFor,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -50,6 +52,7 @@ class Course {
       video: json['videoTotal'] ?? 0,
       averageRate: json['averageRate'] ?? 0,
       createdTime: json['createdTime'] ?? '21/05/2022',
+      isFor: json['isFor'] ?? 'Beginner',
     );
   }
 
@@ -71,6 +74,7 @@ class Course {
       video: video,
       averageRate: json['averageRate'] ?? 0,
       createdTime: json['createdTime'] ?? '21/05/2022',
+      isFor: json['isFor'] ?? 'Beginner',
     );
   }
 
@@ -91,6 +95,7 @@ class Course {
       video: 0,
       averageRate: 0,
       createdTime: '21/05/2022',
+      isFor: 'Beginner',
     );
   }
 }

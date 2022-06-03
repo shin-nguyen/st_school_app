@@ -47,30 +47,3 @@ final List<Category> allCategories = [
   Category('Music', 'assets/images/bag_icon.svg'),
   Category('Personal Development', 'assets/images/bag_icon.svg'),
 ];
-
-List<Category> homeCategories = [
-  Category(
-    "UI/UX Design",
-    "assets/images/graphics.png",
-    const Color(0xFF71b8ff),
-    16,
-  ),
-  Category(
-    "Programming",
-    "assets/images/programming.png",
-    const Color(0xFFff6374),
-    22,
-  ),
-  Category(
-    "Server Side",
-    "assets/images/ux.png",
-    const Color(0xFFffaa5b),
-    15,
-  ),
-  Category(
-    "Other",
-    "assets/images/finance.png",
-    const Color(0xFF9ba0fc),
-    18,
-  ),
-];

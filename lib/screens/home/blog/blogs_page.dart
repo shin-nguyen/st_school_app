@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/providers/blogs_notifier.dart';
-import 'package:st_school_app/screens/detail/detail_page.dart';
 import 'package:st_school_app/screens/home/blog/components/blog_details_page.dart';
 import 'package:st_school_app/widgets/custom_heading.dart';
 import 'package:st_school_app/widgets/custome_search_field.dart';
@@ -49,11 +45,10 @@ class _BlogPageState extends State<BlogPage> {
   int selectedIndex = 0;
   List<String> blogTypes = [
     "All",
-    "Fashion",
-    "UI/UX Design",
-    "Health",
-    "Technology",
-    "Sports",
+    "My Love",
+    "Development",
+    "IT & Software",
+    "Software",
   ];
   @override
   Widget build(BuildContext context) {
@@ -146,31 +141,39 @@ class _BlogPageState extends State<BlogPage> {
                   const SizedBox(
                     height: spacer,
                   ),
-                  Column(
-                    children: List.generate(blog.getBlogs.length, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                          left: 4,
-                          right: 4,
-                        ),
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    BlogDetailsPage.routeName,
-                                    arguments: blog.getBlogs[index].id,
-                                  );
-                                },
-                                child: PostCellWidget(
-                                  blog: blog.getBlogs[index],
-                                )),
-                            const Divider(),
-                          ],
-                        ),
-                      );
-                    }),
+                  SingleChildScrollView(
+                    child: Column(
+                      children: List.generate(blog.getSearch.length, (index) {
+                        return (blogTypes[selectedIndex] == 'All') ||
+                                (blog.getSearch[index].topic ==
+                                    blogTypes[selectedIndex]) ||
+                                (blog.getSearch[index].love &&
+                                    blogTypes[selectedIndex] == 'My Love')
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 4,
+                                  right: 4,
+                                ),
+                                child: Column(
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            BlogDetailsPage.routeName,
+                                            arguments: blog.getBlogs[index].id,
+                                          );
+                                        },
+                                        child: PostCellWidget(
+                                          blog: blog.getBlogs[index],
+                                        )),
+                                    const Divider(),
+                                  ],
+                                ),
+                              )
+                            : Container();
+                      }),
+                    ),
                   ),
 
                   const SizedBox(height: smallSpacer),

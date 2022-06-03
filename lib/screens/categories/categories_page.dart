@@ -4,6 +4,7 @@ import 'package:st_school_app/constants/system_constants.dart';
 import 'package:st_school_app/models/course.dart';
 import 'package:st_school_app/providers/courses_notifier.dart';
 import 'package:st_school_app/screens/categories/components/categories_grid.dart';
+import 'package:st_school_app/screens/home/search/components/search-item.dart';
 import 'package:st_school_app/widgets/custom_title.dart';
 
 class CategoriesPage extends StatefulWidget {
@@ -19,47 +20,76 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Widget build(BuildContext context) {
     final type =
         ModalRoute.of(context)?.settings.arguments as String; // is the id!
+    final List<Course>? coursesBegin = Provider.of<CoursesNotifier>(
+      context,
+      listen: false,
+    ).findByCatogoryBegin(type);
+
     final List<Course>? courses = Provider.of<CoursesNotifier>(
       context,
       listen: false,
     ).findByCatogory(type);
 
     return Scaffold(
-        backgroundColor: background,
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
+      backgroundColor: background,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        titleSpacing: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
         ),
-        body: SafeArea(
-            child: ListView(children: [
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: CustomTitle(
-              title: type == '' ? "Categories" : type,
-              fontSize: 30,
-              extend: false,
-            ),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          type == '' ? "Categories" : type,
+          style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w500,
+            color: textBlack,
           ),
-          const SizedBox(height: appPadding),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: CustomTitle(
-              title: "Course to get you started",
-              fontSize: 25,
-              extend: false,
+        ),
+      ),
+      body: SafeArea(
+        child: ListView(
+          children: [
+            const SizedBox(height: appPadding),
+            coursesBegin!.isEmpty
+                ? Container()
+                : const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: CustomTitle(
+                      title: "Course to get you started",
+                      fontSize: 25,
+                      extend: false,
+                    ),
+                  ),
+            const SizedBox(height: miniSpacer),
+            coursesBegin.isEmpty
+                ? Container()
+                : CategoriesGrid(
+                    courses: coursesBegin,
+                  ),
+            const SizedBox(height: smallSpacer),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: CustomTitle(
+                title: "All Course",
+                fontSize: 25,
+                extend: false,
+              ),
             ),
-          ),
-          const SizedBox(height: miniSpacer),
-          courses == []
-              ? Container()
-              : CategoriesGrid(
-                  courses: courses!,
-                )
-        ])));
+            Column(
+              children: List.generate(
+                courses!.length,
+                (index) {
+                  final courseSearch = courses[index];
+                  return SearchItemPage(course: courseSearch);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

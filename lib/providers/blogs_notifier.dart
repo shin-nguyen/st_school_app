@@ -2,20 +2,26 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:st_school_app/constants/system_constants.dart';
-import 'package:st_school_app/models/blog_love.dart';
 import 'package:st_school_app/models/blog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class BlogsNotifier with ChangeNotifier {
   List<Blog> _items = [];
+  List<Blog> _itemSearch = [];
 
   BlogsNotifier(
     this._items,
+    this._itemSearch,
   );
 
   List<Blog> get getBlogs {
+    _itemSearch = _items;
     return [..._items];
+  }
+
+  List<Blog> get getSearch {
+    return [..._itemSearch];
   }
 
   Blog findById(int id) {
@@ -24,8 +30,9 @@ class BlogsNotifier with ChangeNotifier {
   }
 
   Future<void> findByQuery(String query) async {
+    query = query.toLowerCase();
     try {
-      _items = query == ''
+      _itemSearch = query == ''
           ? _items
           : _items.where((blog) {
               final name = blog.title.toLowerCase();

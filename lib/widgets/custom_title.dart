@@ -29,7 +29,7 @@ class CustomTitle extends StatelessWidget {
               style: TextStyle(
                 color: secondary,
                 fontSize: fontSize,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
               ),
             ),
             (extend)

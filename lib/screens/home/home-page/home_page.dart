@@ -112,14 +112,48 @@ class _HomePageState extends State<HomePage> {
                   const CustomTitle(
                     title: 'Software',
                     route: CategoriesPage.routeName,
-                    arg: "",
+                    arg: "Software",
                   ),
                   const SizedBox(height: smallSpacer),
                   _isLoading
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : const HomeGrid()
+                      : const HomeGrid(type: "Software"),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const CustomTitle(
+                    title: 'IT & Software',
+                    route: CategoriesPage.routeName,
+                    arg: "IT & Software",
+                  ),
+                  const SizedBox(height: smallSpacer),
+                  _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : const HomeGrid(type: "IT & Software"),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const CustomTitle(
+                    title: 'Development',
+                    route: CategoriesPage.routeName,
+                    arg: "Development",
+                  ),
+                  const SizedBox(height: smallSpacer),
+                  _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : const HomeGrid(type: "Development")
                 ],
               ),
             )

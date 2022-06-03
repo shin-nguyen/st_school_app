@@ -74,10 +74,10 @@ class CourseStarCard extends StatelessWidget {
                 constraints: BoxConstraints(
                   maxWidth: w * 0.35,
                 ),
-                child: const Text(
-                  '(4.7)',
+                child: Text(
+                  '${course.averageRate.toString()} ',
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.amber,
                       fontSize: 14.0,
                       fontWeight: FontWeight.w800),
@@ -85,7 +85,7 @@ class CourseStarCard extends StatelessWidget {
               ),
             ),
             RatingBarIndicator(
-              rating: 3.5,
+              rating: course.averageRate,
               itemBuilder: (context, index) => const Icon(
                 Icons.star,
                 color: Colors.amber,
@@ -96,7 +96,7 @@ class CourseStarCard extends StatelessWidget {
               direction: Axis.horizontal,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 4.0),
+              padding: const EdgeInsets.only(left: 4.0),
               child: Text('(${course.subTotal})',
                   style: const TextStyle(
                     color: textBlack,
