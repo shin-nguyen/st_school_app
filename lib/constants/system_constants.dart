@@ -84,4 +84,4 @@ const String homeScreenAppBarTitle = "Generate Branch IO";
 const String gettingData = "Getting Data";
 const String appTitle = 'Deep Link With Flutter';
 
-const String baseUrl = "http://192.168.1.26:8080";
+const String baseUrl = "http://192.168.1.27:8080";

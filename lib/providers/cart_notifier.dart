@@ -6,51 +6,51 @@ import 'package:st_school_app/models/course.dart';
 
 class CartNotifier with ChangeNotifier {
   CartNotifier() {
-    _items.putIfAbsent(
-      '11',
-      () => const Course(
-          id: 11,
-          name: 'The Complete 2020 Fullstack Web Developer Course',
-          description:
-              'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
-          lecturer: 'Kari Noman',
-          language: 'English',
-          price: 123,
-          image:
-              "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
-          subTotal: 1,
-          videoTotal: 20,
-          topic: "ADs",
-          progress: 12,
-          subPrice: 2,
-          video: 123,
-          averageRate: 1,
-          createdTime: "123",
-          isFor: "Beginner"),
-    );
-    _items.putIfAbsent(
-      '10',
-      () => const Course(
-          id: 10,
-          name:
-              'Python Django - The Practical GuideLearn how to build web applications and websites with Python and the Django framework',
-          description:
-              'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
-          lecturer: 'Kari Noman',
-          language: 'English',
-          price: 10,
-          image:
-              "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
-          subTotal: 1,
-          videoTotal: 20,
-          topic: "ADs",
-          progress: 12,
-          subPrice: 4,
-          video: 123,
-          averageRate: 1,
-          createdTime: "123",
-          isFor: "Beginner"),
-    );
+    // _items.putIfAbsent(
+    //   '11',
+    //   () => const Course(
+    //       id: 11,
+    //       name: 'The Complete 2020 Fullstack Web Developer Course',
+    //       description:
+    //           'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
+    //       lecturer: 'Kari Noman',
+    //       language: 'English',
+    //       price: 123,
+    //       image:
+    //           "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
+    //       subTotal: 1,
+    //       videoTotal: 20,
+    //       topic: "ADs",
+    //       progress: 12,
+    //       subPrice: 2,
+    //       video: 123,
+    //       averageRate: 1,
+    //       createdTime: "123",
+    //       isFor: "Beginner"),
+    // );
+    // _items.putIfAbsent(
+    //   '10',
+    //   () => const Course(
+    //       id: 10,
+    //       name:
+    //           'Python Django - The Practical GuideLearn how to build web applications and websites with Python and the Django framework',
+    //       description:
+    //           'HTML is the standard markup language for Web pages. With HTML you can create your own Website.',
+    //       lecturer: 'Kari Noman',
+    //       language: 'English',
+    //       price: 10,
+    //       image:
+    //           "https://res.cloudinary.com/qscloud/image/upload/v1635049180/st-school/images/html.png.png",
+    //       subTotal: 1,
+    //       videoTotal: 20,
+    //       topic: "ADs",
+    //       progress: 12,
+    //       subPrice: 4,
+    //       video: 123,
+    //       averageRate: 1,
+    //       createdTime: "123",
+    //       isFor: "Beginner"),
+    // );
   }
 
   List<S2Choice<String>> options = [
